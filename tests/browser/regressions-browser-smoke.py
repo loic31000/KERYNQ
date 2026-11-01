@@ -125,9 +125,10 @@ with sync_playwright() as p:
             box=page.locator('#tipBubble').bounding_box()
             assert box and box['x']>=0 and box['x']+box['width']<=width and box['y']>=0,(width,box)
             assert tip.get_attribute('aria-describedby')=='tipBubble'
+            assert len(tip.get_attribute('data-tip'))<=170,tip.get_attribute('data-tip')
             page.keyboard.press('Escape')
             assert page.locator('#tipBubble').is_hidden()
-        assert page.locator('.tip').count()==9
+        assert page.locator('.tip').count()==17
         assert not errors,errors;ctx.close()
         # Un ancien thème reste valide ; un thème inconnu revient au thème par défaut.
         for stored,expected in (('light','light'),('inconnu','dark')):

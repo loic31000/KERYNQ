@@ -163,15 +163,23 @@ function setupV5(){
 function renderThemeMenu(){const root=$('themeMenu');root.replaceChildren();const current=THEMES.find(x=>x[0]===state.theme);$('themeToggle').textContent='Thème : '+current[1];document.querySelector('meta[name="theme-color"]').content=getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();for(const [id,label] of THEMES){const b=node('button','theme-choice');b.type='button';b.dataset.themeChoice=id;b.setAttribute('aria-pressed',String(state.theme===id));const dot=node('span','swatch swatch-'+id);dot.setAttribute('aria-hidden','true');b.append(dot,node('span','',label));b.addEventListener('click',()=>{state.theme=id;save();document.documentElement.dataset.theme=id;renderThemeMenu();root.querySelector('[aria-pressed="true"]')?.focus();notify('Thème '+label+' appliqué')});root.append(b)}}
 function toggleThemeMenu(open=$('themeMenu').hidden){$('themeMenu').hidden=!open;$('themeToggle').setAttribute('aria-expanded',String(open));if(open)$('themeMenu').querySelector('[aria-pressed="true"]')?.focus()}
 const TIPS=[
- ['composerLabel','Votre question','Écrivez comme vous parleriez à quelqu’un. KERYNQ ne l’envoie nulle part tant que vous n’avez pas cliqué.'],
- ['destinationLabel','Où chercher','Sur le Web : ouvre le moteur choisi avec votre recherche. Avec une IA : prépare un texte détaillé à coller dans l’assistant.'],
- ['engineLabel','Moteur','Le moteur reçoit votre recherche quand vous lancez. Un moteur spécialisé ne reçoit que votre sujet et vos mots. Tous n’appliquent pas les mêmes filtres : le résultat indique ce qui est réellement appliqué.'],
- ['category-title','Domaine','Le domaine propose des filtres adaptés et enrichit le texte pour l’IA. Il ne filtre pas les résultats des moteurs Web.'],
- ['quickTitle','Ce que vous attendez','Ces choix précisent la réponse demandée à l’IA. Ils ne modifient pas la recherche Web.'],
- ['template-heading','Modèles','Un modèle règle plusieurs options d’un coup, selon votre besoin. Vous pouvez aussi enregistrer les vôtres.'],
- ['resultTitle','Votre résultat','Voici exactement ce que KERYNQ a préparé. Il se met à jour à chaque changement.'],
- ['savedTitle','Mes recherches','Vos favoris restent dans ce navigateur et ne sont pas chiffrés. Évitez d’y garder des données sensibles sur un appareil partagé.'],
- ['privacyTitle','Mode privé','Le mode privé évite d’enregistrer la recherche en cours sur cet appareil. Les moteurs et les IA voient toujours ce que vous leur envoyez.']
+ ["composerLabel","Votre question","Écrivez ce que vous cherchez, comme si vous le demandiez à quelqu’un. Rien n’est envoyé tant que vous ne cliquez pas."],
+ ["destinationLabel","Où chercher","Sur le Web : vous obtenez une liste de sites. Avec une IA : vous obtenez un texte à coller dans un assistant, qui vous répond."],
+ ["engineLabel","Moteur","C’est le site qui fera la recherche. Google convient à presque tout. Les autres sont utiles pour un sujet précis."],
+ ["modeSwitch","Simple ou toutes les options","Simple : l’essentiel, pour aller vite. Toutes les options : des réglages en plus, comme les dates, la langue ou les sites."],
+ ["category-title","Domaine","Choisissez le sujet de votre question. KERYNQ vous propose alors des options adaptées. Si vous hésitez, gardez « Tous les sujets »."],
+ ["quickTitle","Ce que vous attendez","Cochez le type de réponse voulu. Cela sert surtout au texte pour une IA, pas à la recherche sur le Web."],
+ ["goal-title","Votre objectif","Dites ce que vous voulez faire : comprendre, comparer, vérifier… L’IA adapte alors sa réponse."],
+ ["specificTitle","Filtres du domaine","Ces cases changent selon le domaine. Cochez ce qui compte pour vous. Elles servent au texte pour une IA."],
+ ["custom-title","Vos propres critères","Ajoutez une demande qui n’est pas dans la liste, par exemple « disponible en France ». Elle s’ajoute au texte pour une IA."],
+ ["source-title","Types de sources","Indiquez où l’IA doit chercher en priorité : sites officiels, presse, études…"],
+ ["format-title","Présentation de la réponse","Choisissez la forme de la réponse de l’IA : résumé, tableau, liste de liens…"],
+ ["template-heading","Modèles","Un modèle règle plusieurs options en un clic. Votre question ne change pas. Vous pouvez aussi créer les vôtres."],
+ ["resultTitle","Votre résultat","Voici ce que KERYNQ a préparé. Cela change à chaque réglage. Vous pouvez le relire avant de lancer."],
+ ["assistantLabel","Assistant","Choisissez l’IA que vous voulez utiliser. Elle s’ouvre dans un nouvel onglet, et vous y collez le texte. Elle peut demander un compte."],
+ ["promptStyleLabel","Format du texte","Détaillé : plus de consignes, pour une réponse plus complète. Court : un texte bref, pour une réponse rapide."],
+ ["savedTitle","Mes recherches","Gardez une recherche pour la retrouver plus tard. Elle reste dans ce navigateur. Évitez d’y mettre des informations privées sur un appareil partagé."],
+ ["privacyTitle","Mode privé","Votre recherche en cours n’est pas gardée sur cet appareil. Le moteur ou l’IA que vous utilisez la voit quand même."]
 ];
 function setupTips(){const bubble=$('tipBubble');let active=null;
  const hide=()=>{if(active){active.removeAttribute('aria-describedby');active.setAttribute('aria-expanded','false')}active=null;bubble.hidden=true};
