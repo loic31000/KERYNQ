@@ -1,50 +1,51 @@
 # KERYNQ
 
-**Explorez. Affinez. Découvrez.**
+> **Explorez. Affinez. Découvrez.**
 
-KERYNQ est une application web statique pour préparer et lancer des recherches ciblées, organiser ses favoris et composer des consignes structurées. Elle conserve **27 univers de recherche** (culture, TCG, jeux vidéo, IA, cybersécurité, politique, OSINT, etc.) et les filtres de la V5 d'OSINT SEARCH.
+**KERYNQ** est un atelier de recherche web personnalisée, gratuit, sans inscription ni serveur applicatif. Il construit des requêtes adaptées au moteur choisi et des consignes pour différents assistants IA. Il **ne collecte pas de résultats lui-même** et **ne transmet pas de consignes automatiquement aux IA**.
 
-> **Statut : développement privé.** Ce dépôt n'est pas destiné à être publié ou à activer GitHub Pages avant validation. Aucune licence open source n'a été accordée à ce stade.
+**État : développement privé / prépublication.** Le dépôt est volontairement privé. Aucune activation de GitHub Pages ni publication ouverte n'est prévue sans décision du propriétaire.
 
-## Utilisation
+## Démarrer
 
-- Ouvrez `index.html` dans un navigateur moderne pour utiliser l'interface localement.
-- Sur HTTPS ou `localhost`, le manifeste et le service worker peuvent permettre une utilisation de l'interface hors ligne. Certains navigateurs peuvent exiger des icônes PNG pour proposer l'installation.
-- Les recherches se lancent dans **Google, Brave ou DuckDuckGo**, dans un nouvel onglet. KERYNQ n'est **pas** un index ni un moteur de classement de résultats indépendant.
-- Les préférences, modèles et favoris sont stockés dans le navigateur local. Sauvegardez-les avec l'export JSON avant de vider les données du navigateur.
+Ouvrir `index.html` dans un navigateur moderne. Choisissez votre sujet, éventuellement un thème et des filtres, puis lancez Google, Brave ou DuckDuckGo. Pour l'IA, passez à l'onglet **Pour une IA**, copiez la consigne, choisissez le fournisseur et ouvrez-le dans un nouvel onglet. Collez la consigne manuellement.
+
+- **Sans installation** : ouverture directe de `index.html`.
+- **Hébergement statique** : fichiers utilisables sur GitHub Pages après décision de publication.
+- **Fonctionnement hors ligne** : préparation de requêtes et favoris locaux possibles, mais les moteurs et assistants externes nécessitent Internet. La mise en cache PWA est destinée aux environnements HTTPS/localhost.
+- **Vérifier le code** : `node tests/check-static.mjs` (Node.js récent).
 
 ## Fonctionnalités
 
-- Recherche directe et raccourci `Ctrl + K`.
-- Modes **simple** et **avancé** et 27 univers de filtres.
-- Indication des critères réellement appliqués à la recherche Web et de ceux réservés à la consigne IA.
-- Modèles de recherche, favoris et dossiers personnalisés.
-- Export de consignes Markdown et import/export de profils JSON.
-- Interface responsive, SVG, clair/sombre, navigation clavier et prise en charge de `prefers-reduced-motion`.
-- Aucun compte, aucune API payante, aucun suivi intégré.
+- Recherche directe, `Ctrl + K`, modes essentiel et avancé.
+- 27 univers et leurs filtres contextuels, modèles et recherches favorites par dossier.
+- Requêtes dédiées à Google, Brave et DuckDuckGo, avec indication des limites des opérateurs.
+- Export et import de profils JSON ; export des consignes Markdown.
+- **Assistants IA au choix** : ChatGPT, Claude, Gemini, Kimi, Grok, DeepSeek, Perplexity, Mistral Vibe, Copilot, autre URL HTTPS. Aucun compte ni API de fournisseur n'est connecté à KERYNQ.
+- Icônes SVG, clair/sombre, texte agrandi, adaptations mobiles et animation réduite.
 
-## Structure
+## Documentation
 
-| Fichier | Rôle |
-|---|---|
-| `index.html` | Interface et logique autonome |
-| `app-icon.svg`, `favicon.svg` | Identité KERYNQ |
-| `manifest.webmanifest` | Métadonnées d'installation |
-| `service-worker.js` | Cache des ressources internes |
-| `docs/ROADMAP.md` | Travaux et validation avant ouverture |
-| `docs/CONFIDENTIALITE.md` | Données stockées et limites |
-| `tests/check-static.mjs` | Contrôles statiques avec Node.js |
+| Document | À quoi il sert |
+| --- | --- |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Développement, tests et contributions |
+| [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) | Règles de participation |
+| [SECURITY.md](SECURITY.md) | Signalement de failles et politique de sécurité |
+| [SUPPORT.md](SUPPORT.md) | Aide et limites du support |
+| [LICENSE.md](LICENSE.md) | Statut juridique actuel et décision de licence à venir |
+| [ACCESSIBILITY.md](ACCESSIBILITY.md) | Objectifs et vérifications d'accessibilité |
+| [CHANGELOG.md](CHANGELOG.md) | Historique des modifications |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Architecture et flux de données |
+| [docs/FOURNISSEURS_IA.md](docs/FOURNISSEURS_IA.md) | Accès multi-IA et confidentialité |
+| [docs/CONFIDENTIALITE.md](docs/CONFIDENTIALITE.md) | Stockage et partage des données |
+| [docs/ROADMAP.md](docs/ROADMAP.md) | Priorités et vérifications avant publication |
 
-## Tester
+## Vie privée et sécurité
 
-`node tests/check-static.mjs`
+Les préférences, favoris et modèles sont stockés **localement dans le navigateur**. Ils ne sont pas chiffrés par KERYNQ ; évitez d'y conserver des données sensibles sur un appareil partagé. Quand vous ouvrez un moteur ou un assistant, vous quittez KERYNQ : ce site tiers applique ses propres conditions et sa propre politique de confidentialité. L'ouverture d'un assistant **n'envoie jamais la consigne**.
 
-Cela vérifie la syntaxe JavaScript intégrée, les fichiers d'application et le manifeste. Les tests visuels et d'accessibilité au clavier doivent également être faits dans des navigateurs réels.
+Les filtres ne garantissent pas la qualité des résultats. Une consigne demandant de « vérifier les faits » ne signifie pas qu'une vérification a été réalisée.
 
-## Confidentialité
+## Licence
 
-Aucun suivi ou backend KERYNQ n'est intégré. Une requête envoyée à un moteur de recherche est soumise à la politique de confidentialité de ce moteur. Voir [docs/CONFIDENTIALITE.md](docs/CONFIDENTIALITE.md).
-
-## Publication future
-
-Lorsque le produit sera validé, la publication sur GitHub Pages pourra être configurée **après** le passage du dépôt en public. Aucune publication ni modification de visibilité n'est faite pour l'instant.
+**Aucune licence open source n'est accordée pour le moment.** Le code est sous droits réservés tant que le propriétaire n'a pas choisi et publié de licence. Voir [LICENSE.md](LICENSE.md). L'accès à un dépôt, même public ultérieurement, n'est pas en lui-même une autorisation de réutilisation.

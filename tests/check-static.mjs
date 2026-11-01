@@ -34,7 +34,7 @@ const assistants = ['chatgpt','claude','gemini','kimi','grok','deepseek','perple
 for (const assistant of assistants) assert(html.includes(`${assistant}:`), `Assistant disponible : ${assistant}`);
 assert(html.includes('id="aiProvider"') && html.includes('id="openAIProvider"'), 'Sélecteur et ouverture multi-IA présents');
 assert(html.includes('id="customAIUrl"'), 'Fournisseur personnalisé disponible');
-assert(html.includes("target.protocol!=='https:'"), 'Vérification HTTPS de l’URL personnalisée');
+assert(html.includes('KerynqPrivacy.safeAssistantUrl'), 'Vérification HTTPS de l’URL personnalisée');
 assert(!html.includes('openChatGPT'), 'Pas de bouton ChatGPT codé en dur');
 assert(!/window\.open\([^\)]*buildPrompt/.test(html), 'Pas de consigne automatiquement transmise dans URL');
 for (const doc of ['LICENSE.md','CONTRIBUTING.md','CODE_OF_CONDUCT.md','SECURITY.md','SUPPORT.md','ACCESSIBILITY.md','CHANGELOG.md','docs/ARCHITECTURE.md','docs/FOURNISSEURS_IA.md','docs/CONFIDENTIALITE.md','.github/ISSUE_TEMPLATE/bug_report.yml','.github/ISSUE_TEMPLATE/feature_request.yml','.github/PULL_REQUEST_TEMPLATE.md']) {
@@ -47,3 +47,11 @@ assert(html.includes('src="./search-query-core.js"'), 'Compilateur chargé avant
 assert(readFileSync(join(root, 'service-worker.js'),'utf8').includes('search-query-core.js'), 'Compilateur mis en cache PWA');
 try { new vm.Script(readFileSync(join(root, 'search-query-core.js'),'utf8')); console.log('OK: Syntaxe compilateur'); }
 catch (error) { fail('Syntaxe compilateur: '+error.message); }
+
+// Confidentialité et validation des sauvegardes (lot 2).
+for(const id of ['privateSearchToggle','privateSearchInfo','clearAllData']) assert(html.includes('id="'+id+'"'), 'Contrôle vie privée : '+id);
+assert(html.includes('src="./privacy-core.js"'),'Module confidentialité référencé');
+assert(existsSync(join(root,'privacy-core.js')),'Module confidentialité présent');
+assert(readFileSync(join(root,'service-worker.js'),'utf8').includes('privacy-core.js'),'Module confidentialité mis en cache PWA');
+try { new vm.Script(readFileSync(join(root,'privacy-core.js'),'utf8'));console.log('OK: Syntaxe confidentialité'); }
+catch(e){ fail('Syntaxe confidentialité : '+e.message); }

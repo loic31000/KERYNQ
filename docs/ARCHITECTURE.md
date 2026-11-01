@@ -11,7 +11,8 @@ Application **statique côté navigateur**. Pas de serveur, de base distante ou 
 - `manifest.webmanifest` : manifeste d'installation.
 - `favicon.svg` / `app-icon.svg` : identité SVG.
 - `service-worker.js` : cache des seules ressources same-origin.
-- `tests/check-static.mjs` : vérifications statiques sans dépendances.
+- `privacy-core.js` : validation locale des sauvegardes et des URL HTTPS d’assistants.
+- `tests/check-static.mjs`, `tests/privacy.test.cjs` : contrôles statiques et tests unitaires sans dépendances.
 
 ## Flux de recherche Web
 
@@ -44,3 +45,5 @@ Application **statique côté navigateur**. Pas de serveur, de base distante ou 
 ## Tests du moteur de requêtes
 
 `node --test tests/search-query.test.mjs` lance les tests unitaires sans dépendances. Le service worker met en cache le compilateur en même temps que l’interface pour conserver la préparation hors ligne. La présence d’un opérateur dans la requête ne garantit pas que le moteur externe le respecte.
+
+**Lot 2 :** le service worker utilise désormais le cache `kerynq-static-v3`, qui inclut `privacy-core.js`. À tester sous HTTPS avant publication.
