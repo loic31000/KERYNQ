@@ -60,7 +60,7 @@ Aucun nouvel univers ajouté dans ce lot ; les 12 catégories du rapport V6 ont 
 - [ ] Garder les moteurs facultatifs : pas de clés API, pas de serveur, pas d'envoi automatique des requêtes à plusieurs moteurs.
 - [ ] Différencier clairement les capacités de chaque moteur dans le compilateur de requêtes.
 
-Les 39 univers sont maintenant intégrés. Les packs de sources officielles facultatifs constituent la prochaine évolution fonctionnelle.
+Les 39 univers sont maintenant intégrés. Les packs de sources officiels ont été abandonnés à la demande du propriétaire.
 
 ## Phase 1, lot 3 : accessibilité clavier
 
@@ -76,8 +76,7 @@ Les univers supplémentaires et les moteurs de recherche restent planifiés pour
 
 - [x] **Lot 4A** : 6 univers du quotidien (administration, famille, animaux, logement, droit, finances personnelles) ; navigation par 8 familles ; enrichissement Santé & Médecine.
 - [x] **Lot 4B** : enfance/scolarité, travail/emploi, retraite/autonomie, cuisine/alimentation, maison/jardin, mobilité/transports (réutiliser ou distinguer l'univers auto/mobilité existant).
-- [x] Packs de sources institutionnelles **opt-in** : France livrée, pas de `site:` automatique sans pays ni clic.
-- [ ] Packs d'autres pays, par petits lots.
+- Packs de sources institutionnelles : livrés pour la France puis retirés à la demande du propriétaire.
 - [ ] Tests de validation sur tous les univers avant fusion.
 - [ ] Autres moteurs de recherche, **après** stabilisation, sans API payante.
 
@@ -86,4 +85,4 @@ Les univers supplémentaires et les moteurs de recherche restent planifiés pour
 - [x] Six domaines ajoutés, options contextualisées, SVG et familles conservées.
 - [x] Distinction véhicule / réseau de transports collectifs, titres métier / scolarité.
 - [x] Tests 39 univers, navigation 8 familles et régression des requêtes Web.
-- [x] Packs de sources officielles opt-in : premier pays (France) livré.
+- Packs de sources officielles : retirés à la demande du propriétaire.

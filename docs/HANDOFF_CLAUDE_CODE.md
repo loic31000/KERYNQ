@@ -43,7 +43,7 @@ Relancer les tests depuis `main` sur le PC de développement. **Ne pas présente
 3. Revoir les derniers textes de `docs/ROADMAP.md` et les issues ; corriger les notes historiques obsolètes, sans effacer l'historique utile.
 4. Réaliser un audit visuel, clavier, zoom et sécurité avant toute mise en ligne. Ne pas afficher « conforme WCAG » sans contrôle.
 
-### Priorité 1 : packs de sources institutionnelles facultatifs
+### Priorité 1 : packs de sources institutionnelles facultatifs (retirés à la demande du propriétaire, ne pas réintroduire sans sa demande)
 1. Prévoir des **packs par pays et par univers** : par exemple France + administration (Service Public), santé (Ameli/HAS), droit (Légifrance), recherche scientifique (sources reconnues), sans en imposer un par défaut.
 2. Les domaines officiels doivent être **vérifiés**, proposés et sélectionnables ; l'utilisateur peut retirer ou modifier un domaine.
 3. Les packs enrichissent la recherche uniquement sur **action explicite** ; vérifier la capacité réelle du moteur à respecter un ou plusieurs `site:`.
