@@ -21,6 +21,16 @@ Adresse appelée avec un mot de test. « Titre » : le titre de la page correspo
 | Wikipédia (fr) | Encyclopédie | Titre | Mots |
 | GitHub | Code | Titre | Mots |
 | Reddit | Communautés | Titre | Mots |
+| Bing Actualités | Journalisme et actualité | Titre | Mots |
+| Fact Check Explorer | Vérification des faits | Titre | Mots |
+| Internet Archive | OSINT et archives | Titre | Mots |
+| Shodan | OSINT et services exposés | Titre | Mots |
+| data.gouv.fr | Données publiques | Titre | Mots |
+| Open Library | Livres | Titre | Mots |
+| MyAnimeList | Anime et mangas | Titre | Mots |
+| Steam | Jeux vidéo | Titre | Mots |
+| MusicBrainz | Musique | Titre | Mots |
+| OpenStreetMap | Cartes et lieux | Titre | Mots |
 
 ## Limites
 
@@ -28,8 +38,10 @@ Adresse appelée avec un mot de test. « Titre » : le titre de la page correspo
 - « Transmis » ne signifie pas respecté par le moteur. Le contrôle réel des résultats reste à faire pour tous les moteurs.
 - Un moteur spécialisé ne reçoit que le sujet et les mots. Les autres filtres restent signalés et utilisables dans le texte pour une IA.
 - La suggestion par domaine est un choix éditorial : elle ne change jamais le moteur sans clic, et ne présume pas de la qualité des résultats.
+- Shodan peut demander un compte et limiter les résultats gratuits. Il recense des services exposés sur Internet : à utiliser dans un cadre légal. Aucun moteur de recherche de personnes n'est proposé, par choix.
+- MusicBrainz cherche par artiste.
 - Wikipédia est ouverte en français. Reddit et YouTube sont des plateformes communautaires : leurs contenus ne sont pas vérifiés.
 
 ## Écartés pour l'instant
 
-Ecosia (pare-feu lors du contrôle), Mojeek (captcha) et SearXNG (pas d'instance officielle unique). Ils pourront revenir après un contrôle manuel.
+Ecosia (pare-feu lors du contrôle), Mojeek (captcha), SearXNG (pas d'instance officielle unique), et, bloqués ou soumis à une vérification anti-robot lors du contrôle : Google Actualités, Légifrance, HAL, Pappers, OpenCorporates, IMDb et Stack Overflow. Ils pourront revenir après un contrôle manuel.

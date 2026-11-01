@@ -177,7 +177,7 @@ with sync_playwright() as p:
         with ctx.expect_page():page.locator('#runSearch').click()
         page.wait_for_timeout(200)
         assert any(u.startswith('https://pubmed.ncbi.nlm.nih.gov/?term=Migraine') for u in requests),requests
-        assert page.locator('#engineButtons .btn').count()==13
+        assert page.locator('#engineButtons .btn').count()==23
         assert page.evaluate('document.documentElement.scrollWidth-document.documentElement.clientWidth')<=2
         assert not errors,errors;ctx.close()
         # Un fournisseur importé ne peut pas viser une propriété héritée.

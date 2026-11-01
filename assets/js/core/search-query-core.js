@@ -25,11 +25,21 @@
     {id:'youtube',label:'YouTube',group:'special',field:'Vidéo',url:'https://www.youtube.com/results?search_query=',ops:{words:true}},
     {id:'wikipedia',label:'Wikipédia',group:'special',field:'Encyclopédie',url:'https://fr.wikipedia.org/w/index.php?search=',ops:{words:true}},
     {id:'github',label:'GitHub',group:'special',field:'Code',url:'https://github.com/search?q=',ops:{words:true}},
-    {id:'reddit',label:'Reddit',group:'special',field:'Communautés',url:'https://www.reddit.com/search/?q=',ops:{words:true}}
+    {id:'reddit',label:'Reddit',group:'special',field:'Communautés',url:'https://www.reddit.com/search/?q=',ops:{words:true}},
+    {id:'bingnews',label:'Bing Actualités',group:'special',field:'Journalisme et actualité',url:'https://www.bing.com/news/search?q=',ops:{words:true}},
+    {id:'factcheck',label:'Fact Check Explorer',group:'special',field:'Vérification des faits',url:'https://toolbox.google.com/factcheck/explorer/search/',ops:{words:true}},
+    {id:'archive',label:'Internet Archive',group:'special',field:'OSINT et archives',url:'https://archive.org/search?query=',ops:{words:true}},
+    {id:'shodan',label:'Shodan',group:'special',field:'OSINT et services exposés',url:'https://www.shodan.io/search?query=',ops:{words:true}},
+    {id:'datagouv',label:'data.gouv.fr',group:'special',field:'Données publiques',url:'https://www.data.gouv.fr/datasets/search?q=',ops:{words:true}},
+    {id:'openlibrary',label:'Open Library',group:'special',field:'Livres',url:'https://openlibrary.org/search?q=',ops:{words:true}},
+    {id:'myanimelist',label:'MyAnimeList',group:'special',field:'Anime et mangas',url:'https://myanimelist.net/search/all?q=',ops:{words:true}},
+    {id:'steam',label:'Steam',group:'special',field:'Jeux vidéo',url:'https://store.steampowered.com/search/?term=',ops:{words:true}},
+    {id:'musicbrainz',label:'MusicBrainz',group:'special',field:'Musique',url:'https://musicbrainz.org/search?type=artist&query=',ops:{words:true}},
+    {id:'openstreetmap',label:'OpenStreetMap',group:'special',field:'Cartes et lieux',url:'https://www.openstreetmap.org/search?query=',ops:{words:true}}
   ]);
   const engines = ENGINES.map(e => e.id);
   // Simple suggestion par univers : elle ne change jamais le moteur sans clic.
-  const SUGGESTIONS = Object.freeze({health:'pubmed',science:'scholar',space:'arxiv',ai:'github',tech:'github',cyber:'github',history:'wikipedia',culture:'wikipedia',films:'youtube',series:'youtube',anime:'youtube',music:'youtube',learning:'youtube',games:'reddit'});
+  const SUGGESTIONS = Object.freeze({health:'pubmed',science:'scholar',space:'arxiv',ai:'github',tech:'github',cyber:'github',history:'wikipedia',culture:'wikipedia',films:'youtube',series:'youtube',learning:'youtube',manga:'myanimelist',anime:'myanimelist',music:'musicbrainz',games:'steam',books:'openlibrary',news:'bingnews',politics:'factcheck',osint:'archive',economy:'datagouv',environment:'datagouv',travel:'openstreetmap',transport:'openstreetmap'});
   function engineById(id) { return ENGINES.find(e => e.id === id) || ENGINES[0]; }
   function suggestedEngine(topicId) { return Object.prototype.hasOwnProperty.call(SUGGESTIONS,topicId) ? engineById(SUGGESTIONS[topicId]) : null; }
   const filetypes = ['pdf', 'docx', 'xlsx', 'pptx'];
