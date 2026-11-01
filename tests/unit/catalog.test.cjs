@@ -1,7 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const {TOPICS,TOPIC_FAMILIES,DEFAULT,normalize} = require('../catalog-core.js');
-const privacy = require('../privacy-core.js');
+const {TOPICS,TOPIC_FAMILIES,DEFAULT,normalize} = require('../../assets/js/core/catalog-core.js');
+const privacy = require('../../assets/js/core/privacy-core.js');
 const LEGACY_27=['general','manga','anime','series','films','tcg','games','politics','news','ai','cyber','science','tech','history','economy','sports','music','books','travel','health','shopping','culture','environment','space','osint','automotive','learning'];
 
 test('catalog keeps 39 universes and the 27 historical identifiers',()=>{

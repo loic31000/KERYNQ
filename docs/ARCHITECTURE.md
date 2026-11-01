@@ -4,19 +4,31 @@
 
 Application **statique côté navigateur**. Pas de serveur, de base distante ou de fournisseur IA imposé.
 
-## Fichiers principaux
+## Organisation du projet
 
-- `index.html` : structure de la page.
-- `styles.css` : thèmes et mise en page, sans ressource externe.
-- `catalog-core.js` : 39 thèmes, valeurs par défaut et `normalize()`, testables sans navigateur.
-- `source-packs-core.js` : packs facultatifs de sources officielles.
-- `app.js` : logique de l'interface.
-- `search-query-core.js` : générateur de requêtes Web sans dépendances, testé séparément (Google, Brave, DuckDuckGo).
-- `manifest.webmanifest` : manifeste d'installation.
-- `favicon.svg` / `app-icon.svg` : identité SVG.
-- `service-worker.js` : cache des seules ressources same-origin.
-- `privacy-core.js` : validation locale des sauvegardes et des URL HTTPS d’assistants.
-- `tests/check-static.mjs`, `tests/privacy.test.cjs` : contrôles statiques et tests unitaires sans dépendances. `tests/*-browser-smoke.py` : scénarios Chromium via Playwright.
+```text
+index.html              Page de l'application
+manifest.webmanifest    Installation (PWA)
+service-worker.js       Cache hors ligne ; doit rester à la racine pour couvrir tout le site
+assets/
+  css/styles.css        Thèmes et mise en page
+  icons/                Icônes SVG du site
+  js/app.js             Comportement de l'interface
+  js/core/              Logique testable sans navigateur
+    search-query-core.js   Requêtes Google, Brave, DuckDuckGo
+    privacy-core.js        Validation des sauvegardes et des URL
+    catalog-core.js        39 univers, réglages par défaut, normalize()
+    source-packs-core.js   Packs de sources officielles
+tests/
+  check-static.mjs      Contrôles de structure, sans dépendance
+  unit/                 Tests Node
+  browser/              Scénarios Chromium (Playwright)
+docs/                   Architecture, confidentialité, roadmap, contribution, sécurité
+```
+
+Pour modifier : l'apparence dans `assets/css`, le comportement dans `assets/js/app.js`, les univers dans `catalog-core.js`, les sources dans `source-packs-core.js`.
+
+Les scripts restent classiques, sans module ni compilation, pour conserver l'ouverture directe de `index.html`.
 
 ## Flux de recherche Web
 
@@ -48,6 +60,6 @@ Application **statique côté navigateur**. Pas de serveur, de base distante ou 
 
 ## Tests du moteur de requêtes
 
-`node --test tests/search-query.test.mjs` lance les tests unitaires sans dépendances. Le service worker met en cache le compilateur en même temps que l’interface pour conserver la préparation hors ligne. La présence d’un opérateur dans la requête ne garantit pas que le moteur externe le respecte.
+`node --test tests/unit/search-query.test.mjs` lance les tests unitaires sans dépendances. Le service worker met en cache le compilateur en même temps que l’interface pour conserver la préparation hors ligne. La présence d’un opérateur dans la requête ne garantit pas que le moteur externe le respecte.
 
-**Lot 2 :** le service worker inclut `privacy-core.js` dans son cache, aujourd'hui `kerynq-static-v5`. À tester sous HTTPS avant publication.
+**Lot 2 :** le service worker inclut `assets/js/core/privacy-core.js` dans son cache, aujourd'hui `kerynq-static-v5`. À tester sous HTTPS avant publication.

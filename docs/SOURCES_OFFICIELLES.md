@@ -20,4 +20,4 @@ Chaque domaine candidat a été appelé en HTTPS, page d'accueil seulement.
 
 ## Ajouter un pays
 
-Ajouter une entrée dans `COUNTRIES` (`source-packs-core.js`), couvrant explicitement les 39 univers, et le code pays dans `SOURCE_COUNTRIES` (`catalog-core.js`). Les tests refusent un univers manquant. Consigner la vérification ici, avec sa date.
+Ajouter une entrée dans `COUNTRIES` (`assets/js/core/source-packs-core.js`), couvrant explicitement les 39 univers, et le code pays dans `SOURCE_COUNTRIES` (`assets/js/core/catalog-core.js`). Les tests refusent un univers manquant. Consigner la vérification ici, avec sa date.

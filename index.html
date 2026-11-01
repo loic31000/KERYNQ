@@ -6,16 +6,16 @@
 <meta name="color-scheme" content="light dark">
 <meta name="description" content="KERYNQ prépare votre question pour Google, Brave, DuckDuckGo ou un assistant IA. Gratuit, sans compte, rien n'est envoyé sans votre clic.">
 <meta name="theme-color" content="#0b0d12">
-<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="./manifest.webmanifest">
-<link rel="stylesheet" href="./styles.css">
+<link rel="stylesheet" href="./assets/css/styles.css">
 <title>KERYNQ · Préparez de meilleures recherches</title>
 </head>
 <body>
 <a href="#topic" class="skip">Aller directement à la recherche</a>
 <div class="shell">
 <header class="header">
-  <div class="brand"><img src="./favicon.svg" alt="" width="30" height="30"><span class="brand-name">KERYNQ</span></div>
+  <div class="brand"><img src="./assets/icons/favicon.svg" alt="" width="30" height="30"><span class="brand-name">KERYNQ</span></div>
   <div class="header-actions"><button id="fontToggle" class="tool-button" type="button" aria-pressed="false" aria-label="Agrandir les caractères">A+ Texte</button><div class="theme-picker"><button id="themeToggle" class="tool-button" type="button" aria-expanded="false" aria-controls="themeMenu">Thème</button><div id="themeMenu" class="theme-menu" role="group" aria-label="Choisir un thème" hidden></div></div></div>
 </header>
 
@@ -135,11 +135,11 @@
 </div>
 <div id="tipBubble" class="tip-bubble" role="tooltip" hidden></div>
 <div id="status" class="status" role="status" aria-live="polite" aria-atomic="true"></div>
-<script src="./search-query-core.js"></script>
-<script src="./privacy-core.js"></script>
-<script src="./source-packs-core.js"></script>
-<script src="./catalog-core.js"></script>
-<script src="./app.js"></script>
+<script src="./assets/js/core/search-query-core.js"></script>
+<script src="./assets/js/core/privacy-core.js"></script>
+<script src="./assets/js/core/source-packs-core.js"></script>
+<script src="./assets/js/core/catalog-core.js"></script>
+<script src="./assets/js/app.js"></script>
 <script>if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')){window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));}</script>
 </body>
 </html>

@@ -23,10 +23,10 @@ Conserver le coût d'hébergement à 0 euro et le fonctionnement sans serveur, A
 
 ```bash
 node tests/check-static.mjs
-node --test tests/search-query.test.mjs tests/privacy.test.cjs tests/catalog.test.cjs tests/source-packs.test.cjs
-python tests/univers-browser-smoke.py
-python tests/a11y-browser-smoke.py
-python tests/regressions-browser-smoke.py
+node --test tests/unit/search-query.test.mjs tests/unit/privacy.test.cjs tests/unit/catalog.test.cjs tests/unit/source-packs.test.cjs
+python tests/browser/univers-browser-smoke.py
+python tests/browser/a11y-browser-smoke.py
+python tests/browser/regressions-browser-smoke.py
 ```
 
 Les trois scripts Python requièrent Playwright et Chromium, de préférence dans un environnement virtuel hors du dépôt. `KERYNQ_CHROMIUM` permet d'indiquer un autre exécutable Chromium. Tester aussi manuellement les navigateurs concernés avant publication. Pour servir le site en local : `python -m http.server 8000`.

@@ -1,9 +1,9 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const packs = require('../source-packs-core.js');
-const search = require('../search-query-core.js');
-const {TOPICS,normalize,SOURCE_COUNTRIES} = require('../catalog-core.js');
-const privacy = require('../privacy-core.js');
+const packs = require('../../assets/js/core/source-packs-core.js');
+const search = require('../../assets/js/core/search-query-core.js');
+const {TOPICS,normalize,SOURCE_COUNTRIES} = require('../../assets/js/core/catalog-core.js');
+const privacy = require('../../assets/js/core/privacy-core.js');
 
 test('each of the 39 universes is explicitly covered for each country, with no unknown universe',()=>{
  const ids=TOPICS.map(t=>t.id).sort();

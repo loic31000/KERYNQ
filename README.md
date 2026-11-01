@@ -13,7 +13,11 @@ Ouvrir `index.html` dans un navigateur moderne. Écrivez votre question, précis
 - **Sans installation** : ouverture directe de `index.html`.
 - **Hébergement statique** : fichiers utilisables sur GitHub Pages après décision de publication.
 - **Fonctionnement hors ligne** : préparation de requêtes et favoris locaux possibles, mais les moteurs et assistants externes nécessitent Internet. La mise en cache PWA est destinée aux environnements HTTPS/localhost.
-- **Vérifier le code** : `node tests/check-static.mjs` puis `node --test tests/search-query.test.mjs tests/privacy.test.cjs tests/catalog.test.cjs tests/source-packs.test.cjs` (Node.js récent).
+- **Vérifier le code** : `node tests/check-static.mjs` puis `node --test tests/unit/search-query.test.mjs tests/unit/privacy.test.cjs tests/unit/catalog.test.cjs tests/unit/source-packs.test.cjs` (Node.js récent).
+
+## Organisation
+
+`index.html` est la page ; le code et les icônes sont dans `assets/`, les tests dans `tests/`, les documents dans `docs/`. Détail : [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Fonctionnalités
 
@@ -30,12 +34,12 @@ Ouvrir `index.html` dans un navigateur moderne. Écrivez votre question, précis
 
 | Document | À quoi il sert |
 | --- | --- |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | Développement, tests et contributions |
-| [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) | Règles de participation |
-| [SECURITY.md](SECURITY.md) | Signalement de failles et politique de sécurité |
-| [SUPPORT.md](SUPPORT.md) | Aide et limites du support |
+| [CONTRIBUTING.md](docs/CONTRIBUTING.md) | Développement, tests et contributions |
+| [CODE_OF_CONDUCT.md](docs/CODE_OF_CONDUCT.md) | Règles de participation |
+| [SECURITY.md](docs/SECURITY.md) | Signalement de failles et politique de sécurité |
+| [SUPPORT.md](docs/SUPPORT.md) | Aide et limites du support |
 | [LICENSE.md](LICENSE.md) | Statut juridique actuel et décision de licence à venir |
-| [ACCESSIBILITY.md](ACCESSIBILITY.md) | Objectifs et vérifications d'accessibilité |
+| [ACCESSIBILITY.md](docs/ACCESSIBILITY.md) | Objectifs et vérifications d'accessibilité |
 | [CHANGELOG.md](CHANGELOG.md) | Historique des modifications |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Architecture et flux de données |
 | [docs/FOURNISSEURS_IA.md](docs/FOURNISSEURS_IA.md) | Accès multi-IA et confidentialité |
@@ -59,7 +63,7 @@ Les filtres ne garantissent pas la qualité des résultats. Une consigne demanda
 
 39 univers dont 12 nouveaux domaines généralistes, organisés par 8 familles. Santé & Médecine comporte des critères supplémentaires sur la qualité des sources ; aucun thème ne remplace un professionnel. Les filtres thématiques concernent la consigne IA, sauf opérateur Web explicitement indiqué dans l'aperçu.
 
-Vérification des nouveaux univers (Chromium + Playwright Python) : `python tests/univers-browser-smoke.py`.
+Vérification des nouveaux univers (Chromium + Playwright Python) : `python tests/browser/univers-browser-smoke.py`.
 
 ## Nouveaux univers (lot 4B)
 

@@ -10,7 +10,7 @@ KERYNQ est un atelier de recherche personnalisée, non un moteur d'indexation. L
 
 ## Ce qui est déjà fait
 
-- Lots 1 à 3 : compilateur de requêtes séparé (`search-query-core.js`), tests des opérateurs et dates ; contrôles des imports et URL (`privacy-core.js`), mode privé, effacement des données locales ; améliorations de l'accès clavier et du reflow.
+- Lots 1 à 3 : compilateur de requêtes séparé (`assets/js/core/search-query-core.js`), tests des opérateurs et dates ; contrôles des imports et URL (`assets/js/core/privacy-core.js`), mode privé, effacement des données locales ; améliorations de l'accès clavier et du reflow.
 - Lots 4A et 4B : passage de 27 à **39 univers**, répartis en **8 familles**, avec des filtres propres et une compatibilité des identifiants historiques. Les douze nouvelles catégories concernent administration, famille, animaux, logement, droit, finances personnelles, enfance et scolarité, travail et emploi, retraite et autonomie, cuisine et alimentation, maison et jardin, transports et déplacements.
 - Multi-IA, favoris et dossiers, modèles, export/import JSON, thèmes clair/sombre, interface responsive, manifeste PWA et service worker limitant le cache aux ressources de l'application.
 - Documentation existante : README, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY, SUPPORT, ACCESSIBILITY, CHANGELOG, LICENSE et `docs/*`.
@@ -18,20 +18,20 @@ KERYNQ est un atelier de recherche personnalisée, non un moteur d'indexation. L
 
 ## Architecture
 
-- `index.html` (structure), `styles.css`, `catalog-core.js` (catalogue et normalisation), `app.js` (logique UI).
-- `search-query-core.js` : compilation locale de requêtes par moteur.
-- `privacy-core.js` : validation/sanitation des sauvegardes et URL.
-- `manifest.webmanifest`, `service-worker.js`, `app-icon.svg`, `favicon.svg` : installation et cache.
-- `tests/check-static.mjs`, `tests/search-query.test.mjs`, `tests/privacy.test.cjs`, `tests/univers-browser-smoke.py`, `tests/a11y-browser-smoke.py` : tests sans pipeline CI.
+- `index.html` (structure), `assets/css/styles.css`, `assets/js/core/catalog-core.js` (catalogue et normalisation), `assets/js/app.js` (logique UI).
+- `assets/js/core/search-query-core.js` : compilation locale de requêtes par moteur.
+- `assets/js/core/privacy-core.js` : validation/sanitation des sauvegardes et URL.
+- `manifest.webmanifest`, `service-worker.js`, `assets/icons/app-icon.svg`, `assets/icons/favicon.svg` : installation et cache.
+- `tests/check-static.mjs`, `tests/unit/search-query.test.mjs`, `tests/unit/privacy.test.cjs`, `tests/browser/univers-browser-smoke.py`, `tests/browser/a11y-browser-smoke.py` : tests sans pipeline CI.
 - Favoris, préférences et modèles dans le stockage local du navigateur. Ce stockage n'est **pas chiffré**.
 
 ## Vérification de référence (local, pas CI GitHub)
 
 Le 1er novembre 2026, une copie locale du lot 4B a passé :
 - `node tests/check-static.mjs`
-- `node --test tests/search-query.test.mjs tests/privacy.test.cjs` : **17 tests sur 17**.
-- `python tests/univers-browser-smoke.py` : **39 univers, 8 familles**, Chromium 1440, 390 et 320 px.
-- `python tests/a11y-browser-smoke.py` : Chromium 1440, 390 et 320 px.
+- `node --test tests/unit/search-query.test.mjs tests/unit/privacy.test.cjs` : **17 tests sur 17**.
+- `python tests/browser/univers-browser-smoke.py` : **39 univers, 8 familles**, Chromium 1440, 390 et 320 px.
+- `python tests/browser/a11y-browser-smoke.py` : Chromium 1440, 390 et 320 px.
 
 Relancer les tests depuis `main` sur le PC de développement. **Ne pas présenter ces tests comme un audit exhaustif**. Les tests NVDA/VoiceOver/TalkBack, navigateurs Firefox/Safari, zoom fort, PWA installée sous HTTPS et audit XSS/CSP restent à accomplir. Aucun statut CI GitHub concluant n'a été relevé (pas de checks configurés).
 
