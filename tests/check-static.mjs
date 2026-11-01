@@ -27,7 +27,6 @@ for (const [i, script] of scripts.entries()) {
 }
 try { new vm.Script(readFileSync(join(root, 'service-worker.js'), 'utf8')); console.log('OK: Syntaxe service worker'); }
 catch (err) { fail(`Syntaxe service worker: ${err.message}`); }
-if (!process.exitCode) console.log('Tous les contrôles statiques passent.');
 
 // Multi-assistant et documentation
 const assistants = ['chatgpt','claude','gemini','kimi','grok','deepseek','perplexity','mistral','copilot'];
@@ -77,3 +76,5 @@ for (const id of ['childhood','work','retirement','cooking','homegarden','transp
   assert(html.includes(id+':`<svg'), 'Icône SVG lot 4B : '+id);
   assert(html.includes('"'+id+'":"'), 'Famille du thème lot 4B : '+id);
 }
+
+if (!process.exitCode) console.log('Tous les contrôles statiques passent.');
