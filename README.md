@@ -2,38 +2,49 @@
 
 **Explorez. Affinez. Découvrez.**
 
-KERYNQ est une application web de recherche personnalisée, gratuite, sans compte et sans backend. Elle reprend la V5 d'OSINT SEARCH avec son moteur de préparation de requêtes, ses **27 univers**, ses filtres, favoris et modèles.
+KERYNQ est une application web statique pour préparer et lancer des recherches ciblées, organiser ses favoris et composer des consignes structurées. Elle conserve **27 univers de recherche** (culture, TCG, jeux vidéo, IA, cybersécurité, politique, OSINT, etc.) et les filtres de la V5 d'OSINT SEARCH.
 
-> **Projet en développement privé.** Aucun hébergement public activé, et aucune licence open source accordée à ce stade.
+> **Statut : développement privé.** Ce dépôt n'est pas destiné à être publié ou à activer GitHub Pages avant validation. Aucune licence open source n'a été accordée à ce stade.
 
-## Lancer
+## Utilisation
 
-Ouvrir `index.html` dans un navigateur moderne. La recherche s'ouvre dans Google, Brave ou DuckDuckGo, dans un nouvel onglet. L'application n'indexe pas elle-même les résultats Web.
-
-Sur un serveur HTTPS ou localhost, le manifeste et le service worker permettent de mettre en cache l'interface. L'installation PWA doit encore être vérifiée sur les navigateurs ciblés.
+- Ouvrez `index.html` dans un navigateur moderne pour utiliser l'interface localement.
+- Sur HTTPS ou `localhost`, le manifeste et le service worker peuvent permettre une utilisation de l'interface hors ligne. Certains navigateurs peuvent exiger des icônes PNG pour proposer l'installation.
+- Les recherches se lancent dans **Google, Brave ou DuckDuckGo**, dans un nouvel onglet. KERYNQ n'est **pas** un index ni un moteur de classement de résultats indépendant.
+- Les préférences, modèles et favoris sont stockés dans le navigateur local. Sauvegardez-les avec l'export JSON avant de vider les données du navigateur.
 
 ## Fonctionnalités
 
 - Recherche directe et raccourci `Ctrl + K`.
-- Modes essentiel/avancé, 27 univers, filtres et opérateurs par moteur.
-- Séparation explicite des critères Web et des critères réservés aux consignes IA.
-- Favoris enregistrés par dossiers, modèles de recherche personnels.
-- Import/export de profil JSON et de consignes Markdown.
-- SVG, mode clair/sombre, navigation clavier et animations réduites.
+- Modes **simple** et **avancé** et 27 univers de filtres.
+- Indication des critères réellement appliqués à la recherche Web et de ceux réservés à la consigne IA.
+- Modèles de recherche, favoris et dossiers personnalisés.
+- Export de consignes Markdown et import/export de profils JSON.
+- Interface responsive, SVG, clair/sombre, navigation clavier et prise en charge de `prefers-reduced-motion`.
+- Aucun compte, aucune API payante, aucun suivi intégré.
 
 ## Structure
 
-- `index.html` : interface statique autonome.
-- `favicon.svg`, `app-icon.svg` : icônes KERYNQ.
-- `manifest.webmanifest`, `service-worker.js` : métadonnées et cache.
-- `docs/ROADMAP.md` : étapes avant publication.
-- `docs/CONFIDENTIALITE.md` : description du traitement local des données.
-- `tests/check-static.mjs` : vérifications sans dépendances (`node tests/check-static.mjs`).
+| Fichier | Rôle |
+|---|---|
+| `index.html` | Interface et logique autonome |
+| `app-icon.svg`, `favicon.svg` | Identité KERYNQ |
+| `manifest.webmanifest` | Métadonnées d'installation |
+| `service-worker.js` | Cache des ressources internes |
+| `docs/ROADMAP.md` | Travaux et validation avant ouverture |
+| `docs/CONFIDENTIALITE.md` | Données stockées et limites |
+| `tests/check-static.mjs` | Contrôles statiques avec Node.js |
 
-## Confidentialité et limites
+## Tester
 
-Favoris et paramètres sont enregistrés localement dans le navigateur et ne sont pas synchronisés. Ils peuvent contenir des recherches sensibles : exportez-les avec précaution. Cliquer sur Google, Brave ou DuckDuckGo envoie la requête au moteur choisi, selon sa politique de confidentialité. L'application ne réalise pas de vérification factuelle autonome et n'envoie pas automatiquement de consignes à ChatGPT.
+`node tests/check-static.mjs`
+
+Cela vérifie la syntaxe JavaScript intégrée, les fichiers d'application et le manifeste. Les tests visuels et d'accessibilité au clavier doivent également être faits dans des navigateurs réels.
+
+## Confidentialité
+
+Aucun suivi ou backend KERYNQ n'est intégré. Une requête envoyée à un moteur de recherche est soumise à la politique de confidentialité de ce moteur. Voir [docs/CONFIDENTIALITE.md](docs/CONFIDENTIALITE.md).
 
 ## Publication future
 
-Lorsque KERYNQ sera validé, une publication GitHub Pages pourra être préparée. **Ne pas activer Pages ni passer le dépôt en public avant une décision explicite.**
+Lorsque le produit sera validé, la publication sur GitHub Pages pourra être configurée **après** le passage du dépôt en public. Aucune publication ni modification de visibilité n'est faite pour l'instant.

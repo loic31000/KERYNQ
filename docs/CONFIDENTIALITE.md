@@ -1,12 +1,22 @@
-# Confidentialité et limites
+# Confidentialité et protection des données
 
-KERYNQ est un site statique sans serveur applicatif, compte utilisateur ou télémétrie intégrée.
+KERYNQ est un outil statique. Il ne possède ni serveur utilisateur, ni compte, ni télémétrie intégrée. Les données saisies et les configurations sont conservées **dans le navigateur utilisé**, sauf lorsqu'une action explicite ouvre un site externe ou exporte un fichier.
 
-- **Favoris, modèles et préférences :** enregistrés dans le navigateur local ; non chiffrés par KERYNQ. Ne stockez pas d'informations sensibles sur un ordinateur partagé.
-- **Import/export :** les fichiers téléchargés peuvent contenir vos recherches. Vérifiez leur contenu avant tout partage.
-- **Requêtes Web :** le moteur choisi reçoit la requête lorsque vous ouvrez sa page.
-- **Consignes IA :** générées localement ; aucune transmission automatique à ChatGPT.
-- **Hors ligne :** l'interface et la préparation des requêtes peuvent fonctionner hors connexion ; les moteurs externes non.
-- **OSINT :** pas de collecte cachée, de suivi de personnes, d'indexation Web ni de vérification automatique des faits.
+## Données locales
 
-Ce document décrit le comportement attendu ; un audit de sécurité et de confidentialité reste à réaliser avant publication.
+- Recherches en cours, favoris, dossiers, modèles, sources choisies, thèmes et fournisseurs IA.
+- `localStorage` : **non chiffré par KERYNQ**, accessible à quiconque contrôle le même profil navigateur.
+- Supprimer les données de site du navigateur les efface ; les profils sauvegardés peuvent être restaurés manuellement.
+
+## Échanges avec des sites tiers
+
+- **Google, Brave, DuckDuckGo** : la recherche est transmise lorsque vous cliquez pour lancer le moteur.
+- **ChatGPT, Claude, Gemini, Kimi, Grok, DeepSeek, Perplexity, Mistral Vibe, Copilot, autre** : seule leur page est ouverte, sans transmettre la consigne automatiquement. Vous décidez si et quand vous collez le texte.
+- Les sites externes possèdent leurs propres conditions, cookies et traitements de données. KERYNQ ne peut pas les contrôler.
+
+## Précautions
+
+- Ne pas inclure de données personnelles sensibles dans une recherche destinée à un moteur tiers.
+- Vérifier les exports JSON, qui peuvent contenir l'historique des requêtes favorites.
+- Éviter de conserver les recherches privées sur un ordinateur partagé.
+- Ne pas supposer qu'un filtre ou une demande « sources fiables » représente une vérification factuelle accomplie.

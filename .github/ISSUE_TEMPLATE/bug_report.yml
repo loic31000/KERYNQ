@@ -1,0 +1,30 @@
+name: Rapport de bug
+description: Signaler une anomalie reproductible (pas une vulnérabilité de sécurité)
+title: "bug: "
+body:
+  - type: markdown
+    attributes:
+      value: "⚠️ Les vulnérabilités doivent être signalées en privé. Consultez SECURITY.md."
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Décrire le comportement attendu et observé.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Étapes de reproduction
+      description: Évitez les données personnelles dans les captures.
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Navigateur et version
+      placeholder: "Firefox 150 sur Windows 10"
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexte et captures (facultatif)
