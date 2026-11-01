@@ -1,6 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const {TOPICS,TOPIC_FAMILIES,DEFAULT,normalize} = require('../../assets/js/core/catalog-core.js');
+const {ENGINE_IDS,TOPICS,TOPIC_FAMILIES,DEFAULT,normalize} = require('../../assets/js/core/catalog-core.js');
 const privacy = require('../../assets/js/core/privacy-core.js');
 const LEGACY_27=['general','manga','anime','series','films','tcg','games','politics','news','ai','cyber','science','tech','history','economy','sports','music','books','travel','health','shopping','culture','environment','space','osint','automotive','learning'];
 
@@ -36,6 +36,11 @@ test('themes accept historic and new values only',()=>{
 test('a profile saved with the removed source packs stays valid and keeps its sites',()=>{
  const got=normalize({topic:'Ancien',sourceCountry:'FR',includeSites:'ameli.fr, has-sante.fr'});
  assert.equal('sourceCountry' in got,false);assert.equal(got.includeSites,'ameli.fr, has-sante.fr');
+});
+test('every search engine is accepted and matches the compiler',()=>{
+ assert.deepEqual(ENGINE_IDS,require('../../assets/js/core/search-query-core.js').ENGINES.map(e=>e.id));
+ for(const engine of ENGINE_IDS)assert.equal(normalize({engine}).engine,engine);
+ assert.equal(normalize({engine:'constructor'}).engine,'google');
 });
 test('real v3 and v5 profiles import with the real normalize',()=>{
  const v3=privacy.validateImport({app:'KERYNQ',version:3,settings:{topic:'A',category:'manga'}},normalize);

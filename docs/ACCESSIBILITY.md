@@ -13,7 +13,7 @@ KERYNQ vise les **WCAG 2.2 AA**. Le projet ne revendique pas encore une conformi
 
 ## Vérifications
 
-`node tests/check-static.mjs` et `python tests/browser/a11y-browser-smoke.py` (nécessite Python Playwright et Chromium).
+`node tests/check-static.mjs`, `python tests/browser/a11y-browser-smoke.py` et `python tests/browser/cross-browser-smoke.py` (Python Playwright requis). Résultats et limites : `AUDIT_PREPUBLICATION.md`.
 
 ## Restant à valider avant publication
 

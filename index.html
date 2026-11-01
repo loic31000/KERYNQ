@@ -39,7 +39,7 @@
       <span class="control-label" id="destinationLabel">Où chercher ?</span>
       <div class="segmented" role="tablist" aria-labelledby="destinationLabel"><button type="button" role="tab" id="tabWeb" aria-controls="panelWeb" aria-selected="false" tabindex="-1">Sur le Web</button><button type="button" role="tab" id="tabPrompt" aria-controls="panelPrompt" aria-selected="true" tabindex="0">Avec une IA</button></div>
     </div>
-    <div class="engine-picker" id="enginePicker"><label class="control-label" id="engineLabel" for="engineSelect">Moteur</label><select id="engineSelect"><option value="google">Google</option><option value="brave">Brave</option><option value="duck">DuckDuckGo</option></select></div>
+    <div class="engine-picker" id="enginePicker"><label class="control-label" id="engineLabel" for="engineSelect">Moteur</label><select id="engineSelect"></select></div>
     <button id="runSearch" type="button" class="btn primary run-search ico-after ico-external">Rechercher</button>
   </div>
   <p id="searchHint" class="hint"><kbd>Entrée</kbd> pour lancer · <kbd>Maj</kbd> + <kbd>Entrée</kbd> pour aller à la ligne · <kbd>Ctrl</kbd> + <kbd>K</kbd> pour revenir ici</p>
@@ -50,11 +50,11 @@
 <div class="main-stack">
 <section class="panel" aria-labelledby="refineTitle">
   <div class="panel-head"><div><h2 id="refineTitle">Précisez, si besoin</h2><p class="sub">Tout est facultatif. Vous pouvez lancer votre recherche sans rien changer ici.</p></div>
-    <div class="panel-tools"><div class="mode-switch" role="group" aria-label="Quantité d’options affichées"><button type="button" id="modeSimple" aria-pressed="true">Simple</button><button type="button" id="modeAdvanced" aria-pressed="false">Toutes les options</button></div><button id="showAll" class="link-button" type="button" aria-controls="categories" aria-expanded="false">Afficher tous les domaines</button></div></div>
+    <div class="panel-tools"><div class="mode-switch" role="group" aria-label="Quantité d’options affichées"><button type="button" id="modeSimple" aria-pressed="true">Simple</button><button type="button" id="modeAdvanced" aria-pressed="false">Toutes les options</button></div><button id="showAll" class="link-button" type="button" aria-controls="categories" aria-expanded="false">Afficher tous les domaines</button><label class="sr-only" for="familyFilter">Famille de domaines</label><select id="familyFilter" class="text-search"><option value="all">Toutes les familles</option><option value="actus">Actualités &amp; société</option><option value="culture">Culture &amp; loisirs</option><option value="tech">Tech, IA &amp; cyber</option><option value="sciences">Santé &amp; sciences</option><option value="quotidien">Famille &amp; quotidien</option><option value="demarches">Démarches &amp; droit</option><option value="mobilite">Voyages &amp; mobilité</option><option value="formation">Études &amp; travail</option></select></div></div>
 
   <h3 id="category-title">Domaine de votre question</h3>
   <div class="category-grid" id="categories" role="group" aria-labelledby="category-title"></div>
-  <div class="category-tools"><label class="sr-only" for="familyFilter">Famille de domaines</label><select id="familyFilter" class="text-search"><option value="all">Toutes les familles</option><option value="actus">Actualités &amp; société</option><option value="culture">Culture &amp; loisirs</option><option value="tech">Tech, IA &amp; cyber</option><option value="sciences">Santé &amp; sciences</option><option value="quotidien">Famille &amp; quotidien</option><option value="demarches">Démarches &amp; droit</option><option value="mobilite">Voyages &amp; mobilité</option><option value="formation">Études &amp; travail</option></select><label class="sr-only" for="categorySearch">Rechercher un domaine</label><input id="categorySearch" class="text-search advanced-only" type="search" placeholder="Rechercher un domaine"><span class="category-count" id="categoryCount" aria-live="polite"></span></div>
+  <div class="category-tools"><label class="sr-only" for="categorySearch">Rechercher un domaine</label><input id="categorySearch" class="text-search advanced-only" type="search" placeholder="Rechercher un domaine"><span class="category-count" id="categoryCount" aria-live="polite"></span></div>
 
   <div class="block"><h3 id="examplesTitle">Besoin d’une idée ?</h3><div id="examples" class="example-row" role="group" aria-labelledby="examplesTitle"></div></div>
 
@@ -106,10 +106,11 @@
   <section id="panelWeb" class="preview-panel" role="tabpanel" aria-labelledby="tabWeb" tabindex="-1" hidden>
     <p class="sub">Voici ce qui sera envoyé au moteur quand vous cliquerez.</p>
     <span class="control-label" id="queryLabel">Recherche préparée</span><output id="queryPreview" class="preview-mono" aria-labelledby="queryLabel" aria-live="polite">Saisissez une question pour commencer.</output>
-    <div class="go-search" role="group" aria-label="Ouvrir la recherche"><button type="button" class="btn ico-after ico-external" data-engine="google">Google</button><button type="button" class="btn ico-after ico-external" data-engine="brave">Brave</button><button type="button" class="btn ico-after ico-external" data-engine="duck">DuckDuckGo</button></div>
+    <div id="engineSuggest" class="engine-suggest" hidden><span id="engineSuggestText"></span><button type="button" class="btn" id="useSuggestedEngine">Utiliser</button></div>
+    <details class="details engine-other"><summary>Ouvrir sur un autre moteur</summary><div class="go-search" id="engineButtons" role="group" aria-label="Ouvrir la recherche"></div></details>
     <button type="button" class="btn full" id="copyQuery">Copier la recherche</button>
     <div id="queryCompatibility" class="query-compatibility" aria-live="polite"></div>
-    <details class="details engine-table-wrap"><summary>Que transmet KERYNQ à chaque moteur ?</summary><table class="engine-table"><caption class="sr-only">Filtres transmis par KERYNQ selon le moteur</caption><thead><tr><th scope="col">Filtre</th><th scope="col" data-engine-col="google">Google</th><th scope="col" data-engine-col="brave">Brave</th><th scope="col" data-engine-col="duck">Duck&shy;DuckGo</th></tr></thead><tbody id="engineTable"></tbody></table><p class="note">« Transmis » signifie que le filtre figure dans la recherche envoyée. Le moteur peut l’ignorer ou l’interpréter à sa façon.</p></details>
+    <details class="details engine-table-wrap"><summary>Que transmet KERYNQ à chaque moteur ?</summary><div class="engine-scroll" tabindex="0" role="group" aria-label="Tableau des filtres, défilable"><table class="engine-table"><caption class="sr-only">Filtres transmis par KERYNQ selon le moteur</caption><thead><tr id="engineTableHead"></tr></thead><tbody id="engineTable"></tbody></table></div><p class="note">« Transmis » signifie que le filtre figure dans la recherche envoyée. Le moteur peut l’ignorer ou l’interpréter à sa façon.</p></details>
   </section>
 </aside>
 </main>

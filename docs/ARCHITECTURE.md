@@ -15,7 +15,7 @@ assets/
   icons/                Icônes SVG du site
   js/app.js             Comportement de l'interface
   js/core/              Logique testable sans navigateur
-    search-query-core.js   Requêtes Google, Brave, DuckDuckGo
+    search-query-core.js   Liste des moteurs et requêtes
     privacy-core.js        Validation des sauvegardes et des URL
     catalog-core.js        39 univers, réglages par défaut, normalize()
 tests/
@@ -33,7 +33,7 @@ Les scripts restent classiques, sans module ni compilation, pour conserver l'ouv
 
 1. Saisie d'un sujet, moteur, univers, filtres et exclusions.
 2. Génération locale d'une requête compatible avec le moteur choisi.
-3. Ouverture **déclenchée par l'utilisateur** vers Google, Brave ou DuckDuckGo.
+3. Ouverture **déclenchée par l'utilisateur** vers le moteur choisi, jamais vers plusieurs.
 4. Les résultats sont affichés par le moteur externe, jamais ingérés par KERYNQ.
 
 ## Flux de recherche IA

@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url);
-const {capabilities,compile,domains,dates,siteReport}=require('../../assets/js/core/search-query-core.js');
+const {ENGINES,suggestedEngine,capabilities,compile,domains,dates,siteReport}=require('../../assets/js/core/search-query-core.js');
 const base={topic:'Démarches logement',includeWords:'',excludeWords:'',includeSites:'',excludeSites:'',period:'all',language:'all',region:'',filetype:''};
 const build=(params={},engine='google')=>compile({...base,...params},engine,new Date(2026,10,1));
 
@@ -18,3 +18,6 @@ test('langue et région seulement Brave',()=>{const params={language:'fr',region
 test('sans sujet, la requête est vide',()=>assert.equal(build({topic:''},'google').query,''));
 test('les sites ignorés sont signalés',()=>{const eleven=Array.from({length:11},(_,i)=>'s'+i+'.fr').join(',');assert.deepEqual(siteReport(eleven).overflow,['s10.fr']);assert.equal(siteReport(eleven).valid.length,10);assert.deepEqual(siteReport('a.fr b.fr, école.fr, ameli.fr').invalid,['a.fr b.fr','école.fr']);assert.deepEqual(siteReport('https://www.ameli.fr/x ; ameli.fr'),{valid:['ameli.fr'],invalid:[],overflow:[]});assert.deepEqual(domains('ameli.fr, bad host'),['ameli.fr'])});
 test('le tableau des moteurs reflète le compilateur',()=>{const got=Object.fromEntries(capabilities().map(f=>[f.id,[f.engines.google,f.engines.brave,f.engines.duck]]));assert.deepEqual(got,{words:[true,true,true],exclude:[true,true,true],site:[true,true,true],sites:[true,true,false],excludeSite:[true,true,true],filetype:[true,true,true],period:[true,false,false],language:[false,true,false],region:[false,true,false]})});
+test('les moteurs spécialisés ne reçoivent aucun opérateur supposé',()=>{const q=compile({topic:'x',includeWords:'mot exact',excludeWords:'autre',includeSites:'a.fr',excludeSites:'b.fr',filetype:'pdf',language:'fr',region:'France',period:'custom',dateFrom:'2026-01-01',dateTo:'2026-01-31'},'pubmed');assert.equal(q.query,'x "mot exact"');assert.ok(q.prompt.some(x=>/Site ciblé.*PubMed/.test(x)));assert.ok(q.prompt.some(x=>/Exclusions.*PubMed/.test(x)))});
+test('tous les moteurs sont en HTTPS, sans doublon, et les suggestions existent',()=>{assert.equal(ENGINES.length,23);assert.equal(new Set(ENGINES.map(e=>e.id)).size,23);for(const e of ENGINES){assert.equal(new URL(e.url).protocol,'https:');assert.ok(/[=/]$/.test(e.url));if(e.group==='special')assert.ok(e.field)}assert.equal(suggestedEngine('health').id,'pubmed');for(const [topic,id] of [['osint','archive'],['news','bingnews'],['politics','factcheck'],['games','steam']])assert.equal(suggestedEngine(topic).id,id);assert.equal(suggestedEngine('constructor'),null);assert.equal(suggestedEngine('general'),null)});
+test('compile sans moteur connu retombe sur Google',()=>assert.equal(compile({topic:'x',includeSites:'a.fr'},'inconnu').engine,'google'));

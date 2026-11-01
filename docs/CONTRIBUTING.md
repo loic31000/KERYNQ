@@ -8,14 +8,14 @@ Merci de votre intérêt. **Les contributions externes ne sont pas encore ouvert
 - Conserver le choix de l'IA et du moteur de recherche, sans enfermement fournisseur.
 - Ne jamais envoyer automatiquement une consigne à un tiers ou inclure des données personnelles dans une URL d'assistant.
 - Séparer filtres Web réellement appliqués et critères réservés aux consignes IA.
-- Conserver les 27 univers, l'accessibilité clavier et le fonctionnement mobile.
+- Conserver les 39 univers, l'accessibilité clavier et le fonctionnement mobile.
 - Ne pas introduire de secrets, d'identifiants ou de traçage publicitaire.
 
 ## Démarrage local
 
 1. Cloner le dépôt avec `git clone` (une fois l'accès accordé).
 2. Ouvrir `index.html` dans un navigateur.
-3. Lancer `node tests/check-static.mjs` ; aucun paquet npm n'est nécessaire pour ce contrôle.
+3. Lancer `node tests/check-static.mjs` et les autres contrôles listés dans `CLAUDE.md` ; aucun paquet npm n'est nécessaire.
 4. Tester manuellement les parcours utilisateur dans Chrome/Brave et Firefox, à 320 px et 200 % de zoom.
 5. Pour tester PWA et cache hors ligne, servir le dossier sur `http://localhost` ou HTTPS et recharger la page.
 

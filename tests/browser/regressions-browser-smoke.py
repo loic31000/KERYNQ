@@ -140,6 +140,9 @@ with sync_playwright() as p:
         assert show['y']+show['height']<=grid['y'],(width,show,grid)
         mode=page.locator('.panel-tools .mode-switch').bounding_box()
         assert show['x']>=mode['x']+mode['width'] or show['y']>=mode['y']+mode['height'],(width,show,mode)
+        family=page.locator('.panel-tools #familyFilter').bounding_box()
+        assert family['y']+family['height']<=grid['y'],(width,family,grid)
+        if width>600:assert family['x']>=show['x']+show['width'] and abs(family['y']-show['y'])<=12,(family,show)
         tools=page.locator('.panel-tools').bounding_box()
         assert abs(mode['x']-grid['x'])<=2,(width,mode,grid)
         assert page.locator('#showAll').inner_text()=='Afficher tous les domaines'
@@ -150,14 +153,32 @@ with sync_playwright() as p:
         ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'previewTab':'web','engine':'brave'}})
         page.evaluate("document.querySelectorAll('details').forEach(d=>d.open=true)")
         assert page.locator('#engineTable tr').count()==9
-        assert page.locator('th.cap-current').inner_text()=='Brave'
+        assert page.locator('thead th.cap-current').inner_text()=='Brave'
         page.locator('#engineSelect').select_option('duck')
-        assert 'Duck' in page.locator('th.cap-current').inner_text()
+        assert 'Duck' in page.locator('thead th.cap-current').inner_text()
         assert page.locator('#engineTable tr:nth-child(4) td.cap-current').inner_text()=='Non'
         dim=page.evaluate('({a:document.documentElement.scrollWidth,b:document.documentElement.clientWidth})')
         assert dim['a']<=dim['b']+2,(width,dim)
-        box=page.locator('.engine-table').bounding_box();panel=page.locator('#resultPreview').bounding_box()
+        box=page.locator('.engine-scroll').bounding_box();panel=page.locator('#resultPreview').bounding_box()
         assert box['x']+box['width']<=panel['x']+panel['width'],(width,box,panel)
+        assert not errors,errors;ctx.close()
+        # Moteurs spécialisés : suggestion sans bascule automatique, requête limitée, bonne adresse.
+        ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'previewTab':'web','category':'health','topic':'Migraine','includeSites':'ameli.fr','engine':'google'}})
+        assert page.locator('#engineSelect').input_value()=='google'
+        assert 'PubMed' in page.locator('#engineSuggestText').inner_text()
+        assert 'site:ameli.fr' in page.locator('#queryPreview').text_content()
+        page.locator('#useSuggestedEngine').click()
+        assert page.locator('#engineSelect').input_value()=='pubmed' and page.locator('#engineSuggest').is_hidden()
+        assert page.locator('#queryPreview').text_content()=='Migraine'
+        assert 'Site ciblé' in page.locator('#queryCompatibility').inner_text()
+        assert page.locator('#runSearch').inner_text().startswith('Rechercher sur PubMed')
+        requests=[]
+        ctx.on('request',lambda q:requests.append(q.url))
+        with ctx.expect_page():page.locator('#runSearch').click()
+        page.wait_for_timeout(200)
+        assert any(u.startswith('https://pubmed.ncbi.nlm.nih.gov/?term=Migraine') for u in requests),requests
+        assert page.locator('#engineButtons .btn').count()==23
+        assert page.evaluate('document.documentElement.scrollWidth-document.documentElement.clientWidth')<=2
         assert not errors,errors;ctx.close()
         # Un fournisseur importé ne peut pas viser une propriété héritée.
         ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'aiProvider':'constructor'}})

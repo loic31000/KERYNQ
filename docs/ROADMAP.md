@@ -16,7 +16,7 @@
 - [x] Lot 2 : garde-fous de schéma JSON, mode privé, effacement local, validation des URL personnalisées, tests unitaires.
 - [ ] Revue de sécurité indépendante avant publication : CSP et premier audit livrés, voir `AUDIT_PREPUBLICATION.md`.
 - [ ] Tester l'installation PWA sous HTTPS et cache hors ligne ; vérifier icônes requises.
-- [ ] Analyser la compatibilité réelle des opérateurs par moteur et documenter les limites.
+- [ ] Analyser la compatibilité réelle des opérateurs par moteur : ce que KERYNQ transmet est documenté (`MOTEURS.md`), le respect par chaque moteur reste à contrôler.
 - [ ] Choisir la politique de suivi d'incidents et activer les rapports de vulnérabilités privés **après publication**, si souhaité.
 - [ ] Définir nom de domaine, mentions légales et politique de confidentialité publique.
 - [ ] Ne changer la visibilité et ne mettre GitHub Pages en ligne qu'avec accord explicite.
@@ -56,7 +56,8 @@ Aucun nouvel univers ajouté dans ce lot ; les 12 catégories du rapport V6 ont 
 
 ## Plus tard : moteurs de recherche supplémentaires
 
-- [ ] Étudier Startpage, Qwant, Ecosia, Bing, Mojeek et SearXNG, en vérifiant les URL officielles et les opérateurs supportés avant chaque intégration.
+- [x] Bing, Qwant et Startpage intégrés, avec des moteurs spécialisés : voir `MOTEURS.md`.
+- [ ] Ecosia, Mojeek et SearXNG : adresse à confirmer manuellement ; opérateurs réels à contrôler.
 - [ ] Garder les moteurs facultatifs : pas de clés API, pas de serveur, pas d'envoi automatique des requêtes à plusieurs moteurs.
 - [ ] Différencier clairement les capacités de chaque moteur dans le compilateur de requêtes.
 

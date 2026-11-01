@@ -21,14 +21,14 @@ Ouvrir `index.html` dans un navigateur moderne. Écrivez votre question, précis
 
 ## Fonctionnalités
 
-- Recherche directe, `Ctrl + K`, modes essentiel et avancé.
+- Recherche directe, `Ctrl + K`, affichage simple ou toutes les options, bulles d'aide.
 - 39 univers et leurs filtres contextuels, modèles et recherches favorites par dossier.
-- Requêtes dédiées à Google, Brave et DuckDuckGo, avec indication des limites des opérateurs.
+- 23 moteurs généraux et spécialisés (dont OSINT, journalisme, science, code, culture), avec suggestion par domaine et tableau des filtres transmis. Voir [docs/MOTEURS.md](docs/MOTEURS.md).
 - Export et import validé de profils JSON ; export des consignes Markdown.
 - **Mode privé temporaire** : pas de sauvegarde des nouvelles recherches, effacement de la recherche courante déjà enregistrée à l’activation et disparition de la session privée à la fermeture/recharge. Les favoris existants ne sont pas supprimés.
 - **Effacer mes données locales** : suppression confirmée des préférences, favoris et modèles stockés par KERYNQ (ne supprime pas les fichiers déjà exportés).
 - **Assistants IA au choix** : ChatGPT, Claude, Gemini, Kimi, Grok, DeepSeek, Perplexity, Mistral Vibe, Copilot, autre URL HTTPS. Aucun compte ni API de fournisseur n'est connecté à KERYNQ.
-- Icônes SVG, clair/sombre, texte agrandi, adaptations mobiles et animation réduite.
+- Icônes SVG, six thèmes (Nuit, Clair, Pro, Cyber, Girly, Aurore), texte agrandi, adaptations mobiles et animation réduite.
 
 ## Documentation
 
@@ -45,6 +45,7 @@ Ouvrir `index.html` dans un navigateur moderne. Écrivez votre question, précis
 | [docs/FOURNISSEURS_IA.md](docs/FOURNISSEURS_IA.md) | Accès multi-IA et confidentialité |
 | [docs/CONFIDENTIALITE.md](docs/CONFIDENTIALITE.md) | Stockage et partage des données |
 | [docs/AUDIT_PREPUBLICATION.md](docs/AUDIT_PREPUBLICATION.md) | Résultats et limites de l'audit |
+| [docs/MOTEURS.md](docs/MOTEURS.md) | Moteurs disponibles, vérification et limites |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | Priorités et vérifications avant publication |
 | [CLAUDE.md](CLAUDE.md) | Instructions de travail pour Claude Code |
 | [docs/HANDOFF_CLAUDE_CODE.md](docs/HANDOFF_CLAUDE_CODE.md) | Passation et chantiers restants |
