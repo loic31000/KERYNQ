@@ -9,7 +9,29 @@
   if (global) global.KerynqSearch = api;
 })(typeof globalThis === 'object' ? globalThis : this, function () {
   'use strict';
-  const engines = ['google', 'brave', 'duck'];
+  // words : mots inclus. exclude : mots exclus. site, sites, excludeSite, filetype, period, lang, loc : opérateurs transmis.
+  // Un moteur spécialisé ne reçoit que le sujet et les mots : sa syntaxe propre n'est pas supposée.
+  const OPEN_WEB = {words:true,exclude:true,site:true,excludeSite:true};
+  const ENGINES = Object.freeze([
+    {id:'google',label:'Google',group:'general',url:'https://www.google.com/search?q=',ops:{...OPEN_WEB,sites:true,filetype:true,period:true}},
+    {id:'brave',label:'Brave',group:'general',url:'https://search.brave.com/search?q=',ops:{...OPEN_WEB,sites:true,filetype:true,lang:true,loc:true}},
+    {id:'duck',label:'DuckDuckGo',group:'general',url:'https://duckduckgo.com/?q=',ops:{...OPEN_WEB,filetype:true}},
+    {id:'bing',label:'Bing',group:'general',url:'https://www.bing.com/search?q=',ops:{...OPEN_WEB,sites:true,filetype:true}},
+    {id:'qwant',label:'Qwant',group:'general',url:'https://www.qwant.com/?q=',ops:{...OPEN_WEB}},
+    {id:'startpage',label:'Startpage',group:'general',url:'https://www.startpage.com/do/search?query=',ops:{...OPEN_WEB}},
+    {id:'scholar',label:'Google Scholar',group:'special',field:'Articles scientifiques',url:'https://scholar.google.com/scholar?q=',ops:{words:true,exclude:true}},
+    {id:'pubmed',label:'PubMed',group:'special',field:'Santé et médecine',url:'https://pubmed.ncbi.nlm.nih.gov/?term=',ops:{words:true}},
+    {id:'arxiv',label:'arXiv',group:'special',field:'Prépublications scientifiques',url:'https://arxiv.org/search/?searchtype=all&query=',ops:{words:true}},
+    {id:'youtube',label:'YouTube',group:'special',field:'Vidéo',url:'https://www.youtube.com/results?search_query=',ops:{words:true}},
+    {id:'wikipedia',label:'Wikipédia',group:'special',field:'Encyclopédie',url:'https://fr.wikipedia.org/w/index.php?search=',ops:{words:true}},
+    {id:'github',label:'GitHub',group:'special',field:'Code',url:'https://github.com/search?q=',ops:{words:true}},
+    {id:'reddit',label:'Reddit',group:'special',field:'Communautés',url:'https://www.reddit.com/search/?q=',ops:{words:true}}
+  ]);
+  const engines = ENGINES.map(e => e.id);
+  // Simple suggestion par univers : elle ne change jamais le moteur sans clic.
+  const SUGGESTIONS = Object.freeze({health:'pubmed',science:'scholar',space:'arxiv',ai:'github',tech:'github',cyber:'github',history:'wikipedia',culture:'wikipedia',films:'youtube',series:'youtube',anime:'youtube',music:'youtube',learning:'youtube',games:'reddit'});
+  function engineById(id) { return ENGINES.find(e => e.id === id) || ENGINES[0]; }
+  function suggestedEngine(topicId) { return Object.prototype.hasOwnProperty.call(SUGGESTIONS,topicId) ? engineById(SUGGESTIONS[topicId]) : null; }
   const filetypes = ['pdf', 'docx', 'xlsx', 'pptx'];
   const countryMap = {
     'france':'fr','japon':'jp','japan':'jp','allemagne':'de','germany':'de',
@@ -67,41 +89,42 @@
   function regionCountry(value){return countryMap[String(value||'').trim().toLowerCase()]||''}
   function compile(state, engine='google', now=new Date()) {
     const provider=engines.includes(engine)?engine:'google';
+    const info=engineById(provider),ops=info.ops;
     const topic=String(state.topic||'').trim();
     const web=topic?['Sujet principal']:[];
     const prompt=[];
     const parts=topic?[topic]:[];
     const add=(flag,label)=>{if(flag)web.push(label)};
     const incl=tokens(state.includeWords).map(quote).filter(Boolean);
-    if(incl.length){parts.push(...incl);add(true,'Mots inclus')}
+    if(incl.length){if(ops.words){parts.push(...incl);add(true,'Mots inclus')}else prompt.push('Mots inclus (non transmis à '+info.label+')')}
     const excl=tokens(state.excludeWords).map(x=>quote(x.replace(/^-+/,''))).filter(Boolean);
-    if(excl.length){parts.push(...excl.map(x=>'-'+x));add(true,'Exclusions')}
+    if(excl.length){if(ops.exclude){parts.push(...excl.map(x=>'-'+x));add(true,'Exclusions')}else prompt.push('Exclusions (non transmises à '+info.label+')')}
     const sites=domains(state.includeSites);
-    if(sites.length===1){parts.push('site:'+sites[0]);add(true,'Site ciblé')}
+    if(sites.length===1){if(ops.site){parts.push('site:'+sites[0]);add(true,'Site ciblé')}else prompt.push('Site ciblé (non transmis à '+info.label+')')}
     else if(sites.length>1){
-      if(provider==='duck')prompt.push('Sites multiples (non transmis à DuckDuckGo)');
+      if(!ops.sites)prompt.push('Sites multiples (non transmis à '+info.label+')');
       else {parts.push('('+sites.map(x=>'site:'+x).join(' OR ')+')');add(true,'Sites ciblés (OR, résultat non garanti)')}
     }
     const excluded=domains(state.excludeSites);
-    if(excluded.length){parts.push(...excluded.map(x=>'-site:'+x));add(true,'Sites exclus')}
-    if(filetypes.includes(state.filetype)){parts.push('filetype:'+state.filetype);add(true,'Type de fichier')}
+    if(excluded.length){if(ops.excludeSite){parts.push(...excluded.map(x=>'-site:'+x));add(true,'Sites exclus')}else prompt.push('Sites exclus (non transmis à '+info.label+')')}
+    if(filetypes.includes(state.filetype)){if(ops.filetype){parts.push('filetype:'+state.filetype);add(true,'Type de fichier')}else prompt.push('Type de fichier (non transmis à '+info.label+')')}
     const date=dates(state,now);
     if(state.period && state.period!=='all'){
       if(date.invalid)prompt.push('Période (dates invalides : corriger la sélection)');
-      else if(provider==='google'){
+      else if(ops.period){
         if(date.from)parts.push('after:'+date.from);
         if(date.to)parts.push('before:'+nextDay(date.to));
         add(Boolean(date.from||date.to),'Période');
       }else prompt.push('Période (non transmise au moteur choisi)');
     }
     if(['fr','en'].includes(state.language)){
-      if(provider==='brave'){parts.push('lang:'+state.language);add(true,'Langue des pages')}
+      if(ops.lang){parts.push('lang:'+state.language);add(true,'Langue des pages')}
       else prompt.push('Langue des pages (consigne IA seulement)');
     }else if(state.language && state.language!=='all')prompt.push('Langues préférées');
     const region=String(state.region||'').trim();
     if(region){
       const country=regionCountry(region);
-      if(provider==='brave'&&country){parts.push('loc:'+country);add(true,'Région')}
+      if(ops.loc&&country){parts.push('loc:'+country);add(true,'Région')}
       else prompt.push('Région (consigne IA seulement)');
     }
     return {query:parts.join(' ').replace(/\s+/g,' ').trim(),web,prompt,engine:provider,invalidDates:date.invalid};
@@ -121,5 +144,5 @@
   function capabilities() {
     return features.map(([id,label,settings,marker]) => ({id,label,engines:Object.fromEntries(engines.map(engine => [engine,compile({topic:'x',...settings},engine).query.includes(marker)]))}));
   }
-  return Object.freeze({capabilities,compile,tokens,domains,siteReport,dates,validISO,regionCountry});
+  return Object.freeze({ENGINES,engineById,suggestedEngine,capabilities,compile,tokens,domains,siteReport,dates,validISO,regionCountry});
 });

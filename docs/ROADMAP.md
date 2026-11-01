@@ -56,7 +56,8 @@ Aucun nouvel univers ajouté dans ce lot ; les 12 catégories du rapport V6 ont 
 
 ## Plus tard : moteurs de recherche supplémentaires
 
-- [ ] Étudier Startpage, Qwant, Ecosia, Bing, Mojeek et SearXNG, en vérifiant les URL officielles et les opérateurs supportés avant chaque intégration.
+- [x] Bing, Qwant et Startpage intégrés, avec des moteurs spécialisés : voir `MOTEURS.md`.
+- [ ] Ecosia, Mojeek et SearXNG : adresse à confirmer manuellement ; opérateurs réels à contrôler.
 - [ ] Garder les moteurs facultatifs : pas de clés API, pas de serveur, pas d'envoi automatique des requêtes à plusieurs moteurs.
 - [ ] Différencier clairement les capacités de chaque moteur dans le compilateur de requêtes.
 

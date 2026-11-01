@@ -267,3 +267,8 @@ h1{background:linear-gradient(100deg,var(--text) 35%,var(--accent) 75%,var(--acc
 .cap-yes{color:var(--ok);font-weight:650}
 .cap-no{color:var(--muted)}
 .cap-current{background:var(--accent-soft)}
+.engine-scroll{overflow-x:auto;max-width:100%}
+.engine-table{min-width:980px}
+.engine-table th:first-child{position:sticky;left:0;background:var(--surface);width:112px}
+.engine-suggest{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:12px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--radius-sm);font-size:.8125rem}
+.engine-other{margin-top:12px}

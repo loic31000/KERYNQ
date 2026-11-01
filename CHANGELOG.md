@@ -11,6 +11,7 @@ Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent 
 
 ## Non publié (branche de préparation)
 
+- Nouveaux moteurs : Bing, Qwant, Startpage, Google Scholar, PubMed, arXiv, YouTube, Wikipédia, GitHub et Reddit, avec suggestion par domaine sans bascule automatique. Voir `docs/MOTEURS.md`.
 - Tableau des filtres transmis à chaque moteur, généré depuis le compilateur de requêtes (issue #4).
 - Audit avant publication : CSP stricte, `no-referrer`, plus aucun script en ligne, test multi-navigateurs et compte rendu `docs/AUDIT_PREPUBLICATION.md`. Cache PWA `kerynq-static-v10`.
 - Retrait des packs de sources officielles à la demande du propriétaire. Le réglage enregistré est ignoré ; les sites déjà ajoutés restent dans « Sites à privilégier ». Cache PWA `kerynq-static-v9`.
