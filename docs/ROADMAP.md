@@ -3,12 +3,12 @@
 ## Base intégrée
 
 - [x] Identité KERYNQ et recherche navigateur.
-- [x] 39 univers après lot 4A, modes simple/avancé, filtres par moteur.
+- [x] 39 univers après les lots 4A et 4B, modes simple/avancé, filtres par moteur.
 - [x] Favoris et modèles locaux, import/export.
 - [x] Sélecteur de neuf IA + URL HTTPS personnalisée, sans transfert automatique.
 - [x] Documentation sécurité, contribution, licence provisoire, accessibilité.
 
-## Avant fusion et ouverture du dépôt
+## Avant ouverture du dépôt
 
 - [ ] Décider d'une licence (MIT, Apache-2.0, GPL ou autre) et vérifier toutes les ressources (visuel du globe, icônes, polices).
 - [ ] Tester le projet dans Brave, Chrome, Firefox, Safari si disponible, mobile 320/390 px et zoom 200 %.
@@ -40,7 +40,7 @@
 - [x] Tests unitaires Google, Brave et DuckDuckGo et cas limites des dates/domaines.
 - [x] Message de compatibilité indiquant les opérateurs inclus mais non garantis par les moteurs.
 - [x] Phase 1, lot 2 : validation et transaction d’import JSON, mode privé, URLs IA et suppression complète des données locales.
-- [ ] Phase 1, lot 3 : navigation clavier et tests lecteurs d’écran.
+- [x] Phase 1, lot 3 : navigation clavier et contrôles Chromium. Audit complet avec lecteurs d'écran toujours à faire.
 
 Aucun nouvel univers ajouté dans ce lot ; les 12 catégories du rapport V6 restent à concevoir sans surcharger l’accueil.
 
@@ -60,7 +60,7 @@ Aucun nouvel univers ajouté dans ce lot ; les 12 catégories du rapport V6 rest
 - [ ] Garder les moteurs facultatifs : pas de clés API, pas de serveur, pas d'envoi automatique des requêtes à plusieurs moteurs.
 - [ ] Différencier clairement les capacités de chaque moteur dans le compilateur de requêtes.
 
-Le nombre d'univers reste à 27 durant la fiabilisation ; les nouveaux thèmes généraux arrivent après validation de la phase 1.
+Les 39 univers sont maintenant intégrés. Les packs de sources officielles facultatifs constituent la prochaine évolution fonctionnelle.
 
 ## Phase 1, lot 3 : accessibilité clavier
 
