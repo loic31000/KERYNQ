@@ -138,6 +138,8 @@ with sync_playwright() as p:
         ctx,page,errors=open_app(browser,width)
         show=page.locator('.panel-tools #showAll').bounding_box();grid=page.locator('#categories').bounding_box()
         assert show['y']+show['height']<=grid['y'],(width,show,grid)
+        mode=page.locator('.panel-tools .mode-switch').bounding_box()
+        assert show['x']>=mode['x']+mode['width'] or show['y']>=mode['y']+mode['height'],(width,show,mode)
         tools=page.locator('.panel-tools').bounding_box()
         assert abs(tools['x']+tools['width']-(grid['x']+grid['width']))<=2,(width,tools,grid)
         assert page.locator('#showAll').inner_text()=='Afficher tous les domaines'
