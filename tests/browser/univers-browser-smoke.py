@@ -36,7 +36,7 @@ with sync_playwright() as p:
    assert name in page.locator('#specificTitle').text_content()
    assert page.locator('#specialFilters input[type=checkbox]').count()>=7
    page.locator('#topic').fill('Question de test')
-   prompt=page.locator('#promptPreview').input_value()
+   prompt=page.locator('#promptPreview').text_content()
    assert name in prompt and 'Question de test' in prompt
    if id in ('law','administration','personalfinance','housing'):
     assert 'juridiction' in prompt.lower()
@@ -52,7 +52,7 @@ with sync_playwright() as p:
   page.locator('#categorySearch').fill('santé')
   health=page.locator('[data-category-id="health"]');assert health.count()==1;health.click()
   assert 'Médecine' in page.locator('#specificTitle').text_content()
-  assert 'diagnostic' in page.locator('#promptPreview').input_value().lower()
+  assert 'diagnostic' in page.locator('#promptPreview').text_content().lower()
   assert not errors,(width,errors)
   dim=page.evaluate('({a:document.documentElement.scrollWidth,b:document.documentElement.clientWidth})')
   assert dim['a']<=dim['b']+2,(width,dim)

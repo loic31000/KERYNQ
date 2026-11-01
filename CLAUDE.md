@@ -4,7 +4,7 @@ Lire ce fichier en premier, puis [docs/HANDOFF_CLAUDE_CODE.md](docs/HANDOFF_CLAU
 
 ## Objectif et périmètre
 
-KERYNQ est une application de recherche **100 % statique, gratuite et utilisable sur GitHub Pages**. Elle prépare des requêtes pour 29 moteurs Web (voir `docs/MOTEURS.md`) et des consignes à copier manuellement dans plusieurs assistants IA. **Elle n'indexe pas les résultats**. Il y a 39 univers et 8 familles, des favoris locaux, des modèles, un mode privé et une importation/exportation JSON.
+KERYNQ est une application de recherche **100 % statique, gratuite et utilisable sur GitHub Pages**. Elle prépare des requêtes pour 28 moteurs Web (voir `docs/MOTEURS.md`) et des consignes à copier manuellement dans plusieurs assistants IA. **Elle n'indexe pas les résultats**. Il y a 39 univers et 8 familles, des favoris locaux, des modèles, un mode privé et une importation/exportation JSON.
 
 Conserver le coût d'hébergement à 0 euro et le fonctionnement sans serveur, API IA obligatoire, compte, tracking, clé secrète ou service tiers payant.
 

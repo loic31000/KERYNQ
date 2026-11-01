@@ -22,7 +22,6 @@ Adresse appelée avec un mot de test. « Titre » : le titre de la page correspo
 | GitHub | Code | Titre | Mots |
 | Reddit | Communautés | Titre | Mots |
 | Bing Actualités | Journalisme et actualité | Titre | Mots |
-| Fact Check Explorer | Vérification des faits | Titre | Mots |
 | Internet Archive | OSINT et archives | Titre | Mots |
 | Shodan | OSINT et services exposés | Titre | Mots |
 | data.gouv.fr | Données publiques | Titre | Mots |

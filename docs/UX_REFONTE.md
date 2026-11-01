@@ -66,7 +66,7 @@ Thèmes : voir [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md).
 
 ## Équivalence
 
-`tests/browser/golden-queries.json` contient les sorties de `main` : 4 jeux de réglages, 23 moteurs et les consignes IA. `tests/browser/golden-themes.json` fige les couleurs, polices et rayons des 11 thèmes historiques. `regressions-browser-smoke.py` compare les deux à la version actuelle.
+`tests/browser/golden-queries.json` contient les sorties de `main` : 4 jeux de réglages, les 22 moteurs de l'époque encore présents et les consignes IA. `tests/browser/golden-themes.json` fige les couleurs, polices et rayons des 11 thèmes historiques. `regressions-browser-smoke.py` compare les deux à la version actuelle.
 
 ## Contrôles
 
@@ -82,3 +82,7 @@ Non vérifié : avis d'utilisateurs réels, Safari et Chrome réels, téléphone
 - La police du thème KERYNQ (Bahnschrift) dépend de l'appareil, avec une police de repli.
 - Retirer un critère personnel le décoche sans le supprimer.
 - Un profil enregistré avec un nom de thème inconnu passe au thème KERYNQ.
+
+## Aperçu du texte pour l'IA
+
+Le texte est affiché en HTML structuré : titres de section à la couleur d'accent du thème, libellés en gras, listes espacées, quelques mots-clés renforcés. La chaîne de `buildPrompt()` reste la seule source : la copie et l'export la reprennent telle quelle, sans HTML. `KerynqPrompt.structure` découpe les lignes, et l'affichage passe uniquement par `textContent` et des nœuds de texte. Les marques Markdown restent visibles en discret. Seuls les titres de section connus sont stylés comme des titres : la question de l'utilisateur reste du texte simple.

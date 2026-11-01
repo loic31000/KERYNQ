@@ -23,7 +23,7 @@ Ouvrir `index.html` dans un navigateur moderne. Écrivez votre question, précis
 
 - Recherche directe, `Ctrl + K`, affichage simple ou toutes les options, bulles d'aide.
 - 39 univers et leurs filtres contextuels, modèles et recherches favorites par dossier.
-- 29 moteurs généraux, d'images et spécialisés (dont OSINT, journalisme, science, code, culture), avec suggestion par domaine et détail des filtres transmis. Voir [docs/MOTEURS.md](docs/MOTEURS.md).
+- 28 moteurs généraux, d'images et spécialisés (dont OSINT, journalisme, science, code, culture), avec suggestion par domaine et détail des filtres transmis. Voir [docs/MOTEURS.md](docs/MOTEURS.md).
 - Consignes IA adaptées : méthode propre au domaine, format court ou détaillé, note selon l'assistant.
 - Exemple au premier lancement et section d'aide.
 - Export et import validé de profils JSON ; export des consignes Markdown.

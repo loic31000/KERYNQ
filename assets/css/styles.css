@@ -228,8 +228,17 @@ h1 label{display:inline;margin:0;font:inherit;letter-spacing:inherit;text-transf
 @keyframes appear{from{opacity:0;transform:translateY(6px)}}
 .preview-panel{margin-top:var(--s3)}
 .preview-panel:focus{outline:none}
-.preview-field,.preview-mono{display:block;width:100%;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--bg);padding:var(--s3);font:var(--t-sm)/1.55 ui-monospace,"Cascadia Code",Consolas,monospace}
-.preview-field{height:340px;resize:vertical}
+.prompt-preview,.preview-mono{display:block;width:100%;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--bg);padding:var(--s3);font:var(--t-sm)/1.55 ui-monospace,"Cascadia Code",Consolas,monospace}
+.prompt-preview{height:400px;resize:vertical;overflow:auto;background:var(--surface);font:var(--t-md)/1.55 inherit;font-family:inherit;white-space:pre-wrap}
+.prompt-preview h3,.prompt-preview h4,.prompt-preview ul,.prompt-preview p{margin:0;padding:0}
+.pl-title{font-family:var(--display);font-size:var(--t-lg);font-weight:720;color:var(--accent)}
+.pl-section{font-size:var(--t-md);font-weight:700;color:var(--accent)}
+.pl-marker{color:var(--muted);font-weight:400}
+.pl-blank{height:var(--s3)}
+.pl-list{list-style:none;display:grid;gap:var(--s1)}
+.pl-item{padding-left:1.1em;text-indent:-1.1em}
+.pl-label,.pl-key{font-weight:650}
+.pl-user{font-weight:600;font-size:1.05em}
 .preview-mono{white-space:pre-wrap;font-size:var(--t-md)}
 .preview-actions,.go-search,.action-row{display:flex;gap:var(--s2);flex-wrap:wrap;margin-top:var(--s3)}
 .go-search{margin:0}
@@ -324,6 +333,6 @@ body[data-destination="web"] .only-ai{display:none}
   .prepared{padding:var(--s4)}
   .preview-actions .btn{flex:1 1 auto}
   .sheet-head,.sheet-body{padding-inline:var(--s4)}
-  .preview-field{height:280px}
+  .prompt-preview{height:320px}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}

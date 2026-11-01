@@ -6,7 +6,7 @@
 
 Nom : **KERYNQ** (« Explorez. Affinez. Découvrez. »). Dépôt : https://github.com/loic31000/KERYNQ. L'application reste **privée, en prépublication**, et a vocation à fonctionner gratuitement sur GitHub Pages **uniquement quand le propriétaire choisira de la rendre publique**.
 
-KERYNQ est un atelier de recherche personnalisée, non un moteur d'indexation. Le traitement local construit des requêtes vers 29 moteurs (`MOTEURS.md`), et des consignes destinées à ChatGPT, Claude, Gemini, Kimi, Grok, DeepSeek, Perplexity, Mistral Vibe, Copilot et une URL HTTPS personnalisée. Les assistants ne reçoivent **aucune consigne automatiquement**. La recherche et les pages IA s'ouvrent à l'initiative de l'utilisateur.
+KERYNQ est un atelier de recherche personnalisée, non un moteur d'indexation. Le traitement local construit des requêtes vers 28 moteurs (`MOTEURS.md`), et des consignes destinées à ChatGPT, Claude, Gemini, Kimi, Grok, DeepSeek, Perplexity, Mistral Vibe, Copilot et une URL HTTPS personnalisée. Les assistants ne reçoivent **aucune consigne automatiquement**. La recherche et les pages IA s'ouvrent à l'initiative de l'utilisateur.
 
 ## État à jour
 
@@ -61,7 +61,7 @@ Relancer les tests depuis `main` sur le PC de développement. **Ne pas présente
 - Si la taille du HTML rend les changements risqués, modulariser **sans briser l'ouverture directe du fichier** ou fournir une version autonome de distribution.
 
 ### Priorité 3 : recherches et IA avancées, après stabilisation
-- Moteurs : 29 intégrés. À confirmer manuellement : ceux listés comme écartés dans `MOTEURS.md`.
+- Moteurs : 28 intégrés. À confirmer manuellement : ceux listés comme écartés dans `MOTEURS.md`.
 - Ajouter des favoris de fournisseurs, modèles de consignes, et une comparaison **manuelle** multi-moteurs ou multi-IA si cela reste utile.
 - Préserver un fonctionnement local, sans télémétrie ni transmission masquée de requêtes sensibles.
 

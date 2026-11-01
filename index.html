@@ -75,7 +75,7 @@
   <div id="resultEmpty" class="result-empty"><p class="sub">Pour essayer :</p><div id="examples" class="example-row" role="group" aria-label="Exemples de questions"></div></div>
   <div class="when-filled result-head"><h2 id="resultTitle">Votre recherche est prête</h2><p class="sub" id="resultDestination"></p></div>
   <section id="panelPrompt" class="preview-panel" role="tabpanel" aria-labelledby="tabPrompt" tabindex="-1"><div class="when-filled">
-    <label for="promptPreview" class="sr-only">Texte à coller dans l’assistant</label><textarea id="promptPreview" class="preview-field" readonly spellcheck="false"></textarea>
+    <div id="promptPreview" class="prompt-preview" role="region" aria-label="Texte à coller dans l’assistant" tabindex="0"></div>
     <div class="preview-actions"><button type="button" class="btn" id="copyPrompt">Copier le texte</button><button type="button" class="btn" id="downloadPrompt">Enregistrer en fichier</button></div>
     <p id="aiTransferNote" class="note">KERYNQ n’envoie rien à l’assistant. Vous seul collez le texte, et le service applique ses propres conditions.</p>
   </div></section>

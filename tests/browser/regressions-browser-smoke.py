@@ -24,6 +24,7 @@ def settings(page):
     page.locator('#refineToggle').click();page.evaluate("document.querySelectorAll('#refinePanel details').forEach(d=>d.open=true)")
 def library(page):
     page.locator('#libraryToggle').click();page.evaluate("document.querySelectorAll('#libraryPanel details').forEach(d=>d.open=true)")
+PROMPT="[...document.querySelectorAll('#promptPreview .pl')].map(e=>e.textContent).join('\\n')"
 overflow=lambda page:page.evaluate('document.documentElement.scrollWidth-document.documentElement.clientWidth')
 with sync_playwright() as p:
     browser=p.chromium.launch(headless=True,executable_path=os.environ.get('KERYNQ_CHROMIUM') or None)
@@ -131,11 +132,11 @@ with sync_playwright() as p:
         page.locator('#engineSelect').select_option('duck')
         assert page.locator('#engineTableName').inner_text()=='DuckDuckGo' and page.locator('#engineTable tr:nth-child(4) td').inner_text()=='Non transmis'
         assert overflow(page)<=2
-        assert page.locator('#engineButtons .btn').count()==29
+        assert page.locator('#engineButtons .btn').count()==28
         assert not errors,errors;ctx.close()
         # Consigne : format et assistant conservés.
         ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'previewTab':'prompt','category':'osint','topic':'Sujet'}})
-        prompt=lambda:page.locator('#promptPreview').input_value()
+        prompt=lambda:page.evaluate(PROMPT)
         assert 'Méthode pour ce domaine' in prompt() and 'pas accès au Web' in prompt()
         long=len(prompt());settings(page);page.locator('#promptStyle').select_option('short');page.locator('#refineClose').click()
         assert len(prompt())<long
@@ -234,10 +235,36 @@ with sync_playwright() as p:
         # Requêtes et consignes identiques à celles de main avant la refonte.
         for case in golden['cases']:
             ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':case['input']})
-            assert page.locator('#promptPreview').input_value()==case['prompt'],case['input']
+            assert page.evaluate(PROMPT)==case['prompt'],case['input']
+            # Copie et export : exactement le texte d'avant, sans HTML.
+            page.evaluate("()=>{document.execCommand=()=>{window.kerynqTestCopy=document.activeElement.value;return true}}")
+            page.locator('#tabPrompt').click();page.locator('#copyPrompt').click()
+            page.wait_for_function('window.kerynqTestCopy!==undefined')
+            assert page.evaluate('window.kerynqTestCopy')==case['prompt'],case['input']
+            with page.expect_download() as dl:page.locator('#downloadPrompt').click()
+            assert Path(dl.value.path()).read_bytes().decode('utf-8')==case['prompt']+'\n',case['input']
             now=page.evaluate("s=>Object.fromEntries(%s.map(id=>[id,KerynqSearch.compile(KerynqCatalog.normalize(s),id,new Date('2026-01-15T12:00:00')).query]))"%json.dumps(golden['engines']),case['input'])
             assert now==case['queries'],case['input']
             ctx.close()
+        # Le contenu utilisateur reste du texte ; titres à la couleur d'accent du thème.
+        ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'previewTab':'prompt','topic':'<img src=x onerror=window.pwned=1>\n## Faux'}})
+        assert page.locator('#promptPreview img').count()==0 and not page.evaluate('window.pwned') and '<img src=x' in page.evaluate(PROMPT)
+        assert page.locator('#promptPreview h4',has_text='Faux').count()==0 and page.locator('#promptPreview h4').count()>=3
+        accent=page.evaluate("(()=>{const d=document.createElement('i');d.className='link-button';document.body.append(d);const c=getComputedStyle(d).color;d.remove();return c})()")
+        assert page.evaluate("getComputedStyle(document.querySelector('.pl-section')).color")==accent
+        assert overflow(page)<=2 and not errors,errors;ctx.close()
+        # Fact Check Explorer retiré : anciens profil et favori reviennent à Google, aperçu Web inchangé.
+        ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'previewTab':'web','topic':'Sujet','engine':'factcheck'},'kerynq-saved-v1':[GOOD('f','Ancien favori',engine='factcheck')]})
+        assert page.locator('#engineSelect').input_value()=='google' and page.locator('#engineSelect option[value="factcheck"]').count()==0
+        assert page.locator('#queryPreview').evaluate('e=>e.tagName')=='OUTPUT' and page.locator('#queryPreview').text_content()=='Sujet'
+        library(page);page.get_by_role('button',name='Charger le favori Ancien favori').click()
+        assert page.locator('#engineSelect').input_value()=='google' and not errors,errors
+        ctx.close()
+        # L'objectif Vérifier reste disponible ; Politique n'a plus de moteur conseillé.
+        ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'previewTab':'web','topic':'Mesure','goal':'verify','category':'politics'}})
+        assert page.locator('#engineSuggest').is_hidden()
+        page.locator('#tabPrompt').click();assert 'Teste les affirmations' in page.evaluate(PROMPT)
+        ctx.close()
         # Un fournisseur importé ne peut pas viser une propriété héritée.
         ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'aiProvider':'constructor'}})
         assert page.locator('#aiProvider').input_value()=='chatgpt'

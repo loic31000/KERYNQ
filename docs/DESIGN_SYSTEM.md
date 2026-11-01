@@ -23,6 +23,7 @@ Tout passe par des jetons CSS dans `assets/css/styles.css`. Un thème change des
 - **Sections repliables** : `details.fold`.
 - **Critères** : `.chip`, avec `.chip-off` pour un critère ignoré par le moteur.
 - **Messages** : `.status`, annoncé par `role="status"`.
+- **Aperçu du texte pour l'IA** : `.prompt-preview`, couleurs `--accent`, `--text` et `--muted` du thème actif.
 - **Icônes** : SVG uniquement, teintés par `currentColor`.
 - **Mouvement** : moins de 200 ms, coupé par `prefers-reduced-motion`.
 
