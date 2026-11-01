@@ -14,7 +14,7 @@ Les packs sont **facultatifs** : sans pays choisi, rien n'apparaît ; sans clic 
 Chaque domaine candidat a été appelé en HTTPS, page d'accueil seulement.
 
 - **`page`** : page lue, organisme confirmé par son titre.
-- **`gouv`** : domaine en `.gouv.fr`, réservé à l'État, mais lecture automatisée bloquée ou page sans titre exploitable. À contrôler dans un navigateur : `legifrance.gouv.fr`, `sante.gouv.fr`, `economie.gouv.fr`, `education.gouv.fr`, `travail-emploi.gouv.fr`, `enseignementsup-recherche.gouv.fr`, `ants.gouv.fr`, `cyber.gouv.fr`.
+- **`owner`** : domaine en `.gouv.fr` bloquant la lecture automatisée ou sans titre exploitable, confirmé par le propriétaire dans son navigateur le 1er novembre 2026 : `legifrance.gouv.fr`, `sante.gouv.fr`, `economie.gouv.fr`, `education.gouv.fr`, `travail-emploi.gouv.fr`, `enseignementsup-recherche.gouv.fr`, `ants.gouv.fr`, `cyber.gouv.fr`.
 
 **Écartés de ce lot**, car non confirmés et hors `.gouv.fr` : `banque-france.fr`, `abe-infoservice.fr`, `ademe.fr`, `urssaf.fr`, `gallica.bnf.fr`, `courdecassation.fr`, `vie-publique.fr`. Ils pourront revenir après un contrôle manuel.
 

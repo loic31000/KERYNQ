@@ -9,18 +9,18 @@
 })(typeof globalThis !== 'undefined' ? globalThis : this, function (search) {
   'use strict';
   const MAX_SITES = 10;
-  // page : page d'accueil lue et organisme confirmé. gouv : domaine .gouv.fr réservé à l'État, page bloquant la lecture automatisée.
+  // page : page d'accueil lue et organisme confirmé. owner : domaine .gouv.fr bloquant la lecture automatisée, confirmé par le propriétaire dans un navigateur.
   const VERIFIED = '2026-11-01';
   const FR_DOMAINS = {
-    'service-public.gouv.fr':['Service Public','page'],'legifrance.gouv.fr':['Légifrance','gouv'],'justice.gouv.fr':['Ministère de la Justice','page'],'conseil-etat.fr':['Conseil d’État','page'],
-    'ameli.fr':['Assurance Maladie','page'],'has-sante.fr':['Haute Autorité de Santé','page'],'sante.gouv.fr':['Ministère de la Santé','gouv'],'ansm.sante.fr':['ANSM, sécurité du médicament','page'],'santepubliquefrance.fr':['Santé publique France','page'],
-    'impots.gouv.fr':['Impôts','page'],'economie.gouv.fr':['Ministère de l’Économie','gouv'],'anil.org':['ANIL, information logement','page'],'france-renov.gouv.fr':['France Rénov’','page'],'ecologie.gouv.fr':['Ministère de la Transition écologique','page'],
-    'caf.fr':['Caisses d’Allocations familiales','page'],'education.gouv.fr':['Ministère de l’Éducation nationale','gouv'],'onisep.fr':['Onisep, orientation','page'],'travail-emploi.gouv.fr':['Ministère du Travail','gouv'],'francetravail.fr':['France Travail','page'],
+    'service-public.gouv.fr':['Service Public','page'],'legifrance.gouv.fr':['Légifrance','owner'],'justice.gouv.fr':['Ministère de la Justice','page'],'conseil-etat.fr':['Conseil d’État','page'],
+    'ameli.fr':['Assurance Maladie','page'],'has-sante.fr':['Haute Autorité de Santé','page'],'sante.gouv.fr':['Ministère de la Santé','owner'],'ansm.sante.fr':['ANSM, sécurité du médicament','page'],'santepubliquefrance.fr':['Santé publique France','page'],
+    'impots.gouv.fr':['Impôts','page'],'economie.gouv.fr':['Ministère de l’Économie','owner'],'anil.org':['ANIL, information logement','page'],'france-renov.gouv.fr':['France Rénov’','page'],'ecologie.gouv.fr':['Ministère de la Transition écologique','page'],
+    'caf.fr':['Caisses d’Allocations familiales','page'],'education.gouv.fr':['Ministère de l’Éducation nationale','owner'],'onisep.fr':['Onisep, orientation','page'],'travail-emploi.gouv.fr':['Ministère du Travail','owner'],'francetravail.fr':['France Travail','page'],
     'info-retraite.fr':['Info Retraite','page'],'lassuranceretraite.fr':['L’Assurance retraite','page'],'pour-les-personnes-agees.gouv.fr':['Portail des personnes âgées','page'],'agriculture.gouv.fr':['Ministère de l’Agriculture','page'],'anses.fr':['Anses, sécurité sanitaire','page'],
-    'rappel.conso.gouv.fr':['Rappel Conso','page'],'signal.conso.gouv.fr':['SignalConso','page'],'securite-routiere.gouv.fr':['Sécurité routière','page'],'ants.gouv.fr':['France Titres (ANTS)','gouv'],'diplomatie.gouv.fr':['France Diplomatie','page'],
+    'rappel.conso.gouv.fr':['Rappel Conso','page'],'signal.conso.gouv.fr':['SignalConso','page'],'securite-routiere.gouv.fr':['Sécurité routière','page'],'ants.gouv.fr':['France Titres (ANTS)','owner'],'diplomatie.gouv.fr':['France Diplomatie','page'],
     'insee.fr':['Insee','page'],'assemblee-nationale.fr':['Assemblée nationale','page'],'senat.fr':['Sénat','page'],'meteofrance.com':['Météo-France','page'],'cnrs.fr':['CNRS','page'],'inserm.fr':['Inserm','page'],'cnes.fr':['CNES','page'],
-    'cyber.gouv.fr':['ANSSI','gouv'],'cybermalveillance.gouv.fr':['Cybermalveillance.gouv.fr','page'],'cnil.fr':['CNIL','page'],'bnf.fr':['Bibliothèque nationale de France','page'],'culture.gouv.fr':['Ministère de la Culture','page'],'cnc.fr':['CNC, cinéma et image animée','page'],
-    'enseignementsup-recherche.gouv.fr':['Ministère de l’Enseignement supérieur','gouv'],'moncompteformation.gouv.fr':['Mon Compte Formation','page'],'inc-conso.fr':['Institut national de la consommation','page'],'sports.gouv.fr':['Ministère des Sports','page'],'arcep.fr':['Arcep','page'],'data.gouv.fr':['data.gouv.fr','page']
+    'cyber.gouv.fr':['ANSSI','owner'],'cybermalveillance.gouv.fr':['Cybermalveillance.gouv.fr','page'],'cnil.fr':['CNIL','page'],'bnf.fr':['Bibliothèque nationale de France','page'],'culture.gouv.fr':['Ministère de la Culture','page'],'cnc.fr':['CNC, cinéma et image animée','page'],
+    'enseignementsup-recherche.gouv.fr':['Ministère de l’Enseignement supérieur','owner'],'moncompteformation.gouv.fr':['Mon Compte Formation','page'],'inc-conso.fr':['Institut national de la consommation','page'],'sports.gouv.fr':['Ministère des Sports','page'],'arcep.fr':['Arcep','page'],'data.gouv.fr':['data.gouv.fr','page']
   };
   // Chaque univers est explicitement couvert : une liste vide signifie « aucune source officielle pertinente ».
   const FR_UNIVERSES = {

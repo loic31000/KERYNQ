@@ -11,6 +11,7 @@ Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent 
 
 ## Non publié (branche de préparation)
 
+- Bouton d'affichage des domaines déplacé en haut, à côté du choix d'options ; 8 domaines `.gouv.fr` confirmés par le propriétaire.
 - Projet rangé : code et icônes dans `assets/`, tests dans `tests/unit` et `tests/browser`, documents communautaires dans `docs/`. Comportement inchangé ; cache PWA `kerynq-static-v8`.
 - Packs de sources officielles facultatifs pour la France, couvrant explicitement les 39 univers : ajout au clic, retrait ciblé, limite de 10 sites et avertissement DuckDuckGo. Voir `docs/SOURCES_OFFICIELLES.md`.
 - Six thèmes interchangeables (Nuit, Clair, Pro, Cyber, Girly, Aurore), effets visuels désactivés si l'animation réduite est demandée, bulles d'aide au survol, au focus et au toucher.

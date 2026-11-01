@@ -134,6 +134,14 @@ with sync_playwright() as p:
             ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'theme':stored}})
             assert page.evaluate('document.documentElement.dataset.theme')==expected
             ctx.close()
+        # Le bouton d'affichage des domaines est en haut, à côté du choix d'options.
+        ctx,page,errors=open_app(browser,width)
+        show=page.locator('.panel-tools #showAll').bounding_box();grid=page.locator('#categories').bounding_box()
+        assert show['y']+show['height']<=grid['y'],(width,show,grid)
+        assert page.locator('#showAll').inner_text()=='Afficher tous les domaines'
+        page.locator('#showAll').click()
+        assert page.locator('#showAll').inner_text()=='Afficher moins de domaines' and page.locator('.category-btn').count()==39
+        ctx.close()
         # Packs : rien sans pays ni clic ; ajout, retrait et limite respectent la saisie manuelle.
         ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'topic':'Sujet','category':'health','includeSites':'monsite.fr','engine':'google'}})
         assert page.locator('#sourceCountry').input_value()==''

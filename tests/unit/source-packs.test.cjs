@@ -17,11 +17,11 @@ test('pack domains are valid, unique, documented and kept short',()=>{
   const pack=packs.packFor('FR',t.id);
   assert.ok(pack.length<=5,t.id);
   assert.equal(new Set(pack.map(x=>x.domain)).size,pack.length);
-  for(const d of pack){assert.deepEqual(search.domains(d.domain),[d.domain]);assert.ok(d.label);assert.ok(['page','gouv'].includes(d.check));assert.equal(d.verified,packs.VERIFIED)}
+  for(const d of pack){assert.deepEqual(search.domains(d.domain),[d.domain]);assert.ok(d.label);assert.ok(['page','owner'].includes(d.check));assert.equal(d.verified,packs.VERIFIED)}
  }
 });
-test('unverifiable domains are limited to .gouv.fr',()=>{
- for(const t of TOPICS)for(const d of packs.packFor('FR',t.id))if(d.check==='gouv')assert.match(d.domain,/\.gouv\.fr$/);
+test('owner-confirmed domains are limited to .gouv.fr',()=>{
+ for(const t of TOPICS)for(const d of packs.packFor('FR',t.id))if(d.check==='owner')assert.match(d.domain,/\.gouv\.fr$/);
 });
 test('no country or an unknown country yields no pack',()=>{
  for(const country of ['','XX','constructor'])assert.deepEqual(packs.packFor(country,'health'),[]);
