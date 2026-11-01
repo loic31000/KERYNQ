@@ -8,7 +8,7 @@ const require = createRequire(import.meta.url);
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const page = readFileSync(join(root, 'index.html'), 'utf8');
-const sourceFiles = ['catalog-core.js', 'app.js'];
+const sourceFiles = ['source-packs-core.js', 'catalog-core.js', 'app.js'];
 // Les contrôles portent sur la page et sur le code qu'elle charge.
 const html = [page, ...sourceFiles.map(file => readFileSync(join(root, file), 'utf8'))].join('\n');
 const manifest = JSON.parse(readFileSync(join(root, 'manifest.webmanifest'), 'utf8'));

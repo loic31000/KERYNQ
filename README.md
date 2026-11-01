@@ -13,7 +13,7 @@ Ouvrir `index.html` dans un navigateur moderne. Écrivez votre question, précis
 - **Sans installation** : ouverture directe de `index.html`.
 - **Hébergement statique** : fichiers utilisables sur GitHub Pages après décision de publication.
 - **Fonctionnement hors ligne** : préparation de requêtes et favoris locaux possibles, mais les moteurs et assistants externes nécessitent Internet. La mise en cache PWA est destinée aux environnements HTTPS/localhost.
-- **Vérifier le code** : `node tests/check-static.mjs` puis `node --test tests/search-query.test.mjs tests/privacy.test.cjs tests/catalog.test.cjs` (Node.js récent).
+- **Vérifier le code** : `node tests/check-static.mjs` puis `node --test tests/search-query.test.mjs tests/privacy.test.cjs tests/catalog.test.cjs tests/source-packs.test.cjs` (Node.js récent).
 
 ## Fonctionnalités
 
@@ -40,6 +40,7 @@ Ouvrir `index.html` dans un navigateur moderne. Écrivez votre question, précis
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Architecture et flux de données |
 | [docs/FOURNISSEURS_IA.md](docs/FOURNISSEURS_IA.md) | Accès multi-IA et confidentialité |
 | [docs/CONFIDENTIALITE.md](docs/CONFIDENTIALITE.md) | Stockage et partage des données |
+| [docs/SOURCES_OFFICIELLES.md](docs/SOURCES_OFFICIELLES.md) | Packs de sources, vérification et limites |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | Priorités et vérifications avant publication |
 | [CLAUDE.md](CLAUDE.md) | Instructions de travail pour Claude Code |
 | [docs/HANDOFF_CLAUDE_CODE.md](docs/HANDOFF_CLAUDE_CODE.md) | Passation et chantiers restants |

@@ -23,7 +23,7 @@ Conserver le coût d'hébergement à 0 euro et le fonctionnement sans serveur, A
 
 ```bash
 node tests/check-static.mjs
-node --test tests/search-query.test.mjs tests/privacy.test.cjs tests/catalog.test.cjs
+node --test tests/search-query.test.mjs tests/privacy.test.cjs tests/catalog.test.cjs tests/source-packs.test.cjs
 python tests/univers-browser-smoke.py
 python tests/a11y-browser-smoke.py
 python tests/regressions-browser-smoke.py

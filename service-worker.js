@@ -1,6 +1,6 @@
 // Offline cache for local UI assets only. Does not cache external search results.
-const CACHE = 'kerynq-static-v6';
-const CORE = ['./', './index.html', './search-query-core.js', './privacy-core.js', './catalog-core.js', './app.js', './styles.css', './app-icon.svg', './favicon.svg', './manifest.webmanifest'];
+const CACHE = 'kerynq-static-v7';
+const CORE = ['./', './index.html', './search-query-core.js', './privacy-core.js', './source-packs-core.js', './catalog-core.js', './app.js', './styles.css', './app-icon.svg', './favicon.svg', './manifest.webmanifest'];
 self.addEventListener('install', event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(CORE)).then(() => self.skipWaiting())));
 self.addEventListener('activate', event => event.waitUntil(caches.keys().then(names => Promise.all(names.filter(name => name.startsWith('kerynq-static-') && name !== CACHE).map(name => caches.delete(name)))).then(() => self.clients.claim())));
 self.addEventListener('fetch', event => {
