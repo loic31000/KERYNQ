@@ -32,3 +32,13 @@
 8. **Multi-IA** : favoris de fournisseurs, liens desktop documentés, comparaison manuelle facultative de réponses.
 
 **Priorité :** sécurité et transparence des filtres avant les nouvelles animations.
+
+## Phase 1, lot 1 : compilateur Web
+
+- [x] Extraction du compilateur Web dans `search-query-core.js` (compatible ouverture `file://`).
+- [x] Tests unitaires Google, Brave et DuckDuckGo et cas limites des dates/domaines.
+- [x] Message de compatibilité indiquant les opérateurs inclus mais non garantis par les moteurs.
+- [ ] Phase 1, lot 2 : audit import JSON, URLs externes et données sensibles.
+- [ ] Phase 1, lot 3 : navigation clavier et tests lecteurs d’écran.
+
+Aucun nouvel univers ajouté dans ce lot ; les 12 catégories du rapport V6 restent à concevoir sans surcharger l’accueil.

@@ -384,6 +384,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 <footer class="footer"><p>KERYNQ · Version 5.0. Application web statique, utilisable sur ordinateur et mobile.</p><p><a href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener noreferrer">Accessibilité Web</a> · <a href="https://support.google.com/websearch/answer/2466433?hl=fr" target="_blank" rel="noopener noreferrer">Aide Google Search</a> · <a href="https://search.brave.com/help/operators" target="_blank" rel="noopener noreferrer">Opérateurs Brave</a></p></footer>
 </div>
 <div id="status" class="status" role="status" aria-live="polite"></div>
+<script src="./search-query-core.js"></script>
 <script>
 (()=>{'use strict';
 const TOPICS=[
@@ -467,44 +468,24 @@ function makeCheckbox(id,title,desc,checked,onChange,card=false){const lab=node(
 function renderSpecial(){initOptions(state.category);const root=$('specialFilters');root.replaceChildren();const t=topicById(state.category);$('specificTitle').textContent='Filtres : '+t.name;$('specificHelp').textContent='Ces options changent selon le thème sélectionné.';for(const [id,label,desc] of t.options){root.append(makeCheckbox('special-'+id,label,desc,state.options[t.id].includes(id),checked=>{if(checked&&!state.options[t.id].includes(id))state.options[t.id].push(id);else if(!checked)state.options[t.id]=state.options[t.id].filter(x=>x!==id);save();renderResult()},true))}renderCustom();renderQuickFilters()}
 function renderCustom(){const root=$('customList');root.replaceChildren();for(const entry of state.custom[state.category]||[]){const pill=node('span','custom-pill');const chk=document.createElement('input');chk.type='checkbox';chk.checked=entry.checked;chk.setAttribute('aria-label','Activer '+entry.label);chk.addEventListener('change',()=>{entry.checked=chk.checked;save();renderResult()});const lbl=node('span','',entry.label);const rm=node('button','','×');rm.type='button';rm.setAttribute('aria-label','Supprimer le critère '+entry.label);rm.addEventListener('click',()=>{state.custom[state.category]=state.custom[state.category].filter(x=>x.id!==entry.id);save();renderCustom();renderResult()});pill.append(chk,lbl,rm);root.append(pill)}}
 function renderPillGroup(rootId,source,field){const root=$(rootId);root.replaceChildren();for(const [id,label] of source){const lab=makeCheckbox(field+'-'+id,label,'',state[field].includes(id),checked=>{state[field]=checked?[...new Set([...state[field],id])]:state[field].filter(x=>x!==id);save();renderResult()});root.append(lab)}}
-function mapSelected(items,ids){return items.filter(x=>ids.includes(x[0])).map(x=>x[1])}function tokens(text){return text.split(/[,;\n]+/).map(x=>x.trim()).filter(Boolean).slice(0,22)}
-function domains(text){const valid=[];for(let s of tokens(text)){s=s.replace(/^https?:\/\//i,'').replace(/^www\./i,'').replace(/\/.*$/,'').toLowerCase().trim();if(/^(?:[a-z0-9-]+\.)+[a-z]{2,}$/i.test(s)&&!valid.includes(s))valid.push(s)}return valid.slice(0,10)}
+function mapSelected(items,ids){return items.filter(x=>ids.includes(x[0])).map(x=>x[1])}function tokens(text){return KerynqSearch.tokens(text)}
+function domains(text){return KerynqSearch.domains(text)}
 function iso(d){return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}function dateRange(){if(state.period==='all')return ['',''];if(state.period==='custom')return [state.dateFrom,state.dateTo];const n={day:1,week:7,month:30,year:365}[state.period];if(!n)return ['',''];const now=new Date(),from=new Date(now);from.setDate(from.getDate()-n);return[iso(from),iso(now)]}function dayAfter(d){if(!/^\d{4}-\d{2}-\d{2}$/.test(d))return d;const x=new Date(d+'T12:00:00');x.setDate(x.getDate()+1);return iso(x)}
 function categorySelected(){const t=topicById(state.category);return t.options.filter(x=>state.options[t.id]?.includes(x[0])).map(x=>x[1]).concat((state.custom[t.id]||[]).filter(x=>x.checked).map(x=>x.label))}
 function buildPrompt(){const t=topicById(state.category);const s=['# Recherche structurée','','## Sujet',state.topic.trim()||'[Indiquez ici votre question ou votre sujet]','','## Thème',t.name,'','## Objectif',GOAL_TEXT[state.goal]||GOAL_TEXT.explore];if(state.context.trim())s.push('','## Précisions',state.context.trim());const opts=categorySelected();if(opts.length)s.push('','## Critères sélectionnés',...opts.map(x=>'- '+x));const sources=mapSelected(SOURCES,state.sources);if(sources.length)s.push('','## Sources à privilégier',...sources.map(x=>'- '+x));const formats=mapSelected(FORMATS,state.formats);if(formats.length)s.push('','## Format de réponse',...formats.map(x=>'- '+x));const periods={all:'Toutes les périodes',day:'Dernières 24 heures',week:'7 derniers jours',month:'30 derniers jours',year:'12 derniers mois',custom:'Plage personnalisée'};const langs={all:'Toutes les langues',fr:'Français',en:'Anglais','fr-en':'Français et anglais',multi:'Multilingue'};s.push('','## Périmètre','- Période : '+(periods[state.period]||periods.all)+(state.period==='custom'?' ('+(state.dateFrom||'?')+' à '+(state.dateTo||'?')+')':''),'- Langue des sources : '+(langs[state.language]||langs.all));if(state.region.trim())s.push('- Zone géographique : '+state.region.trim());if(state.filetype)s.push('- Format documentaire : '+state.filetype.toUpperCase());if(tokens(state.includeWords).length)s.push('- Inclure ces mots ou expressions : '+tokens(state.includeWords).join(' ; '));if(tokens(state.excludeWords).length)s.push('- Éviter ces termes : '+tokens(state.excludeWords).join(' ; '));if(domains(state.includeSites).length)s.push('- Sites à privilégier : '+domains(state.includeSites).join(', '));if(domains(state.excludeSites).length)s.push('- Sites à exclure : '+domains(state.excludeSites).join(', '));s.push('','## Qualité et fiabilité','- Cherche réellement sur le Web si les outils nécessaires sont disponibles. Ne prétends jamais avoir effectué une recherche qui n’a pas été faite.','- Cite les sources utiles avec liens et dates, et privilégie les documents originaux lorsque cela apporte une preuve.','- Distingue les faits confirmés, les informations non vérifiées, les rumeurs et les opinions.','- Pour une actualité, une sortie, un prix, une disponibilité ou une règle, vérifie que l’information est toujours valable.','- Ne déduis pas une implication ou une causalité du simple fait que des noms ou des événements sont associés.','- En cas de désaccord entre sources fiables, présente les points de divergence.','- Indique clairement les limites de ce qui a pu être vérifié.','- Réponds en français, avec des titres simples et une structure lisible.');return s.join('\n')}
-function searchQuery(engine=state.engine||'google'){
- const base=state.topic.trim();if(!base)return '';
- const parts=[base],extra=tokens(state.includeWords),without=tokens(state.excludeWords);
- const quote=x=>x.includes(' ')&&!/^".*"$/.test(x)?'"'+x.replace(/^"|"$/g,'')+'"':x;
- for(const x of extra)parts.push(quote(x));for(const x of without)parts.push('-'+quote(x.replace(/^-/,'')));
- const sites=domains(state.includeSites);
- if(sites.length===1)parts.push('site:'+sites[0]);
- else if(sites.length>1&&engine!=='duck')parts.push('('+sites.map(x=>'site:'+x).join(' OR ')+')');
- for(const site of domains(state.excludeSites))parts.push('-site:'+site);
- if(state.filetype)parts.push('filetype:'+state.filetype);
- if(engine==='google'){const [from,to]=dateRange();if(from)parts.push('after:'+from);if(to)parts.push('before:'+dayAfter(to));}
- if(engine==='brave'){
-   if(['fr','en'].includes(state.language))parts.push('lang:'+state.language);
-   const country=regionCountry(state.region);if(country)parts.push('loc:'+country);
- }
- return parts.join(' ').replace(/\s+/g,' ').trim();
-}
-function regionCountry(value){const k=(value||'').trim().toLowerCase();return {'france':'fr','japon':'jp','japan':'jp','allemagne':'de','germany':'de','espagne':'es','spain':'es','italie':'it','italy':'it','canada':'ca','etats-unis':'us','états-unis':'us','usa':'us','united states':'us','royaume-uni':'gb','united kingdom':'gb'}[k]||''}
+function searchQuery(engine=state.engine||'google') {return KerynqSearch.compile(state,engine).query}
 function compatibility(){
- const web=['Sujet principal'],prompt=[];if(tokens(state.includeWords).length)web.push('Mots inclus');if(tokens(state.excludeWords).length)web.push('Exclusions');
- const inc=domains(state.includeSites);if(inc.length===1||(inc.length>1&&state.engine!=='duck'))web.push('Sites ciblés');else if(inc.length>1)prompt.push('Sites multiples');
- if(domains(state.excludeSites).length)web.push('Sites exclus');if(state.filetype)web.push('Type de fichier');
- if(state.period!=='all')((state.engine==='google')?web:prompt).push('Période');
- if(['fr','en'].includes(state.language))((state.engine==='brave')?web:prompt).push('Langue préférée');
- else if(state.language!=='all')prompt.push('Langues préférées');
- if(state.region.trim())((state.engine==='brave'&&regionCountry(state.region))?web:prompt).push('Région');
+ const compiled=KerynqSearch.compile(state,state.engine);
+ const {web,prompt}=compiled;
  if(state.category!=='general')prompt.push('Thème : '+topicById(state.category).name);
  if(categorySelected().length)prompt.push('Filtres du thème ('+categorySelected().length+')');
- if(state.sources.length)prompt.push('Sources recherchées');if(state.formats.length)prompt.push('Format de restitution');
- if(state.goal!=='explore')prompt.push('Objectif');if(state.context.trim())prompt.push('Précisions');
+ if(state.sources.length)prompt.push('Sources recherchées');
+ if(state.formats.length)prompt.push('Format de restitution');
+ if(state.goal!=='explore')prompt.push('Objectif');
+ if(state.context.trim())prompt.push('Précisions');
  return {web,prompt};
 }
-function renderCompatibility(){const root=$('queryCompatibility');root.replaceChildren();const c=compatibility();function line(heading,items,ok){const el=node('div','compat-line');const title=node('strong','',heading);const content=node('span','',items.length?items.join(' · '):'Aucun');el.append(title,content);if(ok)el.classList.add('compat-applied');root.append(el)}line('✓ Appliqué au Web',c.web,true);line('◌ Pour la consigne IA',c.prompt,false);}
+function renderCompatibility(){const root=$('queryCompatibility');root.replaceChildren();const c=compatibility();function line(heading,items,ok){const el=node('div','compat-line');const title=node('strong','',heading);const content=node('span','',items.length?items.join(' · '):'Aucun');el.append(title,content);if(ok)el.classList.add('compat-applied');root.append(el)}line('✓ Inclus dans la requête Web',c.web,true);line('◌ Consigne IA seulement',c.prompt,false);}
 function renderQuickFilters(){const t=topicById(state.category);initOptions(t.id);const root=$('quickFilters');root.replaceChildren();for(const [id,label] of t.options.slice(0,4)){
   const b=node('button','quick-filter',label);b.type='button';b.setAttribute('aria-pressed',String(state.options[t.id].includes(id)));
   b.addEventListener('click',()=>{const opts=state.options[t.id];state.options[t.id]=opts.includes(id)?opts.filter(x=>x!==id):[...opts,id];save();renderQuickFilters();renderSpecial();renderResult()});root.append(b)}

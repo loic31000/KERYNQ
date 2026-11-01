@@ -1,16 +1,17 @@
-// Cache local d'interface uniquement, sans requêtes tierces.
-const CACHE = 'kerynq-static-v1';
-const CORE = ['./', './index.html', './app-icon.svg', './favicon.svg', './manifest.webmanifest'];
-self.addEventListener('install', e => e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting())));
-self.addEventListener('activate', e => e.waitUntil(caches.keys().then(names => Promise.all(names.filter(n => n.startsWith('kerynq-static-') && n !== CACHE).map(n => caches.delete(n)))).then(() => self.clients.claim())));
-self.addEventListener('fetch', e => {
-  const req = e.request, url = new URL(req.url);
-  if (req.method !== 'GET' || url.origin !== self.location.origin) return;
-  e.respondWith(fetch(req).then(response => {
+// Offline cache for local UI assets only. Does not cache external search results.
+const CACHE = 'kerynq-static-v2';
+const CORE = ['./', './index.html', './search-query-core.js', './app-icon.svg', './favicon.svg', './manifest.webmanifest'];
+self.addEventListener('install', event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(CORE)).then(() => self.skipWaiting())));
+self.addEventListener('activate', event => event.waitUntil(caches.keys().then(names => Promise.all(names.filter(name => name.startsWith('kerynq-static-') && name !== CACHE).map(name => caches.delete(name)))).then(() => self.clients.claim())));
+self.addEventListener('fetch', event => {
+  const request = event.request;
+  const url = new URL(request.url);
+  if (request.method !== 'GET' || url.origin !== self.location.origin) return;
+  event.respondWith(fetch(request).then(response => {
     if (response.ok && response.type === 'basic') {
       const copy = response.clone();
-      e.waitUntil(caches.open(CACHE).then(c => c.put(req, copy)));
+      event.waitUntil(caches.open(CACHE).then(cache => cache.put(request, copy)));
     }
     return response;
-  }).catch(() => caches.match(req).then(cached => cached || (req.mode === 'navigate' ? caches.match('./index.html') : Response.error()))));
+  }).catch(() => caches.match(request).then(cached => cached || (request.mode === 'navigate' ? caches.match('./index.html', './search-query-core.js') : Response.error()))));
 });

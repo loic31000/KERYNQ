@@ -6,7 +6,8 @@ Application **statique côté navigateur**. Pas de serveur, de base distante ou 
 
 ## Fichiers principaux
 
-- `index.html` : interface, données des 27 thèmes, CSS, JS et génération des requêtes.
+- `index.html` : interface, données des 27 thèmes, CSS et logique UI.
+- `search-query-core.js` : générateur de requêtes Web sans dépendances, testé séparément (Google, Brave, DuckDuckGo).
 - `manifest.webmanifest` : manifeste d'installation.
 - `favicon.svg` / `app-icon.svg` : identité SVG.
 - `service-worker.js` : cache des seules ressources same-origin.
@@ -39,3 +40,7 @@ Application **statique côté navigateur**. Pas de serveur, de base distante ou 
 - Les IA peuvent exiger une connexion ou un abonnement : leur ouverture ne garantit pas un accès gratuit.
 - Pas de filtrage de résultats côté KERYNQ, pas de comparaison automatique de réponses IA.
 - Hors ligne, le cache de l'interface ne fournit pas les services externes.
+
+## Tests du moteur de requêtes
+
+`node --test tests/search-query.test.mjs` lance les tests unitaires sans dépendances. Le service worker met en cache le compilateur en même temps que l’interface pour conserver la préparation hors ligne. La présence d’un opérateur dans la requête ne garantit pas que le moteur externe le respecte.

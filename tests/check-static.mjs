@@ -40,3 +40,10 @@ assert(!/window\.open\([^\)]*buildPrompt/.test(html), 'Pas de consigne automatiq
 for (const doc of ['LICENSE.md','CONTRIBUTING.md','CODE_OF_CONDUCT.md','SECURITY.md','SUPPORT.md','ACCESSIBILITY.md','CHANGELOG.md','docs/ARCHITECTURE.md','docs/FOURNISSEURS_IA.md','docs/CONFIDENTIALITE.md','.github/ISSUE_TEMPLATE/bug_report.yml','.github/ISSUE_TEMPLATE/feature_request.yml','.github/PULL_REQUEST_TEMPLATE.md']) {
  assert(existsSync(join(root,doc)),`Document : ${doc}`);
 }
+
+// Le compilateur de requêtes est un fichier local indispensable au mode hors ligne.
+assert(existsSync(join(root, 'search-query-core.js')), 'Compilateur présent');
+assert(html.includes('src="./search-query-core.js"'), 'Compilateur chargé avant le script UI');
+assert(readFileSync(join(root, 'service-worker.js'),'utf8').includes('search-query-core.js'), 'Compilateur mis en cache PWA');
+try { new vm.Script(readFileSync(join(root, 'search-query-core.js'),'utf8')); console.log('OK: Syntaxe compilateur'); }
+catch (error) { fail('Syntaxe compilateur: '+error.message); }
