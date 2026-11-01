@@ -11,6 +11,7 @@ Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent 
 
 ## Non publié (branche de préparation)
 
+- Retrait de l'archive héritée `osint-search-v5-github-pages.zip` du suivi Git ; elle reste dans l'historique.
 - Documentation communautaire, sécurité, statut de licence et architecture.
 - Sélecteur de neuf assistants IA + fournisseur personnalisé HTTPS, sans transmission automatique de la consigne.
 - Mise à jour des tests statiques et vérifications d'interface associées.
