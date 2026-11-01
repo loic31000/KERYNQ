@@ -11,6 +11,7 @@ Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent 
 
 ## Non publié (branche de préparation)
 
+- Documentation remise à jour pour les 23 moteurs ; cache PWA `kerynq-static-v11`.
 - Moteurs spécialisés supplémentaires : Bing Actualités, Fact Check Explorer, Internet Archive, Shodan, data.gouv.fr, Open Library, MyAnimeList, Steam, MusicBrainz et OpenStreetMap.
 - Nouveaux moteurs : Bing, Qwant, Startpage, Google Scholar, PubMed, arXiv, YouTube, Wikipédia, GitHub et Reddit, avec suggestion par domaine sans bascule automatique. Voir `docs/MOTEURS.md`.
 - Tableau des filtres transmis à chaque moteur, généré depuis le compilateur de requêtes (issue #4).

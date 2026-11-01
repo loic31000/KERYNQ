@@ -16,7 +16,7 @@
 - [x] Lot 2 : garde-fous de schéma JSON, mode privé, effacement local, validation des URL personnalisées, tests unitaires.
 - [ ] Revue de sécurité indépendante avant publication : CSP et premier audit livrés, voir `AUDIT_PREPUBLICATION.md`.
 - [ ] Tester l'installation PWA sous HTTPS et cache hors ligne ; vérifier icônes requises.
-- [ ] Analyser la compatibilité réelle des opérateurs par moteur et documenter les limites.
+- [ ] Analyser la compatibilité réelle des opérateurs par moteur : ce que KERYNQ transmet est documenté (`MOTEURS.md`), le respect par chaque moteur reste à contrôler.
 - [ ] Choisir la politique de suivi d'incidents et activer les rapports de vulnérabilités privés **après publication**, si souhaité.
 - [ ] Définir nom de domaine, mentions légales et politique de confidentialité publique.
 - [ ] Ne changer la visibilité et ne mettre GitHub Pages en ligne qu'avec accord explicite.
