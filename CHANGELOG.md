@@ -11,6 +11,7 @@ Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent 
 
 ## Non publié (branche de préparation)
 
+- Audit de sécurité consigné dans `docs/AUDIT_PREPUBLICATION.md`.
 - Mode privé déplacé en haut de page ; logo agrandi, avec un dessin SVG propre à chaque thème. Cache PWA `kerynq-static-v14`.
 - Bulles d'aide réécrites en langage simple ; ajout pour le mode d'affichage, l'objectif, les filtres, les critères, les sources, la présentation, l'assistant et le format. Cache PWA `kerynq-static-v13`.
 - Dernière passe : consignes IA adaptées au domaine et à l'assistant, format court ou détaillé, exemple au premier lancement, section d'aide, détail des filtres limité au moteur choisi. Cache PWA `kerynq-static-v12`.

@@ -40,3 +40,38 @@ Rejouer : `python tests/browser/cross-browser-smoke.py`, après `playwright inst
 - [ ] Zoom réel du navigateur à 200 % et 400 %.
 - [ ] Installation de la PWA sous HTTPS réel, ce qui suppose de publier : décision du propriétaire.
 - [ ] Revue de sécurité indépendante, si le projet ouvre au public.
+
+## Audit de sécurité du 1er novembre 2026 (commit `d957cb2`)
+
+Contrôles faits par l'assistant de développement. Ce n'est pas une revue indépendante.
+
+**Aucune faille exploitable trouvée** dans les essais ci-dessous.
+
+| Essai | Résultat |
+| --- | --- |
+| Profil importé contenant du HTML et du script dans tous les champs | Aucun code exécuté, affiché comme du texte |
+| Valeurs `__proto__` et `constructor` | Pas de pollution de prototype, retour aux valeurs par défaut |
+| URL d'assistant `javascript:`, `data:`, `http:`, avec identifiants, paramètres ou fragment | Toutes refusées |
+| Question contenant `&`, `#`, `?`, `<` | Encodée, aucun paramètre injecté dans l'adresse du moteur |
+| Import de 81 favoris, de JSON invalide, d'un tableau, de 1,3 Mo | Refusé avec un message |
+| Violations CSP et requêtes externes sans clic pendant ces essais | Aucune |
+| Recherche de clés et jetons courants dans les 48 commits | Aucun résultat |
+| Clés de déploiement, webhooks, secrets Actions | Aucun |
+
+Ces essais ont été faits dans Chromium uniquement, avec un script ponctuel non versionné. La recherche de secrets repose sur des motifs : elle peut en manquer.
+
+### Réglages GitHub
+
+- Activés : alertes Dependabot et correctifs de sécurité automatiques. **Le projet n'a aucune dépendance déclarée** : Dependabot n'a rien à surveiller aujourd'hui.
+- Indisponibles sur ce dépôt privé et cette offre : analyse des secrets, protection contre leur envoi, protection de la branche `main`. Analyse de code non activée : elle passerait par GitHub Actions, écarté par le projet.
+
+### À traiter avant de rendre le dépôt public
+
+- L'adresse e-mail de l'auteur figure dans les 48 commits et deviendra publique.
+- L'archive OSINT v5 et l'ancienne image du globe restent dans l'historique.
+- Activer alors l'analyse des secrets, la protection de `main` et le signalement privé de failles.
+
+### Limites acceptées
+
+- Un profil importé remplace les réglages, y compris les sites ciblés : n'importer que ses propres fichiers.
+- Une question part en clair dans l'adresse du moteur choisi, donc dans son historique de navigation.
