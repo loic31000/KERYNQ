@@ -138,6 +138,8 @@ with sync_playwright() as p:
         ctx,page,errors=open_app(browser,width)
         show=page.locator('.panel-tools #showAll').bounding_box();grid=page.locator('#categories').bounding_box()
         assert show['y']+show['height']<=grid['y'],(width,show,grid)
+        tools=page.locator('.panel-tools').bounding_box()
+        assert abs(tools['x']+tools['width']-(grid['x']+grid['width']))<=2,(width,tools,grid)
         assert page.locator('#showAll').inner_text()=='Afficher tous les domaines'
         page.locator('#showAll').click()
         assert page.locator('#showAll').inner_text()=='Afficher moins de domaines' and page.locator('.category-btn').count()==39
