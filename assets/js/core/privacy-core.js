@@ -81,5 +81,5 @@
     const templates=data.version===5 && hasTemplates?validateItems(data.templates,normalizeSettings,'modèles'):null;
     return {settings,favorites,templates};
   }
-  return Object.freeze({record,cleanText,safeAssistantUrl,scrubCurrentSearch,validateItems,salvageItems,withCurrentPreferences,validateImport,MAX_FILE_BYTES,MAX_FAVORITES,MAX_TEMPLATES});
+  return Object.freeze({safeAssistantUrl,scrubCurrentSearch,validateItems,salvageItems,withCurrentPreferences,validateImport,MAX_FILE_BYTES});
 });

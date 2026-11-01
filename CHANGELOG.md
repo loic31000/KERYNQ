@@ -1,16 +1,11 @@
-## 2026-11-01 · Lot 4B : 39 univers (branche privée)
-
-- Ajout de six univers généralistes et de leurs filtres contextuels, exemples et icônes SVG.
-- Regroupement dans les huit familles existantes ; conservation des identifiants de favoris.
-- Distinction des transports collectifs avec l’univers automobile existant.
-- Tests statiques et de navigation portés à 39 univers.
-
 # Historique des changements
 
 Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent le développement et ne signifient pas une publication publique.
 
 ## Non publié (branche de préparation)
 
+- Nettoyage : code et champs inutilisés retirés, icône en double supprimée, notes dupliquées du README retirées. Cache PWA `kerynq-static-v15`.
+- Audit de sécurité consigné dans `docs/AUDIT_PREPUBLICATION.md`.
 - Mode privé déplacé en haut de page ; logo agrandi, avec un dessin SVG propre à chaque thème. Cache PWA `kerynq-static-v14`.
 - Bulles d'aide réécrites en langage simple ; ajout pour le mode d'affichage, l'objectif, les filtres, les critères, les sources, la présentation, l'assistant et le format. Cache PWA `kerynq-static-v13`.
 - Dernière passe : consignes IA adaptées au domaine et à l'assistant, format court ou détaillé, exemple au premier lancement, section d'aide, détail des filtres limité au moteur choisi. Cache PWA `kerynq-static-v12`.
@@ -40,6 +35,13 @@ Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent 
 - Documentation communautaire, sécurité, statut de licence et architecture.
 - Sélecteur de neuf assistants IA + fournisseur personnalisé HTTPS, sans transmission automatique de la consigne.
 - Mise à jour des tests statiques et vérifications d'interface associées.
+
+## 2026-11-01 · Lot 4B : 39 univers (branche privée)
+
+- Ajout de six univers généralistes et de leurs filtres contextuels, exemples et icônes SVG.
+- Regroupement dans les huit familles existantes ; conservation des identifiants de favoris.
+- Distinction des transports collectifs avec l’univers automobile existant.
+- Tests statiques et de navigation portés à 39 univers.
 
 ## Base V5 importée
 

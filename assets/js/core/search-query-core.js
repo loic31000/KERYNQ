@@ -154,5 +154,5 @@
   function capabilities() {
     return features.map(([id,label,settings,marker]) => ({id,label,engines:Object.fromEntries(engines.map(engine => [engine,compile({topic:'x',...settings},engine).query.includes(marker)]))}));
   }
-  return Object.freeze({ENGINES,engineById,suggestedEngine,capabilities,compile,tokens,domains,siteReport,dates,validISO,regionCountry});
+  return Object.freeze({ENGINES,engineById,suggestedEngine,capabilities,compile,tokens,domains,siteReport,dates});
 });
