@@ -2,6 +2,8 @@
 <html lang="fr" data-theme="dark">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; manifest-src 'self'; connect-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <meta name="description" content="KERYNQ prépare votre question pour Google, Brave, DuckDuckGo ou un assistant IA. Gratuit, sans compte, rien n'est envoyé sans votre clic.">
@@ -133,6 +135,6 @@
 <script src="./assets/js/core/privacy-core.js"></script>
 <script src="./assets/js/core/catalog-core.js"></script>
 <script src="./assets/js/app.js"></script>
-<script>if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')){window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));}</script>
+<script src="./assets/js/register-sw.js"></script>
 </body>
 </html>

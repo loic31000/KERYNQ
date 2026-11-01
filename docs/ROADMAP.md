@@ -11,10 +11,10 @@
 ## Avant ouverture du dépôt
 
 - [ ] Décider d'une licence (MIT, Apache-2.0, GPL ou autre) et vérifier toutes les ressources (visuel du globe, icônes, polices).
-- [ ] Tester le projet dans Brave, Chrome, Firefox, Safari si disponible, mobile 320/390 px et zoom 200 %.
+- [ ] Tester sur navigateurs et appareils réels : moteurs et largeurs déjà automatisés, voir `AUDIT_PREPUBLICATION.md`.
 - [ ] Audit accessibilité WCAG 2.2 AA avec lecteurs d'écran et clavier.
 - [x] Lot 2 : garde-fous de schéma JSON, mode privé, effacement local, validation des URL personnalisées, tests unitaires.
-- [ ] Audit de sécurité approfondi (XSS, CSP, données externes, stockage, tests multi-navigateurs) avant publication.
+- [ ] Revue de sécurité indépendante avant publication : CSP et premier audit livrés, voir `AUDIT_PREPUBLICATION.md`.
 - [ ] Tester l'installation PWA sous HTTPS et cache hors ligne ; vérifier icônes requises.
 - [ ] Analyser la compatibilité réelle des opérateurs par moteur et documenter les limites.
 - [ ] Choisir la politique de suivi d'incidents et activer les rapports de vulnérabilités privés **après publication**, si souhaité.

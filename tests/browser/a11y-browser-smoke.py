@@ -2,17 +2,18 @@
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 root=Path(__file__).resolve().parents[2]
-html=(root/'index.html').read_text(encoding='utf-8')
-for core in ['assets/js/core/search-query-core.js','assets/js/core/privacy-core.js','assets/js/core/catalog-core.js','assets/js/app.js']:
-    html=html.replace(f'<script src="./{core}"></script>', '<script>'+ (root/core).read_text(encoding='utf-8')+'</script>')
-html=html.replace('<link rel="stylesheet" href="./assets/css/styles.css">','<style>'+(root/'assets/css/styles.css').read_text(encoding='utf-8')+'</style>')
+def serve(route):
+    url=route.request.url
+    file=root/url.replace('http://kerynq.test/','').split('?')[0]
+    if url.startswith('http://kerynq.test/') and file.is_file():route.fulfill(body=file.read_bytes(),content_type={'.html':'text/html','.css':'text/css','.js':'text/javascript','.svg':'image/svg+xml'}.get(file.suffix,'application/json'))
+    else:route.abort()
 with sync_playwright() as p:
     browser=p.chromium.launch(headless=True)
     for width in (1440,390,320):
         page=browser.new_page(viewport={'width':width,'height':850}, reduced_motion='reduce')
         errors=[]
         page.on('pageerror',lambda error:errors.append(str(error)))
-        page.set_content(html,wait_until='load')
+        page.route('**/*',serve);page.goto('http://kerynq.test/index.html')
         page.locator('#modeSimple').click()
         cats=page.locator('.category-btn')
         cats.nth(1).focus();cats.nth(1).press('Enter')

@@ -8,7 +8,7 @@ const require = createRequire(import.meta.url);
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const page = readFileSync(join(root, 'index.html'), 'utf8');
-const sourceFiles = ['assets/js/core/catalog-core.js', 'assets/js/app.js'];
+const sourceFiles = ['assets/js/core/catalog-core.js', 'assets/js/app.js', 'assets/js/register-sw.js'];
 // Les contrôles portent sur la page et sur le code qu'elle charge.
 const html = [page, ...sourceFiles.map(file => readFileSync(join(root, file), 'utf8'))].join('\n');
 const manifest = JSON.parse(readFileSync(join(root, 'manifest.webmanifest'), 'utf8'));
@@ -108,5 +108,10 @@ for (const [, ref] of worker.matchAll(/'\.\/([^']+)'/g)) assert(existsSync(join(
 for (const doc of ['README.md', 'CLAUDE.md', 'CHANGELOG.md', 'LICENSE.md', ...readdirSync(join(root, 'docs')).filter(file => file.endsWith('.md')).map(file => 'docs/'+file)]) {
   for (const [, ref] of readFileSync(join(root, doc), 'utf8').matchAll(/\]\((?!https?:|#)([^)#]+)/g)) assert(existsSync(join(dirname(join(root, doc)), ref)), 'Lien de '+doc+' : '+ref);
 }
+
+// Sécurité de la page : la CSP interdit tout code en ligne.
+assert(page.includes("default-src 'none'") && !/script-src[^;]*unsafe/.test(page), 'CSP stricte présente');
+assert(![...page.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].some(m => m[1].trim()), 'Aucun script en ligne');
+assert(!/<style|\sstyle="|\son[a-z]+="/.test(page), 'Aucun style ni gestionnaire en ligne');
 
 if (!process.exitCode) console.log('Tous les contrôles statiques passent.');
