@@ -173,6 +173,7 @@ const TIPS=[
  ["custom-title","Vos propres critères","Ajoutez une demande qui n’est pas dans la liste, par exemple « disponible en France ». Elle s’ajoute au texte pour une IA."],
  ["source-title","Types de sources","Indiquez où l’IA doit chercher en priorité : sites officiels, presse, études…"],
  ["format-title","Présentation de la réponse","Choisissez la forme de la réponse de l’IA : résumé, tableau, liste de liens…"],
+ ["fileTitle","Recherche par fichier","Choisissez une image ou un document. KERYNQ le lit sur votre appareil, puis vous gardez seulement le passage utile pour votre recherche."],
  ["template-heading","Modèles","Un modèle règle plusieurs options en un clic. Votre question ne change pas. Vous pouvez aussi créer les vôtres."],
  ["resultTitle","Votre résultat","Voici ce que KERYNQ a préparé. Cela change à chaque réglage. Vous pouvez le relire avant de lancer."],
  ["assistantLabel","Assistant","Choisissez l’IA que vous voulez utiliser. Elle s’ouvre dans un nouvel onglet, et vous y collez le texte. Elle peut demander un compte."],
@@ -250,6 +251,8 @@ async function openAssistant(){
  notify('Texte copié : collez-le dans la conversation de l’IA');
 }
 $('openAIProvider').addEventListener('click',openAssistant);
+// Passerelle volontaire pour la recherche par fichier : seul le texte choisi rejoint la recherche.
+window.KerynqApp=Object.freeze({notify,useAsQuestion(text){state.topic=text;$('topic').value=text;switchPreview('web');save();renderResult();$('topic').focus()},addToContext(block){state.context=(state.context.trim()?state.context.trim()+'\n\n':'')+block;$('context').value=state.context;switchPreview('prompt');save();renderResult();if(!state.topic.trim()){notify('Écrivez votre question pour compléter le texte pour l’IA');$('topic').focus()}}});
 renderSaved();
 
 })();

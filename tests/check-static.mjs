@@ -8,7 +8,7 @@ const require = createRequire(import.meta.url);
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const page = readFileSync(join(root, 'index.html'), 'utf8');
-const sourceFiles = ['assets/js/core/prompt-core.js', 'assets/js/core/catalog-core.js', 'assets/js/app.js', 'assets/js/register-sw.js'];
+const sourceFiles = ['assets/js/core/file-core.js', 'assets/js/file-panel.js', 'assets/js/core/prompt-core.js', 'assets/js/core/catalog-core.js', 'assets/js/app.js', 'assets/js/register-sw.js'];
 // Les contrôles portent sur la page et sur le code qu'elle charge.
 const html = [page, ...sourceFiles.map(file => readFileSync(join(root, file), 'utf8'))].join('\n');
 const manifest = JSON.parse(readFileSync(join(root, 'manifest.webmanifest'), 'utf8'));

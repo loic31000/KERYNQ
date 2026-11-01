@@ -5,7 +5,7 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[2]
 ORIGIN='http://kerynq.test/'
-TYPES={'.html':'text/html','.css':'text/css','.js':'text/javascript','.svg':'image/svg+xml','.webmanifest':'application/json'}
+TYPES={'.mjs':'text/javascript','.html':'text/html','.css':'text/css','.js':'text/javascript','.svg':'image/svg+xml','.webmanifest':'application/json'}
 GOOD=lambda id,topic,**settings:{'id':id,'name':topic,'topic':topic,'folder':'Général','category':'Tous les sujets','pinned':False,'settings':{'topic':topic,**settings}}
 def serve(route):
     path=route.request.url.replace(ORIGIN,'').split('?')[0] or 'index.html'
@@ -131,7 +131,7 @@ with sync_playwright() as p:
             assert len(tip.get_attribute('data-tip'))<=170,tip.get_attribute('data-tip')
             page.keyboard.press('Escape')
             assert page.locator('#tipBubble').is_hidden()
-        assert page.locator('.tip').count()==17
+        assert page.locator('.tip').count()==18
         assert not errors,errors;ctx.close()
         # Un ancien thème reste valide ; un thème inconnu revient au thème par défaut.
         for stored,expected in (('light','light'),('inconnu','dark')):

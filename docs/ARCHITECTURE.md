@@ -13,11 +13,14 @@ service-worker.js       Cache hors ligne ; doit rester à la racine pour couvrir
 assets/
   css/styles.css        Thèmes et mise en page
   icons/                Icônes SVG du site
+  js/file-panel.js      Recherche par fichier
+  vendor/               Bibliothèques tierces figées, chargées à l'usage
   js/app.js             Comportement de l'interface
   js/core/              Logique testable sans navigateur
     search-query-core.js   Liste des moteurs et requêtes
     privacy-core.js        Validation des sauvegardes et des URL
     prompt-core.js         Méthode des consignes IA
+    file-core.js           Contrôle des fichiers, texte et métadonnées
     catalog-core.js        39 univers, réglages par défaut, normalize()
 tests/
   check-static.mjs      Contrôles de structure, sans dépendance

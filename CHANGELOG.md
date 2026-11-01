@@ -4,6 +4,7 @@ Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent 
 
 ## Non publié (branche de préparation)
 
+- Recherche par fichier : images, PDF et documents lus localement, métadonnées sensibles masquées, OCR sur demande, recherche inversée manuelle, effacement. Voir `docs/IMPORT_FICHIERS.md`. Cache PWA `kerynq-static-v16`.
 - Nettoyage : code et champs inutilisés retirés, icône en double supprimée, notes dupliquées du README retirées. Cache PWA `kerynq-static-v15`.
 - Audit de sécurité consigné dans `docs/AUDIT_PREPUBLICATION.md`.
 - Mode privé déplacé en haut de page ; logo agrandi, avec un dessin SVG propre à chaque thème. Cache PWA `kerynq-static-v14`.

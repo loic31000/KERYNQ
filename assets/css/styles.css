@@ -289,3 +289,27 @@ h1{background:linear-gradient(100deg,var(--text) 35%,var(--accent) 75%,var(--acc
 .private-toggle{display:inline-flex;align-items:center;border:1px solid var(--line-strong)}
 .private-toggle[aria-pressed="true"]{color:var(--ok);border-color:var(--ok);background:var(--soft)}
 .private-banner{margin:0 0 8px;padding:10px 14px;border:1px solid var(--ok);border-radius:var(--radius-sm);background:var(--surface);font-size:.875rem}
+
+/* Recherche par fichier. */
+.ico-upload{--ico:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 16V5M7 10l5-5 5 5M5 19h14'/%3E%3C/svg%3E")}
+.file-drop{display:flex;flex-direction:column;align-items:center;gap:4px;width:100%;margin-top:14px;padding:28px 16px;border:2px dashed var(--line-strong);border-radius:var(--radius);background:var(--bg);color:var(--text);cursor:pointer;text-align:center;transition:border-color .2s,background-color .2s}
+.file-drop:hover,.file-drop.is-over{border-color:var(--accent);background:var(--accent-soft)}
+.file-drop strong{font-size:1.05rem;display:inline-flex;align-items:center}
+.file-drop span{color:var(--muted);font-size:.875rem}
+.file-drop small{color:var(--muted);font-size:.78rem;margin-top:6px}
+.file-body{margin-top:16px;display:grid;gap:14px;min-width:0}
+.file-summary{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
+.file-preview{max-width:220px;max-height:180px;width:auto;height:auto;border-radius:var(--radius-sm);border:1px solid var(--line);object-fit:contain}
+.file-list{display:grid;grid-template-columns:auto minmax(0,1fr);gap:3px 12px;margin:0;font-size:.875rem;flex:1 1 200px;min-width:0}
+.file-list dt{color:var(--muted)}
+.file-list dd{margin:0;font-weight:600}
+.file-status:empty{display:none}
+.file-status{font-size:.9rem;font-weight:600}
+.file-busy{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.file-busy progress{flex:1 1 180px;min-width:0;height:10px;accent-color:var(--accent)}
+.file-block{padding-top:14px;border-top:1px solid var(--line);min-width:0}
+.file-block .custom-row{margin-top:8px}
+.file-sensitive{padding:12px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);display:grid;gap:8px}
+.file-text{height:200px}
+a.btn{text-decoration:none;color:var(--text)}
+.file-clear{justify-self:start;white-space:normal}
