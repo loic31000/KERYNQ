@@ -25,7 +25,7 @@ Les lignes ci-dessous conservent l'historique de la passation ; pour l'état cou
 - `index.html` (structure), `assets/css/styles.css`, `assets/js/core/catalog-core.js` (catalogue et normalisation), `assets/js/app.js` (logique UI).
 - `assets/js/core/search-query-core.js` : compilation locale de requêtes par moteur.
 - `assets/js/core/privacy-core.js` : validation/sanitation des sauvegardes et URL.
-- `manifest.webmanifest`, `service-worker.js`, `assets/icons/app-icon.svg`, `assets/icons/favicon.svg` : installation et cache.
+- `manifest.webmanifest`, `service-worker.js`, `assets/icons/favicon.svg` : installation et cache.
 - `tests/check-static.mjs`, `tests/unit/`, `tests/browser/` (commandes dans `CLAUDE.md`) : tests sans pipeline CI.
 - Favoris, préférences et modèles dans le stockage local du navigateur. Ce stockage n'est **pas chiffré**.
 
