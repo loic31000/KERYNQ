@@ -5,7 +5,7 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
 ORIGIN='http://kerynq.test/'
-TYPES={'.html':'text/html','.js':'text/javascript','.svg':'image/svg+xml','.webmanifest':'application/json'}
+TYPES={'.html':'text/html','.css':'text/css','.js':'text/javascript','.svg':'image/svg+xml','.webmanifest':'application/json'}
 GOOD=lambda id,topic,**settings:{'id':id,'name':topic,'topic':topic,'folder':'Général','category':'Tous les sujets','pinned':False,'settings':{'topic':topic,**settings}}
 def serve(route):
     path=route.request.url.replace(ORIGIN,'').split('?')[0] or 'index.html'
@@ -77,6 +77,63 @@ with sync_playwright() as p:
         rm.focus();rm.press('Enter')
         assert page.evaluate('document.activeElement.id')=='favoriteSearch'
         assert not errors,errors;ctx.close()
+        # Le parcours IA copie le texte, ouvre l'assistant sans la consigne dans l'adresse, et le bouton principal l'annonce.
+        ctx,page,errors=open_app(browser,width)
+        page.locator('#tabWeb').click()
+        assert page.locator('#runSearch').inner_text().startswith('Rechercher sur Google')
+        assert page.locator('#runSearch').is_disabled()
+        page.locator('#tabPrompt').click()
+        assert page.locator('#enginePicker').is_hidden()
+        page.locator('#aiProvider').select_option('claude')
+        assert page.locator('#runSearch').inner_text().startswith('Copier et ouvrir Claude')
+        page.locator('#topic').fill('Sujet confidentiel')
+        page.evaluate("()=>{document.execCommand=()=>{window.kerynqTestCopy=document.activeElement.value;return true}}")
+        with ctx.expect_page() as popup:page.locator('#runSearch').click()
+        assert 'Sujet' not in popup.value.url and 'confidentiel' not in popup.value.url,popup.value.url
+        assert 'Sujet confidentiel' in page.evaluate('window.kerynqTestCopy')
+        assert not errors,errors;ctx.close()
+        # Sans sujet, aucun assistant ne s'ouvre.
+        ctx,page,errors=open_app(browser,width)
+        page.locator('#tabPrompt').click();page.locator('#openAIProvider').click()
+        assert len(ctx.pages)==1 and page.evaluate('document.activeElement.id')=='topic'
+        assert not errors,errors;ctx.close()
+        # Thèmes : choix conservé après rechargement, contraste suffisant, pas de débordement.
+        ctx,page,errors=open_app(browser,width)
+        def lum(c):
+            v=[int(c[i:i+2],16)/255 for i in (1,3,5)]
+            v=[x/12.92 if x<=.03928 else ((x+.055)/1.055)**2.4 for x in v]
+            return .2126*v[0]+.7152*v[1]+.0722*v[2]
+        ratio=lambda a,b:(max(lum(a),lum(b))+.05)/(min(lum(a),lum(b))+.05)
+        for theme in ('dark','light','pro','cyber','girly','aurora'):
+            page.locator('#themeToggle').click()
+            page.locator(f'[data-theme-choice="{theme}"]').click()
+            page.keyboard.press('Escape')
+            assert page.locator('#themeMenu').is_hidden()
+            assert page.evaluate('document.documentElement.dataset.theme')==theme
+            t=page.evaluate("()=>{const s=getComputedStyle(document.documentElement);return Object.fromEntries(['bg','surface','text','muted','accent','on-accent'].map(k=>[k,s.getPropertyValue('--'+k).trim()]))}")
+            for fg,bg in (('text','surface'),('text','bg'),('muted','surface'),('muted','bg'),('accent','surface'),('on-accent','accent')):
+                assert ratio(t[fg],t[bg])>=4.5,(theme,fg,bg,ratio(t[fg],t[bg]))
+            dim=page.evaluate('({a:document.documentElement.scrollWidth,b:document.documentElement.clientWidth})')
+            assert dim['a']<=dim['b']+2,(theme,width,dim)
+        page.reload()
+        assert page.evaluate('document.documentElement.dataset.theme')=='aurora'
+        assert page.locator('#themeToggle').inner_text()=='Thème : Aurore'
+        # Bulles : ouverture au focus, visibles dans l'écran, fermeture par Échap.
+        for tip in page.locator('.tip').all():
+            if not tip.is_visible():continue
+            tip.focus()
+            box=page.locator('#tipBubble').bounding_box()
+            assert box and box['x']>=0 and box['x']+box['width']<=width and box['y']>=0,(width,box)
+            assert tip.get_attribute('aria-describedby')=='tipBubble'
+            page.keyboard.press('Escape')
+            assert page.locator('#tipBubble').is_hidden()
+        assert page.locator('.tip').count()==9
+        assert not errors,errors;ctx.close()
+        # Un ancien thème reste valide ; un thème inconnu revient au thème par défaut.
+        for stored,expected in (('light','light'),('inconnu','dark')):
+            ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'theme':stored}})
+            assert page.evaluate('document.documentElement.dataset.theme')==expected
+            ctx.close()
         # Un fournisseur importé ne peut pas viser une propriété héritée.
         ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'aiProvider':'constructor'}})
         assert page.locator('#aiProvider').input_value()=='chatgpt'

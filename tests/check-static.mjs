@@ -2,9 +2,15 @@ import { readFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
+import { createRequire } from 'node:module';
+
+const require = createRequire(import.meta.url);
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
-const html = readFileSync(join(root, 'index.html'), 'utf8');
+const page = readFileSync(join(root, 'index.html'), 'utf8');
+const sourceFiles = ['catalog-core.js', 'app.js'];
+// Les contrôles portent sur la page et sur le code qu'elle charge.
+const html = [page, ...sourceFiles.map(file => readFileSync(join(root, file), 'utf8'))].join('\n');
 const manifest = JSON.parse(readFileSync(join(root, 'manifest.webmanifest'), 'utf8'));
 const fail = msg => { console.error('FAIL:', msg); process.exitCode = 1; };
 const assert = (ok, msg) => { if (!ok) fail(msg); else console.log('OK:', msg); };
@@ -19,7 +25,7 @@ assert(html.includes('Ctrl') || html.includes('ctrlKey'), 'Raccourci clavier dis
 assert(manifest.name === 'KERYNQ', 'Nom PWA');
 for (const icon of manifest.icons) assert(existsSync(join(root, icon.src)), 'Icône '+icon.src);
 for (const src of ['favicon.svg', 'service-worker.js']) assert(existsSync(join(root, src)), 'Fichier '+src);
-const scripts = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)];
+const scripts = [...page.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)];
 assert(scripts.length > 0, 'Scripts intégrés détectés');
 for (const [i, script] of scripts.entries()) {
   try { new vm.Script(script[1], {filename: `inline-${i}.js`}); console.log('OK: Syntaxe script', i); }
@@ -76,5 +82,24 @@ for (const id of ['childhood','work','retirement','cooking','homegarden','transp
   assert(html.includes(id+':`<svg'), 'Icône SVG lot 4B : '+id);
   assert(html.includes('"'+id+'":"'), 'Famille du thème lot 4B : '+id);
 }
+
+// Structure : chaque fichier chargé existe, est mis en cache PWA et reste sans ressource distante.
+const worker = readFileSync(join(root, 'service-worker.js'), 'utf8');
+for (const file of [...sourceFiles, 'styles.css']) {
+  assert(page.includes('./'+file), 'Fichier chargé par la page : '+file);
+  assert(worker.includes('./'+file), 'Fichier mis en cache PWA : '+file);
+}
+for (const file of sourceFiles) {
+  try { new vm.Script(readFileSync(join(root, file), 'utf8')); console.log('OK: Syntaxe '+file); }
+  catch (error) { fail('Syntaxe '+file+' : '+error.message); }
+}
+assert(!/(?:src|href)="https?:/.test(page.replace(/<a [^>]*>/g, '')), 'Aucun script ou style distant');
+assert(!/@import|url\(\s*['"]?https?:/.test(readFileSync(join(root, 'styles.css'), 'utf8')), 'Aucune ressource distante dans le style');
+
+// Icônes : uniquement du SVG, y compris pour chaque domaine.
+const glyphs = /[\u2190-\u21FF\u2600-\u27BF\u2B00-\u2BFF]|\p{Extended_Pictographic}/u;
+assert(!glyphs.test(html.replace(/[©®™]/g, '')), 'Aucun emoji ni symbole utilisé comme icône');
+assert(!glyphs.test(readFileSync(join(root, 'styles.css'), 'utf8')), 'Aucun symbole utilisé comme icône dans le style');
+for (const {id} of require(join(root, 'catalog-core.js')).TOPICS) assert(new RegExp('\\b'+id+':`<svg').test(html), 'Icône SVG du domaine : '+id);
 
 if (!process.exitCode) console.log('Tous les contrôles statiques passent.');

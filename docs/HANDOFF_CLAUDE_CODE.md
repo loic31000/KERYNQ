@@ -18,7 +18,7 @@ KERYNQ est un atelier de recherche personnalisée, non un moteur d'indexation. L
 
 ## Architecture
 
-- `index.html` : HTML, styles, catalogue thématique et logique UI. Attention : fichier encore monolithique.
+- `index.html` (structure), `styles.css`, `catalog-core.js` (catalogue et normalisation), `app.js` (logique UI).
 - `search-query-core.js` : compilation locale de requêtes par moteur.
 - `privacy-core.js` : validation/sanitation des sauvegardes et URL.
 - `manifest.webmanifest`, `service-worker.js`, `app-icon.svg`, `favicon.svg` : installation et cache.

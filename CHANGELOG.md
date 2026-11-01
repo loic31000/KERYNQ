@@ -11,6 +11,12 @@ Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent 
 
 ## Non publié (branche de préparation)
 
+- Six thèmes interchangeables (Nuit, Clair, Pro, Cyber, Girly, Aurore), effets visuels désactivés si l'animation réduite est demandée, bulles d'aide au survol, au focus et au toucher.
+- Nouvelle interface : KERYNQ explique ce qu'il fait dès l'accueil, parcours en trois étapes, vocabulaire simplifié, favoris et données regroupés à part.
+- Bouton principal unique : il annonce sa cible et, pour une IA, copie le texte puis ouvre l'assistant ; le texte n'est jamais placé dans l'adresse.
+- Icônes d'interface uniquement en SVG ; le visuel du globe en base64 n'est plus utilisé.
+- `index.html` découpé en `styles.css`, `catalog-core.js` et `app.js` ; cache PWA `kerynq-static-v6`.
+- Tests : `tests/catalog.test.cjs` vérifie la vraie normalisation des anciens profils et favoris.
 - Favoris et modèles stockés : une entrée illisible est ignorée avec un message, au lieu de masquer puis d'écraser toute la liste.
 - `Ctrl+Entrée` lance une seule recherche : plus de deuxième onglet ni de copie de la consigne en parallèle.
 - Charger un favori ou un modèle ne change plus le thème, la taille du texte, l'IA choisie ni le mode.
