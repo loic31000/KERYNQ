@@ -96,3 +96,8 @@ Les univers supplémentaires et les moteurs de recherche restent planifiés pour
 - [x] Détail des filtres limité au moteur choisi.
 - Écartés par le propriétaire : variantes de requêtes. Reporté pour éviter de complexifier : lien de partage.
 - [ ] Audit de sécurité, puis publication : décision du propriétaire.
+
+## Refonte de l'ergonomie
+
+- [x] Domaines en pastilles filtrables, texte pour l'IA agrandi, moteurs d'images, onze thèmes.
+- Retiré à la demande du propriétaire : section des modèles (les modèles enregistrés restent dans les sauvegardes). Recherche par fichier abandonnée.

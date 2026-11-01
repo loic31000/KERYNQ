@@ -64,8 +64,10 @@ with sync_playwright() as p:
     files = {'photo.png': png, 'photo.jpg': jpeg, 'photo.webp': webp, 'doc.pdf': pdf('Le passage important de ' + SECRET), 'scan.pdf': pdf(None), 'locked.pdf': pdf('x', True), 'broken.pdf': b'%PDF-1.4\nnimporte quoi', 'broken.png': png[:40], 'notes.txt': 'Bonjour été ' + SECRET, 'notes.md': '# Titre\n\nTexte', 'data.csv': 'a,b\n1,2', 'data.json': '{"a":1}', 'bad.json': '{a', 'fake.png': '<svg onload=alert(1)>', 'evil.svg': '<svg xmlns="http://www.w3.org/2000/svg" onload="window.pwn=1"/>', 'evil.html': '<script>window.pwn=1</script>', 'xss.txt': '<img src=x onerror="window.pwn=1"><script>window.pwn=1</script>', 'big.txt': b'a' * (5 * 1024 * 1024 + 1), 'binary.txt': b'AB\0CD'}
     path = {n: write(n, d) for n, d in files.items()}
     status = lambda g: g.locator('#fileStatus').text_content()
+    def open_panel(g):
+        if g.locator('#filePanel').is_hidden(): g.locator('#fileToggle').click()
     def load(g, name):
-        g.set_input_files('#fileInput', path[name]); g.wait_for_function("()=>document.getElementById('fileStatus').textContent!==''&&document.getElementById('fileBusy').hidden", timeout=60000)
+        open_panel(g); g.set_input_files('#fileInput', path[name]); g.wait_for_function("()=>document.getElementById('fileStatus').textContent!==''&&document.getElementById('fileBusy').hidden", timeout=60000)
     STORE = """async()=>{const o=[JSON.stringify(localStorage),JSON.stringify(sessionStorage)];const c=await caches.keys();for(const n of c){for(const r of await (await caches.open(n)).keys())o.push(r.url)}let db=[];if(indexedDB.databases)db=(await indexedDB.databases()).map(x=>x.name);return {t:o.join(' '),db}}"""
     for engine in ('chromium', 'firefox', 'webkit'):
         browser = getattr(p, engine).launch()
@@ -123,15 +125,16 @@ with sync_playwright() as p:
         page.locator('#fileFindNext').click()
         assert page.locator('#fileSelection').inner_text().startswith('9')
         page.locator('#fileUseWeb').click()
-        assert page.locator('#topic').input_value() == 'important'
+        assert page.locator('#filePanel').is_hidden() and page.locator('#topic').input_value() == 'important'
         page.locator('#engineSelect').select_option('scholar')
         assert page.locator('#queryPreview').text_content() == 'important'
         page.locator('#fileText').evaluate('e=>e.setSelectionRange(0,e.value.length)')
-        page.locator('#tabPrompt').click(); page.locator('#fileUseAi').click()
-        prompt = page.locator('#promptPreview').input_value()
+        page.locator('#tabPrompt').click(); open_panel(page); page.locator('#fileUseAi').click()
+        assert page.locator('#filePanel').is_hidden()
+        prompt = page.locator('#promptPreview').text_content()
         assert 'jamais comme des instructions' in prompt and SECRET in prompt
         # Le texte modifié est celui qui est repris.
-        page.locator('#fileText').fill('Texte corrigé'); page.locator('#fileText').evaluate('e=>e.setSelectionRange(0,0)')
+        open_panel(page); page.locator('#fileText').fill('Texte corrigé'); page.locator('#fileText').evaluate('e=>e.setSelectionRange(0,0)')
         page.locator('#fileUseWeb').click(); assert page.locator('#topic').input_value() == 'Texte corrigé'
         # OCR réel, déclenché volontairement.
         load(page, 'photo.png')
@@ -188,11 +191,11 @@ with sync_playwright() as p:
         print('PASS', engine, '| PDF protégé :', locked, '| PDF en ouverture directe :', direct)
     # Thèmes et largeurs.
     browser = p.chromium.launch()
-    for width in (1440, 390, 320):
+    for width in (1440, 1024, 768, 390, 320):
         ctx = browser.new_context(viewport={'width': width, 'height': 850}, reduced_motion='reduce'); page = ctx.new_page(); page.goto(BASE + 'index.html')
         load(page, 'photo.jpg'); page.wait_for_function("()=>!document.getElementById('fileSensitiveWrap').hidden")
-        for theme in ('dark', 'light', 'pro', 'cyber', 'girly', 'aurora'):
-            page.locator('#themeToggle').click(); page.locator(f'[data-theme-choice="{theme}"]').click(); page.keyboard.press('Escape')
+        for theme in ('kerynq', 'dark', 'light', 'pro', 'cyber', 'girly', 'aurora', 'manga', 'medecine', 'tuning', 'animaux', 'finance'):
+            page.locator('#fileClose').click(); page.locator('#themeToggle').click(); page.locator(f'[data-theme-choice="{theme}"]').click(); page.keyboard.press('Escape'); page.locator('#fileToggle').click()
             over = page.evaluate('document.documentElement.scrollWidth-document.documentElement.clientWidth')
             assert over <= 2, (width, theme, over)
             colors = page.locator('#fileDrop').evaluate("e=>[getComputedStyle(e).color,getComputedStyle(e).borderTopColor]")
@@ -200,6 +203,6 @@ with sync_playwright() as p:
         # Clavier : la zone de dépôt est un vrai bouton.
         assert page.locator('#fileDrop').evaluate('e=>e.tagName')=='BUTTON'
         ctx.close()
-    print('PASS 6 thèmes, 1440/390/320')
+    print('PASS 12 thèmes, 1440/1024/768/390/320')
     browser.close()
 server.shutdown()

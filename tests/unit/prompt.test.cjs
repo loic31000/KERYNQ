@@ -1,6 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const {guidance,FAMILY_METHODS,TOPIC_METHODS} = require('../../assets/js/core/prompt-core.js');
+const {guidance,structure,FAMILY_METHODS,TOPIC_METHODS} = require('../../assets/js/core/prompt-core.js');
 const {TOPICS,TOPIC_FAMILIES,normalize} = require('../../assets/js/core/catalog-core.js');
 const of = (topicId,extra={}) => guidance({topicId,family:TOPIC_FAMILIES[topicId],provider:'chatgpt',style:'detailed',...extra});
 
@@ -36,4 +36,12 @@ test('prompt format setting is safe for old profiles',()=>{
  assert.equal(normalize({topic:'Ancien'}).promptStyle,'detailed');
  assert.equal(normalize({promptStyle:'short'}).promptStyle,'short');
  assert.equal(normalize({promptStyle:'constructor'}).promptStyle,'detailed');
+});
+
+test('structure keeps every original line and treats the question as plain text',()=>{
+ const text='# Recherche structurée\n\n## Sujet\n## Faux titre\n- pas une liste\n<img src=x onerror=alert(1)>\n\n## Périmètre\n- Période : 12 mois\n- Simple';
+ const lines=structure(text);
+ assert.equal(lines.map(x=>x.raw).join('\n'),text);
+ assert.deepEqual(lines.map(x=>x.type),['title','blank','section','text','text','text','blank','section','item','item']);
+ assert.equal(lines[8].label,'Période : ');
 });

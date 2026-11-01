@@ -37,7 +37,7 @@ catch (err) { fail(`Syntaxe service worker: ${err.message}`); }
 // Multi-assistant et documentation
 const assistants = ['chatgpt','claude','gemini','kimi','grok','deepseek','perplexity','mistral','copilot'];
 for (const assistant of assistants) assert(html.includes(`${assistant}:`), `Assistant disponible : ${assistant}`);
-assert(html.includes('id="aiProvider"') && html.includes('id="openAIProvider"'), 'Sélecteur et ouverture multi-IA présents');
+assert(html.includes('id="aiProvider"') && html.includes('function openAssistant'), 'Sélecteur et ouverture multi-IA présents');
 assert(html.includes('id="customAIUrl"'), 'Fournisseur personnalisé disponible');
 assert(html.includes('KerynqPrivacy.safeAssistantUrl'), 'Vérification HTTPS de l’URL personnalisée');
 assert(!html.includes('openChatGPT'), 'Pas de bouton ChatGPT codé en dur');
@@ -48,14 +48,14 @@ for (const doc of ['LICENSE.md','docs/CONTRIBUTING.md','docs/CODE_OF_CONDUCT.md'
 
 // Le compilateur de requêtes est un fichier local indispensable au mode hors ligne.
 assert(existsSync(join(root, 'assets/js/core/search-query-core.js')), 'Compilateur présent');
-assert(html.includes('src="./assets/js/core/search-query-core.js"'), 'Compilateur chargé avant le script UI');
+assert(html.includes('src="./assets/js/core/search-query-core.js'), 'Compilateur chargé avant le script UI');
 assert(readFileSync(join(root, 'service-worker.js'),'utf8').includes('assets/js/core/search-query-core.js'), 'Compilateur mis en cache PWA');
 try { new vm.Script(readFileSync(join(root, 'assets/js/core/search-query-core.js'),'utf8')); console.log('OK: Syntaxe compilateur'); }
 catch (error) { fail('Syntaxe compilateur: '+error.message); }
 
 // Confidentialité et validation des sauvegardes (lot 2).
 for(const id of ['privateSearchToggle','privateSearchInfo','clearAllData']) assert(html.includes('id="'+id+'"'), 'Contrôle vie privée : '+id);
-assert(html.includes('src="./assets/js/core/privacy-core.js"'),'Module confidentialité référencé');
+assert(html.includes('src="./assets/js/core/privacy-core.js'),'Module confidentialité référencé');
 assert(existsSync(join(root,'assets/js/core/privacy-core.js')),'Module confidentialité présent');
 assert(readFileSync(join(root,'service-worker.js'),'utf8').includes('assets/js/core/privacy-core.js'),'Module confidentialité mis en cache PWA');
 try { new vm.Script(readFileSync(join(root,'assets/js/core/privacy-core.js'),'utf8'));console.log('OK: Syntaxe confidentialité'); }
@@ -103,7 +103,9 @@ assert(!glyphs.test(readFileSync(join(root, 'assets/css/styles.css'), 'utf8')), 
 for (const {id} of require(join(root, 'assets/js/core/catalog-core.js')).TOPICS) assert(new RegExp('\\b'+id+':`<svg').test(html), 'Icône SVG du domaine : '+id);
 
 // Structure : tout fichier local cité par la page, la PWA ou la documentation existe.
-for (const [, ref] of page.matchAll(/(?:src|href)="\.\/([^"]+)"/g)) assert(existsSync(join(root, ref)), 'Fichier référencé : '+ref);
+for (const [, ref] of page.matchAll(/(?:src|href)="\.\/([^"?]+)/g)) assert(existsSync(join(root, ref)), 'Fichier référencé : '+ref);
+const cacheVersion = /kerynq-static-v(\d+)/.exec(worker)[1];
+for (const [, ref] of page.matchAll(/(?:src=|rel="stylesheet" href=)"(\.\/assets\/[^"]+)"/g)) assert(ref.endsWith('?v='+cacheVersion), 'Version du fichier alignée sur le cache PWA : '+ref);
 for (const [, ref] of worker.matchAll(/'\.\/([^']+)'/g)) assert(existsSync(join(root, ref)), 'Fichier mis en cache : '+ref);
 for (const doc of ['README.md', 'CLAUDE.md', 'CHANGELOG.md', 'LICENSE.md', ...readdirSync(join(root, 'docs')).filter(file => file.endsWith('.md')).map(file => 'docs/'+file)]) {
   for (const [, ref] of readFileSync(join(root, doc), 'utf8').matchAll(/\]\((?!https?:|#)([^)#]+)/g)) assert(existsSync(join(dirname(join(root, doc)), ref)), 'Lien de '+doc+' : '+ref);

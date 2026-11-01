@@ -68,3 +68,7 @@ Les scripts restent classiques, sans module ni compilation, pour conserver l'ouv
 **Lot 2 :** le service worker inclut `assets/js/core/privacy-core.js` dans son cache, aujourd'hui `kerynq-static-v5`. À tester sous HTTPS avant publication.
 
 **Détail du moteur choisi :** `capabilities()` interroge `compile()`. Il décrit ce que KERYNQ transmet ; le respect réel par chaque moteur n'est pas vérifié et peut changer.
+
+## Versions des fichiers
+
+GitHub Pages sert chaque fichier avec un cache HTTP de 10 minutes. Une page récente pouvait donc s'exécuter avec un CSS et un JavaScript plus anciens. Le CSS et les scripts sont chargés avec `?v=N`, où `N` est le numéro du cache de `service-worker.js`. Augmenter ce numéro et les paramètres ensemble à chaque publication : `tests/check-static.mjs` refuse tout décalage. Le service worker revalide les fichiers auprès du serveur et, hors ligne, retrouve un fichier sans tenir compte du paramètre.
