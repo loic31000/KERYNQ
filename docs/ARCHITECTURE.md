@@ -18,7 +18,6 @@ assets/
     search-query-core.js   Requêtes Google, Brave, DuckDuckGo
     privacy-core.js        Validation des sauvegardes et des URL
     catalog-core.js        39 univers, réglages par défaut, normalize()
-    source-packs-core.js   Packs de sources officielles
 tests/
   check-static.mjs      Contrôles de structure, sans dépendance
   unit/                 Tests Node
@@ -26,7 +25,7 @@ tests/
 docs/                   Architecture, confidentialité, roadmap, contribution, sécurité
 ```
 
-Pour modifier : l'apparence dans `assets/css`, le comportement dans `assets/js/app.js`, les univers dans `catalog-core.js`, les sources dans `source-packs-core.js`.
+Pour modifier : l'apparence dans `assets/css`, le comportement dans `assets/js/app.js`, les univers dans `catalog-core.js`.
 
 Les scripts restent classiques, sans module ni compilation, pour conserver l'ouverture directe de `index.html`.
 

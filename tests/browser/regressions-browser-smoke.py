@@ -127,7 +127,7 @@ with sync_playwright() as p:
             assert tip.get_attribute('aria-describedby')=='tipBubble'
             page.keyboard.press('Escape')
             assert page.locator('#tipBubble').is_hidden()
-        assert page.locator('.tip').count()==10
+        assert page.locator('.tip').count()==9
         assert not errors,errors;ctx.close()
         # Un ancien thème reste valide ; un thème inconnu revient au thème par défaut.
         for stored,expected in (('light','light'),('inconnu','dark')):
@@ -146,44 +146,6 @@ with sync_playwright() as p:
         page.locator('#showAll').click()
         assert page.locator('#showAll').inner_text()=='Afficher moins de domaines' and page.locator('.category-btn').count()==39
         ctx.close()
-        # Packs : rien sans pays ni clic ; ajout, retrait et limite respectent la saisie manuelle.
-        ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'topic':'Sujet','category':'health','includeSites':'monsite.fr','engine':'google'}})
-        assert page.locator('#sourceCountry').input_value()==''
-        assert page.locator('#sourcePackBody').is_hidden()
-        query=lambda:page.locator('#queryPreview').text_content()
-        assert query()=='Sujet site:monsite.fr'
-        page.locator('#sourceCountry').select_option('FR')
-        assert page.locator('#sourcePackList input').count()==5
-        assert query()=='Sujet site:monsite.fr'
-        for domain in ('has-sante.fr','sante.gouv.fr','ansm.sante.fr','santepubliquefrance.fr'):
-            page.locator(f'[id="pack-{domain}"]').uncheck()
-        page.locator('#addSourcePack').click()
-        assert page.locator('#includeSites').input_value()=='monsite.fr, ameli.fr'
-        assert 'site:ameli.fr' in query() and 'has-sante' not in query()
-        page.locator('.category-btn[data-category-id="manga"]').click()
-        assert 'Aucune source officielle' in page.locator('#sourcePackNote').inner_text()
-        assert page.locator('#includeSites').input_value()=='monsite.fr, ameli.fr'
-        page.locator('.category-btn[data-category-id="general"]').click()
-        page.locator('#sourceCountry').select_option('')
-        assert page.locator('#includeSites').input_value()=='monsite.fr, ameli.fr'
-        page.locator('#sourceCountry').select_option('FR')
-        page.reload()
-        assert page.locator('#sourceCountry').input_value()=='FR'
-        page.locator('#modeAdvanced').click()
-        page.evaluate("document.querySelectorAll('details').forEach(d=>d.open=true)")
-        page.locator('#categorySearch').fill('Santé');page.locator('.category-btn[data-category-id="health"]').click();page.locator('#categorySearch').fill('')
-        page.locator('#removeSourcePack').click()
-        assert page.locator('#includeSites').input_value()=='monsite.fr'
-        page.locator('#engineSelect').select_option('duck')
-        assert 'DuckDuckGo' in page.locator('#sourcePackNote').inner_text()
-        page.locator('#engineSelect').select_option('google')
-        page.locator('#includeSites').fill(', '.join(f's{i}.fr' for i in range(9)))
-        page.locator('#addSourcePack').click()
-        assert 'ameli.fr' not in page.locator('#includeSites').input_value()
-        assert 'Limite' in page.locator('#status').inner_text()
-        dim=page.evaluate('({a:document.documentElement.scrollWidth,b:document.documentElement.clientWidth})')
-        assert dim['a']<=dim['b']+2,(width,dim)
-        assert not errors,errors;ctx.close()
         # Un fournisseur importé ne peut pas viser une propriété héritée.
         ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'aiProvider':'constructor'}})
         assert page.locator('#aiProvider').input_value()=='chatgpt'

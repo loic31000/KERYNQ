@@ -3,7 +3,7 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[2]
 HTML=(ROOT/'index.html').read_text(encoding='utf-8')
-for fn in ['assets/js/core/search-query-core.js','assets/js/core/privacy-core.js','assets/js/core/source-packs-core.js','assets/js/core/catalog-core.js','assets/js/app.js']:
+for fn in ['assets/js/core/search-query-core.js','assets/js/core/privacy-core.js','assets/js/core/catalog-core.js','assets/js/app.js']:
  HTML=HTML.replace(f'<script src="./{fn}"></script>',f'<script>{(ROOT/fn).read_text(encoding="utf-8")}</script>')
 EXPECT={'administration':'Administration','family':'Famille / Parentalité','animals':'Animaux','housing':'Logement','law':'Droit / Justice','personalfinance':'Finances personnelles','childhood':'Enfance & Scolarité','work':'Travail & Emploi','retirement':'Retraite & Autonomie','cooking':'Cuisine & Alimentation','homegarden':'Maison & Jardin','transport':'Transports & Déplacements'}
 HTML=HTML.replace('<link rel="stylesheet" href="./assets/css/styles.css">','<style>'+(ROOT/'assets/css/styles.css').read_text(encoding='utf-8')+'</style>')

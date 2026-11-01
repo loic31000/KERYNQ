@@ -18,7 +18,7 @@ Le catalogue regroupe 39 univers (27 historiques, 6 du lot 4A et 6 du lot 4B), r
 ## Règles de fonctionnement
 
 - Les filtres de thème modifient **la consigne IA générée localement**, mais **pas** la requête Web. Les opérateurs Web effectifs (site:, exclusions, dates selon le moteur) restent indiqués séparément.
-- Aucune source nationale n'est imposée automatiquement. L'utilisateur choisit pays et sources ; des packs de sources officiels facultatifs existent pour la France (voir `SOURCES_OFFICIELLES.md`).
+- Aucune source nationale n'est imposée automatiquement. L'utilisateur choisit pays et sources ; les packs de sources officiels ont été retirés à la demande du propriétaire.
 - Les questions de santé, droit, argent et famille doivent recevoir un traitement prudent et des sources vérifiables, sans surpromesse.
 - L'ouverture de Google, Brave, DuckDuckGo et d'un assistant IA demeure une action explicite.
 

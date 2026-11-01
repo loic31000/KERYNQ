@@ -23,7 +23,7 @@ Conserver le coût d'hébergement à 0 euro et le fonctionnement sans serveur, A
 
 ```bash
 node tests/check-static.mjs
-node --test tests/unit/search-query.test.mjs tests/unit/privacy.test.cjs tests/unit/catalog.test.cjs tests/unit/source-packs.test.cjs
+node --test tests/unit/search-query.test.mjs tests/unit/privacy.test.cjs tests/unit/catalog.test.cjs
 python tests/browser/univers-browser-smoke.py
 python tests/browser/a11y-browser-smoke.py
 python tests/browser/regressions-browser-smoke.py
@@ -31,8 +31,8 @@ python tests/browser/regressions-browser-smoke.py
 
 Les trois scripts Python requièrent Playwright et Chromium, de préférence dans un environnement virtuel hors du dépôt. `KERYNQ_CHROMIUM` permet d'indiquer un autre exécutable Chromium. Tester aussi manuellement les navigateurs concernés avant publication. Pour servir le site en local : `python -m http.server 8000`.
 
-## Première mission conseillée
+## Suite
 
-Vérifier la base de `main`, réconcilier l'état des issues et de la roadmap, puis concevoir **des packs de sources officielles facultatifs par univers et par pays**. Ne pas ajouter de restriction `site:` automatique sans choix explicite. Ajouter des tests, notamment pour les sauvegardes héritées des 27 premiers univers. Faire un premier lot autonome et une PR pour validation.
+Les packs de sources officielles ont été retirés à la demande du propriétaire (voir `CHANGELOG.md`) : ne pas les réintroduire sans sa demande. Consulter `docs/ROADMAP.md`.
 
 Détail des étapes, risques et priorités : [docs/HANDOFF_CLAUDE_CODE.md](docs/HANDOFF_CLAUDE_CODE.md).

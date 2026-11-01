@@ -33,6 +33,10 @@ test('themes accept historic and new values only',()=>{
  for(const theme of ['dark','light','pro','cyber','girly','aurora'])assert.equal(normalize({theme}).theme,theme);
  assert.equal(normalize({theme:'constructor'}).theme,'dark');
 });
+test('a profile saved with the removed source packs stays valid and keeps its sites',()=>{
+ const got=normalize({topic:'Ancien',sourceCountry:'FR',includeSites:'ameli.fr, has-sante.fr'});
+ assert.equal('sourceCountry' in got,false);assert.equal(got.includeSites,'ameli.fr, has-sante.fr');
+});
 test('real v3 and v5 profiles import with the real normalize',()=>{
  const v3=privacy.validateImport({app:'KERYNQ',version:3,settings:{topic:'A',category:'manga'}},normalize);
  assert.equal(v3.settings.category,'manga');assert.equal(v3.favorites,null);

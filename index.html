@@ -58,12 +58,6 @@
 
   <div class="block quick-filter-section"><h3 id="quickTitle">Ce que vous attendez</h3><div id="quickFilters" class="quick-filters" role="group" aria-labelledby="quickTitle"></div></div>
 
-  <div class="block source-packs"><h3 id="sourcePackTitle">Sources officielles (facultatif)</h3>
-    <label for="sourceCountry" class="control-label">Pays des sources</label><select id="sourceCountry" class="field source-country"><option value="">Aucun pays : ne rien proposer</option></select>
-    <div id="sourcePackBody" hidden><div id="sourcePackList" class="pack-list" role="group" aria-labelledby="sourcePackTitle"></div><div class="preview-actions pack-actions"><button type="button" id="addSourcePack" class="btn">Ajouter à ma recherche</button><button type="button" id="removeSourcePack" class="btn">Retirer ces sites</button></div></div>
-    <p id="sourcePackNote" class="note" aria-live="polite"></p><p id="sourcePackSites" class="note" aria-live="polite"></p>
-  </div>
-
   <div class="block advanced-only"><h3 id="goal-title">Votre objectif</h3><p class="sub">Change la façon dont l’IA répond. Sans effet sur la recherche Web.</p><div id="goals" class="goal-grid" role="group" aria-labelledby="goal-title"></div></div>
 
   <div class="block advanced-only full-filters">
@@ -137,7 +131,6 @@
 <div id="status" class="status" role="status" aria-live="polite" aria-atomic="true"></div>
 <script src="./assets/js/core/search-query-core.js"></script>
 <script src="./assets/js/core/privacy-core.js"></script>
-<script src="./assets/js/core/source-packs-core.js"></script>
 <script src="./assets/js/core/catalog-core.js"></script>
 <script src="./assets/js/app.js"></script>
 <script>if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')){window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));}</script>

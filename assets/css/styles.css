@@ -258,8 +258,5 @@ h1{background:linear-gradient(100deg,var(--text) 35%,var(--accent) 75%,var(--acc
 .tip-bubble{position:fixed;z-index:40;width:min(280px,calc(100vw - 20px));padding:11px 14px;border-radius:var(--radius-sm);background:var(--text);color:var(--bg);font-size:.84rem;line-height:1.45;box-shadow:0 14px 34px -10px #0009;pointer-events:none;animation:tipIn .16s ease-out}
 @keyframes tipIn{from{opacity:0;transform:translateY(4px) scale(.97)}}
 @media(prefers-reduced-motion:reduce){body::before,body::after,.intro,.composer,.panel,.tip-bubble{animation:none!important}}
-.source-country{max-width:340px}
-.pack-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin-top:12px}
-.pack-actions .btn{flex:0 1 auto}
 .panel-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;flex:1 1 100%}
 @media(max-width:600px){.panel-tools{width:100%}}

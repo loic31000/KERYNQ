@@ -25,7 +25,7 @@
   function scrubCurrentSearch(settings) {
     if (!record(settings)) return {};
     const clean = {...settings};
-    for(const key of ['sourceCountry','topic','context','includeWords','excludeWords','includeSites','excludeSites','region','dateFrom','dateTo','customAIUrl']) clean[key]='';
+    for(const key of ['topic','context','includeWords','excludeWords','includeSites','excludeSites','region','dateFrom','dateTo','customAIUrl']) clean[key]='';
     return clean;
   }
   function validateItems(items, normalizeSettings, kind) {
