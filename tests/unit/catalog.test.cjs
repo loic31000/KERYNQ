@@ -1,7 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const {TOPICS,TOPIC_FAMILIES,DEFAULT,normalize} = require('../catalog-core.js');
-const privacy = require('../privacy-core.js');
+const {TOPICS,TOPIC_FAMILIES,DEFAULT,normalize} = require('../../assets/js/core/catalog-core.js');
+const privacy = require('../../assets/js/core/privacy-core.js');
 const LEGACY_27=['general','manga','anime','series','films','tcg','games','politics','news','ai','cyber','science','tech','history','economy','sports','music','books','travel','health','shopping','culture','environment','space','osint','automotive','learning'];
 
 test('catalog keeps 39 universes and the 27 historical identifiers',()=>{
@@ -32,6 +32,10 @@ test('real normalize falls back safely on invalid values',()=>{
 test('themes accept historic and new values only',()=>{
  for(const theme of ['dark','light','pro','cyber','girly','aurora'])assert.equal(normalize({theme}).theme,theme);
  assert.equal(normalize({theme:'constructor'}).theme,'dark');
+});
+test('a profile saved with the removed source packs stays valid and keeps its sites',()=>{
+ const got=normalize({topic:'Ancien',sourceCountry:'FR',includeSites:'ameli.fr, has-sante.fr'});
+ assert.equal('sourceCountry' in got,false);assert.equal(got.includeSites,'ameli.fr, has-sante.fr');
 });
 test('real v3 and v5 profiles import with the real normalize',()=>{
  const v3=privacy.validateImport({app:'KERYNQ',version:3,settings:{topic:'A',category:'manga'}},normalize);

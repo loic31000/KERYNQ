@@ -25,4 +25,4 @@ Un signalement utile contient : versions/navigateur, impact, étapes reproductib
 
 ## Publication
 
-Effectuer une revue de sécurité, de confidentialité et des vulnérabilités avant toute ouverture publique. Voir [docs/ROADMAP.md](docs/ROADMAP.md).
+Effectuer une revue de sécurité, de confidentialité et des vulnérabilités avant toute ouverture publique. Voir [docs/ROADMAP.md](ROADMAP.md).

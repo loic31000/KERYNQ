@@ -1,6 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const privacy = require('../privacy-core.js');
+const privacy = require('../../assets/js/core/privacy-core.js');
 const normalized = v => ({topic:typeof v.topic==='string'?v.topic.slice(0,2200):'',category:'general'});
 const sample = {app:'KERYNQ',version:5,settings:{topic:'Hello'},favorites:[{id:'one',name:'Search',folder:'Travel',topic:'Hello',settings:{topic:'Hello'}}],templates:[{id:'t1',label:'Daily',settings:{topic:'Welcome'}}]};
 

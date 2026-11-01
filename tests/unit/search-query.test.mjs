@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url);
-const {compile,domains,dates,siteReport}=require('../search-query-core.js');
+const {compile,domains,dates,siteReport}=require('../../assets/js/core/search-query-core.js');
 const base={topic:'Démarches logement',includeWords:'',excludeWords:'',includeSites:'',excludeSites:'',period:'all',language:'all',region:'',filetype:''};
 const build=(params={},engine='google')=>compile({...base,...params},engine,new Date(2026,10,1));
 
