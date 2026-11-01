@@ -23,7 +23,12 @@
 <g class="logo-v logo-pro"><rect x="8" y="8" width="48" height="48" rx="6"/><path d="M24 20v24M42 20 24 32l18 12" stroke-width="4"/></g>
 <g class="logo-v logo-cyber"><path d="M32 5 55 18v28L32 59 9 46V18L32 5Z"/><path d="M25 21v22M41 21 25 32l16 11"/><path d="M32 5v6M32 53v6M9 18l5 3M55 46l-5-3M55 18l-5 3M9 46l5-3" stroke-width="2"/></g>
 <g class="logo-v logo-girly"><path d="M32 56S8 42 8 24c0-9 7-15 14-15 4 0 8 2 10 6 2-4 6-6 10-6 7 0 14 6 14 15 0 18-24 32-24 32Z"/><path d="m32 21 3 8 8 3-8 3-3 8-3-8-8-3 8-3 3-8Z" fill="url(#logoInk)"/></g>
-<g class="logo-v logo-aurora"><path d="M6 44C14 22 24 12 32 12s18 10 26 32"/><path d="M15 44c5-13 11-20 17-20s12 7 17 20"/><path d="M24 44c2-6 5-9 8-9s6 3 8 9"/><path d="M6 52h52"/></g></svg><span class="brand-name">KERYNQ</span></div>
+<g class="logo-v logo-aurora"><path d="M6 44C14 22 24 12 32 12s18 10 26 32"/><path d="M15 44c5-13 11-20 17-20s12 7 17 20"/><path d="M24 44c2-6 5-9 8-9s6 3 8 9"/><path d="M6 52h52"/></g>
+<g class="logo-v logo-manga"><path d="M8 10h48v34H30L18 56V44H8Z"/><path d="M26 18v18M40 18 26 27l14 9" stroke-width="4"/></g>
+<g class="logo-v logo-medecine"><circle cx="32" cy="32" r="25"/><path d="M26 15h12v11h11v12H38v11H26V38H15V26h11Z"/></g>
+<g class="logo-v logo-tuning"><path d="M10 46a26 26 0 1 1 44 0"/><path d="m32 34 13-14" stroke-width="5"/><circle cx="32" cy="34" r="4" fill="url(#logoInk)"/><path d="M14 54h36"/></g>
+<g class="logo-v logo-animaux"><path d="M32 30c-9 0-16 8-16 16 0 6 5 8 9 7 4-1 10-1 14 0 4 1 9-1 9-7 0-8-7-16-16-16Z"/><circle cx="14" cy="26" r="5"/><circle cx="26" cy="14" r="5"/><circle cx="38" cy="14" r="5"/><circle cx="50" cy="26" r="5"/></g>
+<g class="logo-v logo-finance"><path d="M8 56h48"/><path d="M14 56V42M28 56V32M42 56V24" stroke-width="6"/><path d="M10 28 26 16l10 6L54 8M44 8h10v10"/></g></svg><span class="brand-name">KERYNQ</span></div>
   <div class="header-actions"><button type="button" id="privateSearchToggle" class="tool-button private-toggle ico-after ico-lock" aria-pressed="false" aria-controls="privateSearchInfo">Mode privé</button><button id="fontToggle" class="tool-button" type="button" aria-pressed="false" aria-label="Agrandir les caractères">A+ Texte</button><div class="theme-picker"><button id="themeToggle" class="tool-button" type="button" aria-expanded="false" aria-controls="themeMenu">Thème</button><div id="themeMenu" class="theme-menu" role="group" aria-label="Choisir un thème" hidden></div></div></div>
 </header>
 <p id="privateSearchInfo" class="private-banner" aria-live="polite" hidden></p>
@@ -61,8 +66,8 @@
     <div class="panel-tools"><div id="modeSwitch" class="mode-switch" role="group" aria-label="Quantité d’options affichées"><button type="button" id="modeSimple" aria-pressed="true">Simple</button><button type="button" id="modeAdvanced" aria-pressed="false">Toutes les options</button></div><button id="showAll" class="link-button" type="button" aria-controls="categories" aria-expanded="false">Afficher tous les domaines</button><label class="sr-only" for="familyFilter">Famille de domaines</label><select id="familyFilter" class="text-search"><option value="all">Toutes les familles</option><option value="actus">Actualités &amp; société</option><option value="culture">Culture &amp; loisirs</option><option value="tech">Tech, IA &amp; cyber</option><option value="sciences">Santé &amp; sciences</option><option value="quotidien">Famille &amp; quotidien</option><option value="demarches">Démarches &amp; droit</option><option value="mobilite">Voyages &amp; mobilité</option><option value="formation">Études &amp; travail</option></select></div></div>
 
   <h3 id="category-title">Domaine de votre question</h3>
+  <div class="category-tools"><label class="sr-only" for="categorySearch">Rechercher un domaine</label><input id="categorySearch" class="text-search" type="search" placeholder="Rechercher un domaine"><span class="category-count" id="categoryCount" aria-live="polite"></span></div>
   <div class="category-grid" id="categories" role="group" aria-labelledby="category-title"></div>
-  <div class="category-tools"><label class="sr-only" for="categorySearch">Rechercher un domaine</label><input id="categorySearch" class="text-search advanced-only" type="search" placeholder="Rechercher un domaine"><span class="category-count" id="categoryCount" aria-live="polite"></span></div>
 
   <div class="block"><h3 id="examplesTitle">Besoin d’une idée ?</h3><div id="examples" class="example-row" role="group" aria-labelledby="examplesTitle"></div></div>
 
@@ -92,11 +97,6 @@
   </div>
 </section>
 
-<section class="panel" aria-labelledby="template-heading">
-  <div class="panel-head"><div><h2 id="template-heading">Partir d’un modèle</h2><p class="sub">Règle les options en un clic. Votre question est conservée.</p></div><button type="button" id="manageTemplates" class="link-button" aria-controls="templateManager" aria-expanded="false">Mes modèles</button></div>
-  <div class="template-list" id="templateList"></div>
-  <div class="template-manager" id="templateManager" role="region" aria-label="Gestion de mes modèles" hidden><div class="custom-row"><label class="sr-only" for="templateName">Nom du modèle</label><input id="templateName" class="field" maxlength="60" placeholder="Nom de votre modèle"><button id="saveTemplate" type="button" class="btn">Enregistrer les options actuelles</button></div><div id="customTemplates" class="custom-template-list" aria-live="polite"></div></div>
-</section>
 </div>
 
 <aside class="panel preview" id="resultPreview" aria-labelledby="resultTitle">

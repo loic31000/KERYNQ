@@ -51,8 +51,6 @@ with sync_playwright() as p:
         page.locator('.saved-load').click()
         assert page.locator('#topic').input_value()=='Favori' and page.locator('#engineSelect').input_value()=='brave'
         assert_prefs()
-        page.locator('#manageTemplates').click();page.locator('#customTemplates .btn').click()
-        assert_prefs()
         assert not errors,errors;ctx.close()
         # Les sites ignorés sont signalés.
         ctx,page,errors=open_app(browser,width)
@@ -104,7 +102,7 @@ with sync_playwright() as p:
             v=[x/12.92 if x<=.03928 else ((x+.055)/1.055)**2.4 for x in v]
             return .2126*v[0]+.7152*v[1]+.0722*v[2]
         ratio=lambda a,b:(max(lum(a),lum(b))+.05)/(min(lum(a),lum(b))+.05)
-        for theme in ('dark','light','pro','cyber','girly','aurora'):
+        for theme in ('dark','light','pro','cyber','girly','aurora','manga','medecine','tuning','animaux','finance'):
             page.locator('#themeToggle').click()
             page.locator(f'[data-theme-choice="{theme}"]').click()
             page.keyboard.press('Escape')
@@ -119,8 +117,8 @@ with sync_playwright() as p:
             assert page.locator('.logo').bounding_box()['width']>=44
             assert page.locator('.brand-name').bounding_box()['height']<=44,theme
         page.reload()
-        assert page.evaluate('document.documentElement.dataset.theme')=='aurora'
-        assert page.locator('#themeToggle').inner_text()=='Thème : Aurore'
+        assert page.evaluate('document.documentElement.dataset.theme')=='finance'
+        assert page.locator('#themeToggle').inner_text()=='Thème : Finance'
         # Bulles : ouverture au focus, visibles dans l'écran, fermeture par Échap.
         for tip in page.locator('.tip').all():
             if not tip.is_visible():continue
@@ -131,7 +129,7 @@ with sync_playwright() as p:
             assert len(tip.get_attribute('data-tip'))<=170,tip.get_attribute('data-tip')
             page.keyboard.press('Escape')
             assert page.locator('#tipBubble').is_hidden()
-        assert page.locator('.tip').count()==17
+        assert page.locator('.tip').count()==16
         assert not errors,errors;ctx.close()
         # Un ancien thème reste valide ; un thème inconnu revient au thème par défaut.
         for stored,expected in (('light','light'),('inconnu','dark')):
@@ -208,7 +206,7 @@ with sync_playwright() as p:
         with ctx.expect_page():page.locator('#runSearch').click()
         page.wait_for_timeout(200)
         assert any(u.startswith('https://pubmed.ncbi.nlm.nih.gov/?term=Migraine') for u in requests),requests
-        assert page.locator('#engineButtons .btn').count()==23
+        assert page.locator('#engineButtons .btn').count()==29
         assert page.evaluate('document.documentElement.scrollWidth-document.documentElement.clientWidth')<=2
         assert not errors,errors;ctx.close()
         # Mode privé en haut de page, explication visible seulement quand il est actif.
@@ -219,6 +217,29 @@ with sync_playwright() as p:
         assert page.locator('#privateSearchToggle').get_attribute('aria-pressed')=='true' and page.locator('#privateSearchInfo').is_visible()
         assert 'Secret' not in page.evaluate("localStorage.getItem('kerynq-premium-v5')")
         assert page.evaluate('document.documentElement.scrollWidth-document.documentElement.clientWidth')<=2
+        assert not errors,errors;ctx.close()
+        # Modèles retirés de l'interface, mais conservés dans une sauvegarde ; domaines en pastilles filtrables.
+        ctx,page,errors=open_app(browser,width,{'kerynq-v5-templates':[{'id':'t','label':'Ancien','settings':{'topic':'x'}}]})
+        assert page.locator('#templateList,#manageTemplates').count()==0
+        assert 'Ancien' in page.evaluate("localStorage.getItem('kerynq-v5-templates')")
+        page.locator('#modeSimple').click()
+        assert page.locator('#categorySearch').is_visible()
+        page.locator('#categorySearch').fill('finances')
+        assert page.locator('.category-btn').count()==1
+        page.locator('#categorySearch').fill('')
+        assert page.locator('#categories').bounding_box()['height']<=240
+        page.locator('#showAll').click()
+        assert page.locator('.category-btn').count()==39 and page.locator('#categories').bounding_box()['height']<=240
+        assert page.evaluate("[...document.querySelectorAll('.category-btn')].every(b=>b.getBoundingClientRect().height>=44)")
+        # Moteur d'images : adresse dédiée, opérateurs non supposés.
+        page.locator('#topic').fill('Chat')
+        page.locator('#engineSelect').select_option('googleimages')
+        assert page.locator('#queryPreview').text_content()=='Chat'
+        assert 'optgroup' in page.locator('#engineSelect').inner_html() and page.locator('optgroup[label="Images"] option').count()==6
+        requests=[];ctx.on('request',lambda q:requests.append(q.url))
+        with ctx.expect_page():page.locator('#runSearch').click()
+        page.wait_for_timeout(200)
+        assert any(u.startswith('https://www.google.com/search?udm=2&q=Chat') for u in requests),requests
         assert not errors,errors;ctx.close()
         # Un fournisseur importé ne peut pas viser une propriété héritée.
         ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'aiProvider':'constructor'}})

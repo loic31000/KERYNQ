@@ -6,7 +6,7 @@
 
 Nom : **KERYNQ** (« Explorez. Affinez. Découvrez. »). Dépôt : https://github.com/loic31000/KERYNQ. L'application reste **privée, en prépublication**, et a vocation à fonctionner gratuitement sur GitHub Pages **uniquement quand le propriétaire choisira de la rendre publique**.
 
-KERYNQ est un atelier de recherche personnalisée, non un moteur d'indexation. Le traitement local construit des requêtes vers 23 moteurs (`MOTEURS.md`), et des consignes destinées à ChatGPT, Claude, Gemini, Kimi, Grok, DeepSeek, Perplexity, Mistral Vibe, Copilot et une URL HTTPS personnalisée. Les assistants ne reçoivent **aucune consigne automatiquement**. La recherche et les pages IA s'ouvrent à l'initiative de l'utilisateur.
+KERYNQ est un atelier de recherche personnalisée, non un moteur d'indexation. Le traitement local construit des requêtes vers 29 moteurs (`MOTEURS.md`), et des consignes destinées à ChatGPT, Claude, Gemini, Kimi, Grok, DeepSeek, Perplexity, Mistral Vibe, Copilot et une URL HTTPS personnalisée. Les assistants ne reçoivent **aucune consigne automatiquement**. La recherche et les pages IA s'ouvrent à l'initiative de l'utilisateur.
 
 ## État à jour
 
@@ -16,7 +16,7 @@ Les lignes ci-dessous conservent l'historique de la passation ; pour l'état cou
 
 - Lots 1 à 3 : compilateur de requêtes séparé (`assets/js/core/search-query-core.js`), tests des opérateurs et dates ; contrôles des imports et URL (`assets/js/core/privacy-core.js`), mode privé, effacement des données locales ; améliorations de l'accès clavier et du reflow.
 - Lots 4A et 4B : passage de 27 à **39 univers**, répartis en **8 familles**, avec des filtres propres et une compatibilité des identifiants historiques. Les douze nouvelles catégories concernent administration, famille, animaux, logement, droit, finances personnelles, enfance et scolarité, travail et emploi, retraite et autonomie, cuisine et alimentation, maison et jardin, transports et déplacements.
-- Multi-IA, favoris et dossiers, modèles, export/import JSON, six thèmes interchangeables, bulles d'aide, interface responsive, manifeste PWA et service worker limitant le cache aux ressources de l'application.
+- Multi-IA, favoris et dossiers, modèles, export/import JSON, onze thèmes interchangeables, bulles d'aide, interface responsive, manifeste PWA et service worker limitant le cache aux ressources de l'application.
 - Documentation existante : README, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY, SUPPORT, ACCESSIBILITY, CHANGELOG, LICENSE et `docs/*`.
 - Aucune GitHub Action mise en place.
 
@@ -61,7 +61,7 @@ Relancer les tests depuis `main` sur le PC de développement. **Ne pas présente
 - Si la taille du HTML rend les changements risqués, modulariser **sans briser l'ouverture directe du fichier** ou fournir une version autonome de distribution.
 
 ### Priorité 3 : recherches et IA avancées, après stabilisation
-- Moteurs : 23 intégrés. À confirmer manuellement : ceux listés comme écartés dans `MOTEURS.md`.
+- Moteurs : 29 intégrés. À confirmer manuellement : ceux listés comme écartés dans `MOTEURS.md`.
 - Ajouter des favoris de fournisseurs, modèles de consignes, et une comparaison **manuelle** multi-moteurs ou multi-IA si cela reste utile.
 - Préserver un fonctionnement local, sans télémétrie ni transmission masquée de requêtes sensibles.
 

@@ -35,11 +35,6 @@ with sync_playwright() as p:
         assert page.evaluate('document.activeElement.id')=='tabPrompt'
         page.keyboard.press('End')
         assert page.evaluate('document.activeElement.id')=='tabWeb'
-        page.locator('#manageTemplates').click()
-        assert page.locator('#manageTemplates').get_attribute('aria-expanded')=='true'
-        assert page.evaluate('document.activeElement.id')=='templateName'
-        page.locator('#manageTemplates').click()
-        assert page.locator('#templateManager').is_hidden()
         page.locator('#modeSimple').click()
         if width<=390:
             page.locator('#jumpToResult').click()

@@ -30,7 +30,7 @@ test('real normalize falls back safely on invalid values',()=>{
  assert.equal(normalize({aiProvider:'custom'}).aiProvider,'custom');
 });
 test('themes accept historic and new values only',()=>{
- for(const theme of ['dark','light','pro','cyber','girly','aurora'])assert.equal(normalize({theme}).theme,theme);
+ for(const theme of ['dark','light','pro','cyber','girly','aurora','manga','medecine','tuning','animaux','finance'])assert.equal(normalize({theme}).theme,theme);
  assert.equal(normalize({theme:'constructor'}).theme,'dark');
 });
 test('a profile saved with the removed source packs stays valid and keeps its sites',()=>{

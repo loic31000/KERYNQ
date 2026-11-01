@@ -23,14 +23,14 @@ Ouvrir `index.html` dans un navigateur moderne. Écrivez votre question, précis
 
 - Recherche directe, `Ctrl + K`, affichage simple ou toutes les options, bulles d'aide.
 - 39 univers et leurs filtres contextuels, modèles et recherches favorites par dossier.
-- 23 moteurs généraux et spécialisés (dont OSINT, journalisme, science, code, culture), avec suggestion par domaine et détail des filtres transmis. Voir [docs/MOTEURS.md](docs/MOTEURS.md).
+- 29 moteurs généraux, d'images et spécialisés (dont OSINT, journalisme, science, code, culture), avec suggestion par domaine et détail des filtres transmis. Voir [docs/MOTEURS.md](docs/MOTEURS.md).
 - Consignes IA adaptées : méthode propre au domaine, format court ou détaillé, note selon l'assistant.
 - Exemple au premier lancement et section d'aide.
 - Export et import validé de profils JSON ; export des consignes Markdown.
 - **Mode privé temporaire** : pas de sauvegarde des nouvelles recherches, effacement de la recherche courante déjà enregistrée à l’activation et disparition de la session privée à la fermeture/recharge. Les favoris existants ne sont pas supprimés.
 - **Effacer mes données locales** : suppression confirmée des préférences, favoris et modèles stockés par KERYNQ (ne supprime pas les fichiers déjà exportés).
 - **Assistants IA au choix** : ChatGPT, Claude, Gemini, Kimi, Grok, DeepSeek, Perplexity, Mistral Vibe, Copilot, autre URL HTTPS. Aucun compte ni API de fournisseur n'est connecté à KERYNQ.
-- Icônes SVG, six thèmes (Nuit, Clair, Pro, Cyber, Girly, Aurore), texte agrandi, adaptations mobiles et animation réduite.
+- Icônes SVG, onze thèmes (Nuit, Clair, Pro, Cyber, Girly, Aurore, Manga, Médecine, Tuning, Animaux, Finance), texte agrandi, adaptations mobiles et animation réduite.
 
 ## Documentation
 

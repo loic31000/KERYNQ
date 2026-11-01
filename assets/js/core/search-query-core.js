@@ -35,7 +35,13 @@
     {id:'myanimelist',label:'MyAnimeList',group:'special',field:'Anime et mangas',url:'https://myanimelist.net/search/all?q=',ops:{words:true}},
     {id:'steam',label:'Steam',group:'special',field:'Jeux vidéo',url:'https://store.steampowered.com/search/?term=',ops:{words:true}},
     {id:'musicbrainz',label:'MusicBrainz',group:'special',field:'Musique',url:'https://musicbrainz.org/search?type=artist&query=',ops:{words:true}},
-    {id:'openstreetmap',label:'OpenStreetMap',group:'special',field:'Cartes et lieux',url:'https://www.openstreetmap.org/search?query=',ops:{words:true}}
+    {id:'openstreetmap',label:'OpenStreetMap',group:'special',field:'Cartes et lieux',url:'https://www.openstreetmap.org/search?query=',ops:{words:true}},
+    {id:'googleimages',label:'Google Images',group:'images',url:'https://www.google.com/search?udm=2&q=',ops:{words:true}},
+    {id:'bingimages',label:'Bing Images',group:'images',url:'https://www.bing.com/images/search?q=',ops:{words:true}},
+    {id:'braveimages',label:'Brave Images',group:'images',url:'https://search.brave.com/images?q=',ops:{words:true}},
+    {id:'duckimages',label:'DuckDuckGo Images',group:'images',url:'https://duckduckgo.com/?ia=images&iax=images&q=',ops:{words:true}},
+    {id:'commons',label:'Wikimedia Commons',group:'images',url:'https://commons.wikimedia.org/w/index.php?search=',ops:{words:true}},
+    {id:'flickr',label:'Flickr',group:'images',url:'https://www.flickr.com/search/?text=',ops:{words:true}}
   ]);
   const engines = ENGINES.map(e => e.id);
   // Simple suggestion par univers : elle ne change jamais le moteur sans clic.

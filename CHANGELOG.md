@@ -4,6 +4,7 @@ Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent 
 
 ## Non publié (branche de préparation)
 
+- Ergonomie : domaines en pastilles compactes avec filtre, texte pour l'IA agrandi, section des modèles retirée. Six moteurs d'images ajoutés. Thèmes Manga, Médecine, Tuning, Animaux et Finance. Cache PWA `kerynq-static-v16`.
 - Nettoyage : code et champs inutilisés retirés, icône en double supprimée, notes dupliquées du README retirées. Cache PWA `kerynq-static-v15`.
 - Audit de sécurité consigné dans `docs/AUDIT_PREPUBLICATION.md`.
 - Mode privé déplacé en haut de page ; logo agrandi, avec un dessin SVG propre à chaque thème. Cache PWA `kerynq-static-v14`.

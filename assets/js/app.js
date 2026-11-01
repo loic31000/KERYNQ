@@ -10,7 +10,7 @@ function updatePrivateUI(){
  $('privateSearchInfo').textContent=privateMode
   ?'Mode privé actif : aucune nouvelle recherche ni modification de filtre n’est conservée localement. Les moteurs externes voient toujours vos requêtes. Quitter ce mode effacera les champs privés.'
   :'Mode privé désactivé : vos réglages et votre recherche peuvent être enregistrés sur cet appareil. Les moteurs externes reçoivent les requêtes lancées.';
- for(const id of ['saveResearch','saveTemplate','exportConfig','importConfig'])$(id).disabled=privateMode;
+ for(const id of ['saveResearch','exportConfig','importConfig'])$(id).disabled=privateMode;
 }
 function togglePrivateMode(){
  if(!privateMode){
@@ -20,7 +20,7 @@ function togglePrivateMode(){
   updatePrivateUI();notify('Mode privé activé : aucune recherche en cours enregistrée');
  }else{
   privateMode=false;
-  state=load();initOptions(state.category);sync();renderTemplates();renderCustomTemplates();renderSaved();
+  state=load();initOptions(state.category);sync();renderSaved();
   updatePrivateUI();notify('Mode privé désactivé : champs temporaires effacés');
  }
 }
@@ -29,9 +29,9 @@ function eraseAllKerynqData(){
  const keys=[LS,SAVED_KEY,CUSTOM_TEMPLATES_KEY,'kerynq-premium-v1',WELCOME_KEY];
  try{for(const key of keys)localStorage.removeItem(key)}catch{notify('Effacement incomplet : vérifier les données du navigateur');return}
  privateMode=false;state=clone(DEFAULT);initOptions(state.category);$('categorySearch').value='';
- $('favoriteTitle').value='';$('favoriteFolder').value='';$('favoriteSearch').value='';$('templateName').value='';
+ $('favoriteTitle').value='';$('favoriteFolder').value='';$('favoriteSearch').value='';
  suppressSave=true;
- try{sync();renderTemplates();renderCustomTemplates();renderSaved();updatePrivateUI()}
+ try{sync();renderSaved();updatePrivateUI()}
  finally{suppressSave=false}
  notify('Données locales KERYNQ effacées');
 }
@@ -89,7 +89,7 @@ function renderExamples(){const t=topicById(state.category);const root=$('exampl
 function renderGoals(){const root=$('goals');root.replaceChildren();for(const [id,name] of GOALS){const b=node('button','goal-btn',name);b.type='button';b.setAttribute('aria-pressed',String(state.goal===id));b.addEventListener('click',()=>{const keyboardFocus=document.activeElement===b;state.goal=id;save();renderGoals();renderResult();if(keyboardFocus){[...root.children].find(x=>x.dataset.goalId===id)?.focus({preventScroll:true})}});b.dataset.goalId=id;root.append(b)}}
 function makeCheckbox(id,title,desc,checked,onChange,card=false){const lab=node('label',card?'check-card':'pill-check');const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.checked=checked;checkbox.id=id;checkbox.addEventListener('change',()=>onChange(checkbox.checked));const span=node('span');span.append(node('strong','',title));if(desc)span.append(node('small','',desc));lab.append(checkbox,span);return lab}
 function renderSpecial(){initOptions(state.category);const root=$('specialFilters');root.replaceChildren();const t=topicById(state.category);$('specificTitle').textContent='Filtres : '+t.name;$('specificHelp').textContent='Ces options changent selon le thème sélectionné.';for(const [id,label,desc] of t.options){root.append(makeCheckbox('special-'+id,label,desc,state.options[t.id].includes(id),checked=>{if(checked&&!state.options[t.id].includes(id))state.options[t.id].push(id);else if(!checked)state.options[t.id]=state.options[t.id].filter(x=>x!==id);save();renderResult()},true))}renderCustom();renderQuickFilters()}
-function setupEngines(){const select=$('engineSelect'),buttons=$('engineButtons');for(const [group,title] of [['general','Moteurs généraux'],['special','Moteurs spécialisés']]){const box=document.createElement('optgroup');box.label=title;for(const e of KerynqSearch.ENGINES.filter(x=>x.group===group)){const o=node('option','',e.field?e.label+' · '+e.field:e.label);o.value=e.id;box.append(o);const b=node('button','btn ico-after ico-external',e.label);b.type='button';b.dataset.engine=e.id;buttons.append(b)}select.append(box)}
+function setupEngines(){const select=$('engineSelect'),buttons=$('engineButtons');for(const [group,title] of [['general','Moteurs généraux'],['images','Images'],['special','Moteurs spécialisés']]){const box=document.createElement('optgroup');box.label=title;for(const e of KerynqSearch.ENGINES.filter(x=>x.group===group)){const o=node('option','',e.field?e.label+' · '+e.field:e.label);o.value=e.id;box.append(o);const b=node('button','btn ico-after ico-external',e.label);b.type='button';b.dataset.engine=e.id;buttons.append(b)}select.append(box)}
  $('useSuggestedEngine').addEventListener('click',()=>{const e=KerynqSearch.suggestedEngine(state.category);if(!e)return;state.engine=e.id;$('engineSelect').value=e.id;save();renderResult();$('engineSelect').focus();notify('Moteur choisi : '+e.label)})}
 function renderEngineTable(){const root=$('engineTable');root.replaceChildren();const current=KerynqSearch.engineById(state.engine);$('engineTableName').textContent=current.label;for(const f of KerynqSearch.capabilities()){const row=document.createElement('tr');const head=node('th','',f.label);head.scope='row';const on=f.engines[current.id];row.append(head,node('td',on?'cap-yes':'cap-no',on?'Transmis':'Non transmis'));root.append(row)}const suggested=KerynqSearch.suggestedEngine(state.category);const show=!!suggested&&suggested.id!==state.engine;$('engineSuggest').hidden=!show;if(show)$('engineSuggestText').textContent='Conseillé pour ce domaine : '+suggested.label+' ('+suggested.field.toLowerCase()+').'}
 function renderCustom(){const root=$('customList');root.replaceChildren();for(const entry of state.custom[state.category]||[]){const pill=node('span','custom-pill');const chk=document.createElement('input');chk.type='checkbox';chk.checked=entry.checked;chk.setAttribute('aria-label','Activer '+entry.label);chk.addEventListener('change',()=>{entry.checked=chk.checked;save();renderResult()});const lbl=node('span','',entry.label);const rm=node('button','ico ico-close');rm.type='button';rm.setAttribute('aria-label','Supprimer le critère '+entry.label);rm.addEventListener('click',()=>{state.custom[state.category]=state.custom[state.category].filter(x=>x.id!==entry.id);save();renderCustom();renderResult();$('customInput').focus()});pill.append(chk,lbl,rm);root.append(pill)}}
@@ -125,25 +125,10 @@ function sync(){if($('familyFilter'))$('familyFilter').value='all';if($('aiProvi
 async function copy(text){try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text)}else{const tmp=document.createElement('textarea');tmp.value=text;tmp.style.position='fixed';tmp.style.left='-9999px';document.body.append(tmp);tmp.select();const ok=document.execCommand('copy');tmp.remove();if(!ok)throw Error('Copie non disponible')}notify('Copié dans le presse-papiers');return true}catch{notify('Copie bloquée par le navigateur. Sélectionnez le texte à copier.');return false}}
 function download(name,s,mime){const url=URL.createObjectURL(new Blob([s],{type:mime}));const a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000)}
 
-const TEMPLATES=[
- {id:'verify',label:'Vérifier un fait',category:'osint',goal:'verify',sources:['official','press','archives'],formats:['summary','sources'],period:'all'},
- {id:'compare',label:'Comparer',category:'general',goal:'compare',sources:['official','specialists'],formats:['table','sources'],period:'all'},
- {id:'watch',label:'Veille récente',category:'news',goal:'news',sources:['official','press'],formats:['summary','timeline','sources'],period:'week'},
- {id:'document',label:'Documentation',category:'general',goal:'find',sources:['official','science','archives'],formats:['sources','summary'],period:'all',filetype:'pdf'},
- {id:'culture',label:'Explorer la culture',category:'culture',goal:'recommend',sources:['specialists','community'],formats:['ideas','summary'],period:'all'},
- {id:'investigate',label:'Enquête structurée',category:'osint',goal:'deep',sources:['official','archives'],formats:['timeline','detail','sources'],period:'all'}
-];
 const CUSTOM_TEMPLATES_KEY='kerynq-v5-templates';
 let damagedStorageNotified=false;
 function readStoredItems(key,kind){let raw;try{raw=JSON.parse(localStorage.getItem(key)||'[]')}catch{return []}const {items,dropped}=KerynqPrivacy.salvageItems(raw,normalize,kind);if(dropped&&!damagedStorageNotified){damagedStorageNotified=true;notify(dropped+' entrée(s) illisible(s) ignorée(s) dans vos '+kind)}return items}
 function getCustomTemplates(){return readStoredItems(CUSTOM_TEMPLATES_KEY,'modèles')}
-function putCustomTemplates(a){try{localStorage.setItem(CUSTOM_TEMPLATES_KEY,JSON.stringify(a.slice(0,30)))}catch{notify('Stockage local indisponible')}}
-function applyTemplate(template){if(template.settings){const oldTopic=state.topic;const oldEngine=state.engine;state=normalize(KerynqPrivacy.withCurrentPreferences(template.settings,state));state.topic=oldTopic||state.topic;state.engine=oldEngine;}else{state.category=template.category;state.goal=template.goal;state.sources=template.sources.slice();state.formats=template.formats.slice();state.period=template.period||'all';state.filetype=template.filetype||'';state.options[template.category]=topicById(template.category).defaults.slice();}initOptions(state.category);save();sync();notify('Modèle appliqué : '+template.label);}
-function renderTemplates(){const root=$('templateList');root.replaceChildren();for(const t of TEMPLATES){const b=node('button','template-chip',t.label);b.type='button';b.addEventListener('click',()=>applyTemplate(t));root.append(b)}const custom=getCustomTemplates();if(custom.length){const b=node('button','template-chip template-custom','Mes modèles ('+custom.length+')');b.type='button';b.addEventListener('click',()=>{$('templateManager').hidden=false;renderCustomTemplates();$('templateManager').scrollIntoView({block:'nearest',behavior:'smooth'})});root.append(b)}}
-function renderCustomTemplates(){const root=$('customTemplates');root.replaceChildren();for(const t of getCustomTemplates()){
- const r=node('div','custom-template-row');const apply=node('button','btn',t.label);apply.type='button';apply.addEventListener('click',()=>applyTemplate(t));const rm=node('button','icon-action ico ico-close');rm.type='button';rm.setAttribute('aria-label','Supprimer le modèle '+t.label);rm.addEventListener('click',()=>{putCustomTemplates(getCustomTemplates().filter(x=>x.id!==t.id));renderTemplates();renderCustomTemplates();$('templateName').focus()});r.append(apply,rm);root.append(r)}
- if(!root.children.length)root.append(node('p','sub','Aucun modèle personnel enregistré.'));
-}
 function applyMode(){document.body.dataset.mode=state.mode;const adv=state.mode==='advanced';$('modeSimple').setAttribute('aria-pressed',String(!adv));$('modeAdvanced').setAttribute('aria-pressed',String(adv));}
 function switchMode(mode){state.mode=mode;save();applyMode();if(mode==='advanced')$('advanced').open=false;}
 function searchUrl(engine=state.engine){return KerynqSearch.engineById(engine).url+encodeURIComponent(searchQuery(engine))}
@@ -154,9 +139,7 @@ function setupV5(){
  $('runSearch').addEventListener('click',runSearch);
  $('topic').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.ctrlKey&&!e.metaKey){e.preventDefault();runSearch()}});
  window.addEventListener('keydown',e=>{const k=(e.key||'').toLowerCase();if((e.ctrlKey||e.metaKey)&&k==='k'){e.preventDefault();$('topic').focus();$('topic').select()}else if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();runSearch()}});
- $('manageTemplates').addEventListener('click',()=>{const d=$('templateManager');const opening=d.hidden;if(!opening&&d.contains(document.activeElement))$('manageTemplates').focus();d.hidden=!opening;renderCustomTemplates();$('manageTemplates').setAttribute('aria-expanded',String(opening));if(opening)$('templateName').focus()});
- $('saveTemplate').addEventListener('click',()=>{if(privateMode)return notify('Quittez le mode privé pour enregistrer un modèle');const label=$('templateName').value.trim();if(!label){notify('Donnez un nom à votre modèle');$('templateName').focus();return}const all=getCustomTemplates();if(all.length>=30){notify('30 modèles personnels maximum');return}all.unshift({id:(typeof crypto!=='undefined'&&crypto.randomUUID)?crypto.randomUUID():String(Date.now()),label:label.slice(0,60),settings:clone(state)});putCustomTemplates(all);$('templateName').value='';renderTemplates();renderCustomTemplates();notify('Modèle personnel enregistré')});
- renderTemplates();renderCustomTemplates();renderQuickFilters();applyMode();
+ renderQuickFilters();applyMode();
 }
 
 function renderThemeMenu(){const root=$('themeMenu');root.replaceChildren();const current=THEMES.find(x=>x[0]===state.theme);$('themeToggle').textContent='Thème : '+current[1];document.querySelector('meta[name="theme-color"]').content=getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();for(const [id,label] of THEMES){const b=node('button','theme-choice');b.type='button';b.dataset.themeChoice=id;b.setAttribute('aria-pressed',String(state.theme===id));const dot=node('span','swatch swatch-'+id);dot.setAttribute('aria-hidden','true');b.append(dot,node('span','',label));b.addEventListener('click',()=>{state.theme=id;save();document.documentElement.dataset.theme=id;renderThemeMenu();root.querySelector('[aria-pressed="true"]')?.focus();notify('Thème '+label+' appliqué')});root.append(b)}}
@@ -173,7 +156,6 @@ const TIPS=[
  ["custom-title","Vos propres critères","Ajoutez une demande qui n’est pas dans la liste, par exemple « disponible en France ». Elle s’ajoute au texte pour une IA."],
  ["source-title","Types de sources","Indiquez où l’IA doit chercher en priorité : sites officiels, presse, études…"],
  ["format-title","Présentation de la réponse","Choisissez la forme de la réponse de l’IA : résumé, tableau, liste de liens…"],
- ["template-heading","Modèles","Un modèle règle plusieurs options en un clic. Votre question ne change pas. Vous pouvez aussi créer les vôtres."],
  ["resultTitle","Votre résultat","Voici ce que KERYNQ a préparé. Cela change à chaque réglage. Vous pouvez le relire avant de lancer."],
  ["assistantLabel","Assistant","Choisissez l’IA que vous voulez utiliser. Elle s’ouvre dans un nouvel onglet, et vous y collez le texte. Elle peut demander un compte."],
  ["promptStyleLabel","Format du texte","Détaillé : plus de consignes, pour une réponse plus complète. Court : un texte bref, pour une réponse rapide."],
@@ -213,7 +195,7 @@ $('profileFile').addEventListener('change',async e=>{const file=e.target.files&&
    if(imported.favorites!==null)localStorage.setItem(SAVED_KEY,JSON.stringify(imported.favorites));
    if(imported.templates!==null)localStorage.setItem(CUSTOM_TEMPLATES_KEY,JSON.stringify(imported.templates));
   }catch(storageError){for(let i=0;i<keys.length;i++)try{if(previous[i]===null)localStorage.removeItem(keys[i]);else localStorage.setItem(keys[i],previous[i])}catch{}throw Error('Stockage indisponible ou plein : import annulé')}
-  state=imported.settings;initOptions(state.category);sync();renderSaved();renderTemplates();renderCustomTemplates();
+  state=imported.settings;initOptions(state.category);sync();renderSaved();
   notify('Import validé et appliqué');
  }catch(err){notify('Import impossible : '+err.message)}finally{e.target.value=''}
 });
