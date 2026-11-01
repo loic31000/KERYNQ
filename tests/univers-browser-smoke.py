@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
@@ -6,7 +7,7 @@ for fn in ['search-query-core.js','privacy-core.js']:
  HTML=HTML.replace(f'<script src="./{fn}"></script>',f'<script>{(ROOT/fn).read_text(encoding="utf-8")}</script>')
 EXPECT={'administration':'Administration','family':'Famille / Parentalité','animals':'Animaux','housing':'Logement','law':'Droit / Justice','personalfinance':'Finances personnelles','childhood':'Enfance & Scolarité','work':'Travail & Emploi','retirement':'Retraite & Autonomie','cooking':'Cuisine & Alimentation','homegarden':'Maison & Jardin','transport':'Transports & Déplacements'}
 with sync_playwright() as p:
- browser=p.chromium.launch(headless=True,executable_path='/usr/bin/chromium',args=['--no-sandbox'])
+ browser=p.chromium.launch(headless=True,executable_path=os.environ.get('KERYNQ_CHROMIUM') or None)
  for width in [1440,390,320]:
   ctx=browser.new_context(viewport={'width':width,'height':850},reduced_motion='reduce',service_workers='block')
   page=ctx.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))

@@ -20,16 +20,21 @@
   function tokens(input) {
     return String(input || '').split(/[,;\n]+/).map(x=>x.trim()).filter(Boolean).slice(0,22);
   }
-  function domains(input) {
-    const results=[];
-    for(let value of tokens(input)) {
-      value=value.replace(/^https?:\/\//i,'').replace(/^www\./i,'').replace(/[/?#].*$/,'').toLowerCase().trim();
-      if(/^(?:[a-z0-9-]+\.)+[a-z]{2,}$/.test(value) &&
+  function siteReport(input) {
+    const valid=[],invalid=[],overflow=[];
+    for(const raw of String(input || '').split(/[,;\n]+/).map(x=>x.trim()).filter(Boolean)) {
+      const value=raw.replace(/^https?:\/\//i,'').replace(/^www\./i,'').replace(/[/?#].*$/,'').toLowerCase().trim();
+      const ok=/^(?:[a-z0-9-]+\.)+[a-z]{2,}$/.test(value) &&
          value.split('.').every(label=>label.length<=63 && !label.startsWith('-') && !label.endsWith('-')) &&
-         value.length<=253 && !results.includes(value)) results.push(value);
+         value.length<=253;
+      if(!ok) invalid.push(raw);
+      else if(valid.includes(value)) continue;
+      else if(valid.length<10) valid.push(value);
+      else if(!overflow.includes(value)) overflow.push(value);
     }
-    return results.slice(0,10);
+    return {valid,invalid,overflow};
   }
+  function domains(input) {return siteReport(input).valid}
   function iso(date){return [date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-')}
   function validISO(value) {
     if(!/^\d{4}-\d{2}-\d{2}$/.test(value || ''))return false;
@@ -101,5 +106,5 @@
     }
     return {query:parts.join(' ').replace(/\s+/g,' ').trim(),web,prompt,engine:provider,invalidDates:date.invalid};
   }
-  return Object.freeze({compile,tokens,domains,dates,validISO,regionCountry});
+  return Object.freeze({compile,tokens,domains,siteReport,dates,validISO,regionCountry});
 });

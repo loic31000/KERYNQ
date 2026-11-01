@@ -76,4 +76,4 @@ Relancer les tests depuis `main` sur le PC de développement. **Ne pas présente
 ## Conditions de validation d'un nouveau lot
 Changements limités, code lisible, tests reproduits et rapport honnête, `git diff --check`, absence de secrets, tests du thème et des moteurs concernés, état du dépôt connu, nouvelle branche/PR et **pas de fusion automatique** sans accord.
 
-Le résultat souhaité est une application réellement utile et compréhensible du grand public, et non un empilement de filtres visuels. 
+Le résultat souhaité est une application réellement utile et compréhensible du grand public, et non un empilement de filtres visuels.

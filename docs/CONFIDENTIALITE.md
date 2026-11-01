@@ -11,7 +11,7 @@ KERYNQ est un outil statique. Il ne possède ni serveur utilisateur, ni compte, 
 ## Mode privé (nouveau, expérimental)
 
 - Le bouton **Mode privé** suspend l'enregistrement automatique des modifications de la recherche en cours. La requête et les critères restent visibles durant la session courante, puis sont oubliés en quittant le mode ou en rechargeant la page.
-- Lors de l'activation, KERYNQ nettoie dans les réglages courants déjà conservés le sujet et les champs de précisions/exclusions/sites. **Cela n'efface pas les anciens favoris et modèles, ni les exports déjà téléchargés.**
+- Lors de l'activation, KERYNQ nettoie dans les réglages courants déjà conservés le sujet et les champs de précisions/exclusions/sites. **Cela n'efface pas les anciens favoris et modèles, les critères personnels déjà enregistrés dans les thèmes, ni les exports déjà téléchargés.**
 - L'ajout de nouveaux favoris ou modèles et l'import/export de profils sont désactivés pendant le mode privé ; la copie de la consigne ou le lancement d'une recherche restent possibles sur décision de l'utilisateur.
 - **Le mode privé ne rend pas les moteurs externes anonymes.** Les requêtes envoyées à Google, Brave ou DuckDuckGo restent visibles par le fournisseur ; les consignes collées dans une IA sont soumises à ses règles. Le presse-papiers est géré par le système et peut conserver une copie.
 - L'état « Mode privé » est volontairement temporaire : il ne se réactive pas automatiquement après rechargement.

@@ -38,3 +38,12 @@ test('assistant URLs require HTTPS, no credentials and no query/fragment',()=>{
  assert.equal(privacy.safeAssistantUrl('https://example.org/chat'), 'https://example.org/chat');
  for(const input of ['javascript:alert(1)','http://example.org','https://user:pass@example.org','https://example.org/?q=secret','https://example.org/#section','data:text/html,hi','bad URL'])assert.throws(()=>privacy.safeAssistantUrl(input));
 });
+test('stored collections keep valid entries when one is invalid',()=>{
+ const got=privacy.salvageItems([{id:1,settings:{}},{id:'ok',settings:{topic:'A'}},{id:'ok',settings:{topic:'B'}},null],normalized,'favoris');
+ assert.deepEqual(got.items.map(x=>x.id),['ok']);assert.equal(got.items[0].settings.topic,'A');assert.equal(got.dropped,3);
+ assert.deepEqual(privacy.salvageItems({},normalized,'favoris'),{items:[],dropped:1});
+});
+test('restoring a search keeps the current display and assistant preferences',()=>{
+ const got=privacy.withCurrentPreferences({topic:'F',engine:'brave',theme:'light',largeText:true,aiProvider:'claude',customAIUrl:'https://a.example/',mode:'advanced',showAll:true,previewTab:'prompt'},{theme:'dark',largeText:false,aiProvider:'chatgpt',customAIUrl:'',mode:'simple',showAll:false,previewTab:'web',engine:'google'});
+ assert.deepEqual(got,{topic:'F',engine:'brave',theme:'dark',largeText:false,aiProvider:'chatgpt',customAIUrl:'',mode:'simple',showAll:false,previewTab:'web'});
+});

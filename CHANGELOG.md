@@ -11,6 +11,13 @@ Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent 
 
 ## Non publié (branche de préparation)
 
+- Favoris et modèles stockés : une entrée illisible est ignorée avec un message, au lieu de masquer puis d'écraser toute la liste.
+- `Ctrl+Entrée` lance une seule recherche : plus de deuxième onglet ni de copie de la consigne en parallèle.
+- Charger un favori ou un modèle ne change plus le thème, la taille du texte, l'IA choisie ni le mode.
+- Les sites ignorés (format non reconnu, plus de 10 sites) sont signalés dans la compatibilité de la requête.
+- Focus clavier conservé après les actions sur les favoris, modèles et critères ; champ de renommage étiqueté.
+- Un fournisseur IA importé ne peut plus désigner une propriété héritée (`constructor`).
+- Tests : `tests/regressions-browser-smoke.py` ajouté ; test `univers` exécutable hors Linux et sans `--no-sandbox`.
 - Retrait de l'archive héritée `osint-search-v5-github-pages.zip` du suivi Git ; elle reste dans l'historique.
 - Documentation communautaire, sécurité, statut de licence et architecture.
 - Sélecteur de neuf assistants IA + fournisseur personnalisé HTTPS, sans transmission automatique de la consigne.

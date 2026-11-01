@@ -42,7 +42,7 @@
 - [x] Phase 1, lot 2 : validation et transaction d’import JSON, mode privé, URLs IA et suppression complète des données locales.
 - [x] Phase 1, lot 3 : navigation clavier et contrôles Chromium. Audit complet avec lecteurs d'écran toujours à faire.
 
-Aucun nouvel univers ajouté dans ce lot ; les 12 catégories du rapport V6 restent à concevoir sans surcharger l’accueil.
+Aucun nouvel univers ajouté dans ce lot ; les 12 catégories du rapport V6 ont ensuite été livrées par les lots 4A et 4B.
 
 ## Phase 1, lot 2 : sécurité et confidentialité (prépublication)
 
@@ -52,7 +52,7 @@ Aucun nouvel univers ajouté dans ce lot ; les 12 catégories du rapport V6 rest
 - [x] Bouton d'effacement complet du stockage KERYNQ avec confirmation.
 - [x] URL HTTPS personnalisée sans identifiants, query-string ou fragment.
 - [x] Tests unitaires et scénarios Chromium 1440/390/320 px.
-- [ ] Phase 1, lot 3 : accessibilité clavier, zoom à 200 %, lecteurs d'écran et détails PWA.
+- [ ] Phase 1, lot 3 : clavier livré (voir ci-dessous) ; zoom à 200 %, lecteurs d'écran et détails PWA restent à faire.
 
 ## Plus tard : moteurs de recherche supplémentaires
 

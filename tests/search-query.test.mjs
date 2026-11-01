@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url);
-const {compile,domains,dates}=require('../search-query-core.js');
+const {compile,domains,dates,siteReport}=require('../search-query-core.js');
 const base={topic:'Démarches logement',includeWords:'',excludeWords:'',includeSites:'',excludeSites:'',period:'all',language:'all',region:'',filetype:''};
 const build=(params={},engine='google')=>compile({...base,...params},engine,new Date(2026,10,1));
 
@@ -16,3 +16,4 @@ test('dates uniquement Google, borne finale inclusive',()=>{const s={period:'cus
 test('date invalide ou inversée n’ajoute pas de faux filtre',()=>{for(const s of [{dateFrom:'2026-02-30',dateTo:''},{dateFrom:'2026-11-01',dateTo:'2026-10-01'}]){const result=build({period:'custom',...s},'google');assert.equal(result.invalidDates,true);assert.doesNotMatch(result.query,/after:|before:/);assert.ok(result.prompt.some(x=>x.includes('invalides')))}});
 test('langue et région seulement Brave',()=>{const params={language:'fr',region:'France'};assert.ok(build(params,'brave').query.includes('lang:fr loc:fr'));for(const e of ['google','duck']){assert.doesNotMatch(build(params,e).query,/lang:|loc:/);assert.ok(build(params,e).prompt.includes('Région (consigne IA seulement)'))}});
 test('sans sujet, la requête est vide',()=>assert.equal(build({topic:''},'google').query,''));
+test('les sites ignorés sont signalés',()=>{const eleven=Array.from({length:11},(_,i)=>'s'+i+'.fr').join(',');assert.deepEqual(siteReport(eleven).overflow,['s10.fr']);assert.equal(siteReport(eleven).valid.length,10);assert.deepEqual(siteReport('a.fr b.fr, école.fr, ameli.fr').invalid,['a.fr b.fr','école.fr']);assert.deepEqual(siteReport('https://www.ameli.fr/x ; ameli.fr'),{valid:['ameli.fr'],invalid:[],overflow:[]});assert.deepEqual(domains('ameli.fr, bad host'),['ameli.fr'])});

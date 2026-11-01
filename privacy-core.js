@@ -51,6 +51,24 @@
       return {id,label:cleanText(item.label,60,'Modèle'),settings};
     });
   }
+  // Stored collections are recovered entry by entry; imports stay all-or-nothing.
+  function salvageItems(items,normalizeSettings,kind) {
+    if (!Array.isArray(items)) return {items:[],dropped:1};
+    const kept=[],seen=new Set();let dropped=0;
+    for (const item of items.slice(0,kind==='favoris'?MAX_FAVORITES:MAX_TEMPLATES)) {
+      try {
+        const [clean]=validateItems([item],normalizeSettings,kind);
+        if (seen.has(clean.id)) dropped++;
+        else {seen.add(clean.id);kept.push(clean);}
+      } catch { dropped++; }
+    }
+    return {items:kept,dropped};
+  }
+  function withCurrentPreferences(settings,current) {
+    const merged={...settings};
+    for(const key of ['theme','largeText','aiProvider','customAIUrl','mode','showAll','previewTab']) merged[key]=current[key];
+    return merged;
+  }
   function validateImport(data,normalizeSettings) {
     if (!record(data) || data.app!=='KERYNQ' || ![3,5].includes(data.version) || !record(data.settings)) {
       throw Error('Profil KERYNQ incompatible');
@@ -63,5 +81,5 @@
     const templates=data.version===5 && hasTemplates?validateItems(data.templates,normalizeSettings,'modèles'):null;
     return {settings,favorites,templates};
   }
-  return Object.freeze({record,cleanText,safeAssistantUrl,scrubCurrentSearch,validateItems,validateImport,MAX_FILE_BYTES,MAX_FAVORITES,MAX_TEMPLATES});
+  return Object.freeze({record,cleanText,safeAssistantUrl,scrubCurrentSearch,validateItems,salvageItems,withCurrentPreferences,validateImport,MAX_FILE_BYTES,MAX_FAVORITES,MAX_TEMPLATES});
 });
