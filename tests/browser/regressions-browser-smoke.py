@@ -141,7 +141,7 @@ with sync_playwright() as p:
         mode=page.locator('.panel-tools .mode-switch').bounding_box()
         assert show['x']>=mode['x']+mode['width'] or show['y']>=mode['y']+mode['height'],(width,show,mode)
         tools=page.locator('.panel-tools').bounding_box()
-        assert abs(tools['x']+tools['width']-(grid['x']+grid['width']))<=2,(width,tools,grid)
+        assert abs(mode['x']-grid['x'])<=2,(width,mode,grid)
         assert page.locator('#showAll').inner_text()=='Afficher tous les domaines'
         page.locator('#showAll').click()
         assert page.locator('#showAll').inner_text()=='Afficher moins de domaines' and page.locator('.category-btn').count()==39
