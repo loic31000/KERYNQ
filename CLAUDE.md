@@ -27,9 +27,10 @@ node --test tests/unit/search-query.test.mjs tests/unit/privacy.test.cjs tests/u
 python tests/browser/univers-browser-smoke.py
 python tests/browser/a11y-browser-smoke.py
 python tests/browser/regressions-browser-smoke.py
+python tests/browser/cross-browser-smoke.py
 ```
 
-Les trois scripts Python requièrent Playwright et Chromium, de préférence dans un environnement virtuel hors du dépôt. `KERYNQ_CHROMIUM` permet d'indiquer un autre exécutable Chromium. Tester aussi manuellement les navigateurs concernés avant publication. Pour servir le site en local : `python -m http.server 8000`.
+Les scripts Python requièrent Playwright et Chromium, de préférence dans un environnement virtuel hors du dépôt. `KERYNQ_CHROMIUM` permet d'indiquer un autre exécutable Chromium. Tester aussi manuellement les navigateurs concernés avant publication. Pour servir le site en local : `python -m http.server 8000`.
 
 ## Suite
 

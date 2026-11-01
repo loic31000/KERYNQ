@@ -44,6 +44,7 @@ Ouvrir `index.html` dans un navigateur moderne. Écrivez votre question, précis
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Architecture et flux de données |
 | [docs/FOURNISSEURS_IA.md](docs/FOURNISSEURS_IA.md) | Accès multi-IA et confidentialité |
 | [docs/CONFIDENTIALITE.md](docs/CONFIDENTIALITE.md) | Stockage et partage des données |
+| [docs/AUDIT_PREPUBLICATION.md](docs/AUDIT_PREPUBLICATION.md) | Résultats et limites de l'audit |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | Priorités et vérifications avant publication |
 | [CLAUDE.md](CLAUDE.md) | Instructions de travail pour Claude Code |
 | [docs/HANDOFF_CLAUDE_CODE.md](docs/HANDOFF_CLAUDE_CODE.md) | Passation et chantiers restants |

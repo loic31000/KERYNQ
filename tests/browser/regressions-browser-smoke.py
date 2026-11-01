@@ -16,7 +16,7 @@ def open_app(browser,width,storage=None):
     ctx=browser.new_context(viewport={'width':width,'height':850},reduced_motion='reduce',service_workers='block')
     ctx.route('**/*',lambda route:serve(route) if route.request.url.startswith(ORIGIN) else route.abort())
     ctx.add_init_script('if(!sessionStorage.seeded){sessionStorage.seeded=1;for(const [k,v] of Object.entries(%s))localStorage.setItem(k,v)}'%json.dumps({k:json.dumps(v) for k,v in (storage or {}).items()}))
-    page=ctx.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+    page=ctx.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)));page.on('console',lambda m:errors.append(m.text) if 'Content Security Policy' in m.text else None)
     page.goto(ORIGIN+'index.html');page.locator('#modeAdvanced').click()
     page.evaluate("document.querySelectorAll('details').forEach(d=>d.open=true)")
     return ctx,page,errors

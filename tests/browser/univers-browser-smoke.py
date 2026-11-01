@@ -2,17 +2,18 @@ import os
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[2]
-HTML=(ROOT/'index.html').read_text(encoding='utf-8')
-for fn in ['assets/js/core/search-query-core.js','assets/js/core/privacy-core.js','assets/js/core/catalog-core.js','assets/js/app.js']:
- HTML=HTML.replace(f'<script src="./{fn}"></script>',f'<script>{(ROOT/fn).read_text(encoding="utf-8")}</script>')
+def serve(route):
+    url=route.request.url
+    file=ROOT/url.replace('http://kerynq.test/','').split('?')[0]
+    if url.startswith('http://kerynq.test/') and file.is_file():route.fulfill(body=file.read_bytes(),content_type={'.html':'text/html','.css':'text/css','.js':'text/javascript','.svg':'image/svg+xml'}.get(file.suffix,'application/json'))
+    else:route.abort()
 EXPECT={'administration':'Administration','family':'Famille / Parentalité','animals':'Animaux','housing':'Logement','law':'Droit / Justice','personalfinance':'Finances personnelles','childhood':'Enfance & Scolarité','work':'Travail & Emploi','retirement':'Retraite & Autonomie','cooking':'Cuisine & Alimentation','homegarden':'Maison & Jardin','transport':'Transports & Déplacements'}
-HTML=HTML.replace('<link rel="stylesheet" href="./assets/css/styles.css">','<style>'+(ROOT/'assets/css/styles.css').read_text(encoding='utf-8')+'</style>')
 with sync_playwright() as p:
  browser=p.chromium.launch(headless=True,executable_path=os.environ.get('KERYNQ_CHROMIUM') or None)
  for width in [1440,390,320]:
   ctx=browser.new_context(viewport={'width':width,'height':850},reduced_motion='reduce',service_workers='block')
   page=ctx.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-  page.set_content(HTML,wait_until='load')
+  page.route('**/*',serve);page.goto('http://kerynq.test/index.html')
   assert page.locator('#familyFilter').is_visible(), 'families should be visible in simple mode'
   page.locator('#modeAdvanced').click()
   page.locator('#showAll').click()

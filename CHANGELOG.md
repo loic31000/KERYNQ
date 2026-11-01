@@ -11,6 +11,7 @@ Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent 
 
 ## Non publié (branche de préparation)
 
+- Audit avant publication : CSP stricte, `no-referrer`, plus aucun script en ligne, test multi-navigateurs et compte rendu `docs/AUDIT_PREPUBLICATION.md`. Cache PWA `kerynq-static-v10`.
 - Retrait des packs de sources officielles à la demande du propriétaire. Le réglage enregistré est ignoré ; les sites déjà ajoutés restent dans « Sites à privilégier ». Cache PWA `kerynq-static-v9`.
 - Bouton d'affichage des domaines déplacé en haut, à côté du choix d'options ; 8 domaines `.gouv.fr` confirmés par le propriétaire.
 - Projet rangé : code et icônes dans `assets/`, tests dans `tests/unit` et `tests/browser`, documents communautaires dans `docs/`. Comportement inchangé ; cache PWA `kerynq-static-v8`.
