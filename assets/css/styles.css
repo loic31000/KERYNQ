@@ -266,12 +266,11 @@ h1{background:linear-gradient(100deg,var(--text) 35%,var(--accent) 75%,var(--acc
 .engine-table thead th,.engine-table tbody th{font-weight:650}
 .cap-yes{color:var(--ok);font-weight:650}
 .cap-no{color:var(--muted)}
-.cap-current{background:var(--accent-soft)}
-.engine-scroll{overflow-x:auto;max-width:100%}
-.engine-table{min-width:2300px}
-.engine-table thead th{overflow-wrap:normal;word-break:keep-all}
-.engine-table th:first-child{position:sticky;left:0;background:var(--surface);width:112px}
 .engine-suggest{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:12px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--radius-sm);font-size:.8125rem}
 .engine-other{margin-top:12px}
 .panel-tools .text-search{width:auto;flex:0 1 220px;min-width:0;margin-left:auto;min-height:44px;font-size:.875rem}
 @media(max-width:600px){.panel-tools .text-search{flex:1 1 100%;margin-left:0}}
+.welcome{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:22px;padding:14px 16px;border:1px solid var(--accent);border-radius:var(--radius-sm);background:var(--accent-soft)}
+.welcome-actions{display:flex;gap:8px;flex-wrap:wrap}
+.help-example{margin-top:16px}
+#promptStyle{margin-bottom:2px}

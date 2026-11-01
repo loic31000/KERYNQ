@@ -17,6 +17,7 @@ assets/
   js/core/              Logique testable sans navigateur
     search-query-core.js   Liste des moteurs et requêtes
     privacy-core.js        Validation des sauvegardes et des URL
+    prompt-core.js         Méthode des consignes IA
     catalog-core.js        39 univers, réglages par défaut, normalize()
 tests/
   check-static.mjs      Contrôles de structure, sans dépendance
@@ -38,7 +39,7 @@ Les scripts restent classiques, sans module ni compilation, pour conserver l'ouv
 
 ## Flux de recherche IA
 
-1. La consigne est générée localement à partir des mêmes réglages.
+1. La consigne est générée localement à partir des mêmes réglages, avec une méthode propre au domaine (`prompt-core.js`), un format court ou détaillé et une note selon l'assistant.
 2. L'utilisateur choisit son fournisseur, copie la consigne et ouvre son site HTTPS officiel.
 3. Il colle **manuellement** la consigne dans le chat. **Aucune API, aucune clé, aucun paramètre contenant la consigne n'est transmis**.
 4. Les règles de confidentialité du fournisseur externe s'appliquent après la navigation.
@@ -63,4 +64,4 @@ Les scripts restent classiques, sans module ni compilation, pour conserver l'ouv
 
 **Lot 2 :** le service worker inclut `assets/js/core/privacy-core.js` dans son cache, aujourd'hui `kerynq-static-v5`. À tester sous HTTPS avant publication.
 
-**Tableau des moteurs :** `capabilities()` interroge `compile()`. Il décrit ce que KERYNQ transmet ; le respect réel par chaque moteur n'est pas vérifié et peut changer.
+**Détail du moteur choisi :** `capabilities()` interroge `compile()`. Il décrit ce que KERYNQ transmet ; le respect réel par chaque moteur n'est pas vérifié et peut changer.
