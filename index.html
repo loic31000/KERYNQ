@@ -80,10 +80,12 @@
     <p id="aiTransferNote" class="note">KERYNQ n’envoie rien à l’assistant. Vous seul collez le texte, et le service applique ses propres conditions.</p>
   </div></section>
   <section id="panelWeb" class="preview-panel" role="tabpanel" aria-labelledby="tabWeb" tabindex="-1" hidden><div class="when-filled">
-    <output id="queryPreview" class="preview-mono" aria-label="Recherche envoyée au moteur" aria-live="polite"></output>
+    <div id="webGuide" class="web-guide"><h3 id="suggestTitle">Rendez votre recherche plus précise</h3><div id="webSuggestions" class="suggestions" role="group" aria-labelledby="suggestTitle"></div></div>
+    <p id="webGuideNone" class="sub" hidden></p>
     <div id="queryCompatibility" class="query-compatibility" aria-live="polite"></div>
     <div id="engineSuggest" class="engine-suggest" hidden><span id="engineSuggestText"></span><button type="button" class="btn" id="useSuggestedEngine">Utiliser ce moteur</button></div>
     <div class="preview-actions"><button type="button" class="btn" id="copyQuery">Copier la recherche</button></div>
+    <details class="fold query-exact" id="queryExact"><summary>Voir la requête exacte</summary><output id="queryPreview" class="preview-mono" aria-label="Recherche envoyée au moteur"></output></details>
     <details class="fold engine-other"><summary>Ouvrir sur un autre moteur</summary><div class="go-search" id="engineButtons" role="group" aria-label="Ouvrir la recherche"></div></details>
     <details class="fold engine-table-wrap"><summary>Ce que ce moteur peut recevoir</summary><table class="engine-table"><caption class="sr-only">Filtres transmis par KERYNQ au moteur choisi</caption><thead><tr><th scope="col">Filtre</th><th scope="col" id="engineTableName">Moteur</th></tr></thead><tbody id="engineTable"></tbody></table><p class="note">« Transmis » signifie que le filtre figure dans la recherche envoyée. Le moteur peut l’ignorer ou l’interpréter à sa façon.</p></details>
   </div></section>

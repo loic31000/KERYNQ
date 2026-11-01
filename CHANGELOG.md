@@ -12,6 +12,7 @@ Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent 
 - Recherche préparée : service, texte exact, critères pris en compte et action suivante.
 - « Ma bibliothèque » : favoris, dossiers, modèles, sauvegarde et données restaurés.
 - Textes de l'interface réécrits.
+- Panneau Web : suggestions réelles, synthèse des critères transmis, requête exacte repliée.
 - Aperçu du texte pour l'IA mis en forme, sans changement du texte copié ou exporté.
 - Fact Check Explorer retiré. Un profil qui l'utilisait revient à Google.
 - Six moteurs d'images (28 moteurs au total), cinq thèmes ajoutés auparavant (Manga, Médecine, Tuning, Animaux, Finance).

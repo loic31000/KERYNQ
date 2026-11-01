@@ -48,8 +48,7 @@ with sync_playwright() as p:
         assert box['y']<=run['y'] and run['y']+run['height']<=box['y']+box['height']
         page.locator('#tabWeb').click()
         page.locator('#topic').fill('Chat')
-        assert page.locator('#resultTitle').inner_text()=='Votre recherche pour Google est prête'
-        assert 'Votre question' in page.locator('#queryCompatibility').inner_text()
+        assert page.locator('#resultTitle').inner_text()=='Votre recherche est prête'
         assert not errors,errors;ctx.close()
         # Profil existant : le thème enregistré est préservé, y compris s'il était implicite.
         for stored,expected in (({'theme':'light'},'light'),({'topic':'x'},'dark'),({'theme':'inconnu'},'kerynq')):
@@ -265,6 +264,53 @@ with sync_playwright() as p:
         assert page.locator('#engineSuggest').is_hidden()
         page.locator('#tabPrompt').click();assert 'Teste les affirmations' in page.evaluate(PROMPT)
         ctx.close()
+        # Panneau Web : question simple, suggestions réelles, rien d'appliqué, pas de doublon.
+        ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'previewTab':'web','topic':'Mesure politique'}})
+        assert 'Google recevra votre question telle quelle' in page.locator('#resultDestination').inner_text()
+        assert page.locator('.suggestion').count()==4 and page.locator('#queryExact').is_hidden() and page.locator('#queryPreview').is_hidden()
+        assert page.locator('#copyQuery').is_visible() and page.locator('#resultPreview #runSearch').count()==0
+        for key,field in (('period','period'),('filetype','filetype'),('site','includeSites'),('exclude','excludeWords')):
+            s=page.locator(f'[data-suggest="{key}"]');s.focus();page.keyboard.press('Enter')
+            assert page.locator('#refinePanel').is_visible() and page.evaluate('document.activeElement.id')==field,key
+            page.keyboard.press('Escape')
+            assert page.evaluate('document.activeElement.dataset.suggest')==key,key
+            assert page.locator('.chip').count()==0 and page.locator('#queryPreview').text_content()=='Mesure politique',key
+        # Période puis PDF : synthèse, requête exacte repliée, focus conservé.
+        page.locator('[data-suggest="period"]').click();page.locator('#period').select_option('year');page.locator('#refineClose').click()
+        page.wait_for_timeout(150);assert page.evaluate('document.activeElement.id')=='refineToggle'
+        assert page.locator('#resultTitle').inner_text()=='Votre recherche est personnalisée' and page.locator('.suggestion').count()==0 and page.locator('#webGuide').is_hidden()
+        assert 'Transmis à Google' in page.locator('#queryCompatibility').inner_text() and 'Période' in page.locator('#queryCompatibility').inner_text()
+        assert 'Appliqué' not in page.locator('#panelWeb').inner_text() and 'Pris en compte' not in page.locator('#panelWeb').inner_text()
+        assert page.locator('#queryExact').is_visible() and page.locator('#queryPreview').is_hidden()
+        page.locator('#queryExact summary').click();assert 'after:' in page.locator('#queryPreview').inner_text()
+        page.evaluate("()=>{document.execCommand=()=>{window.kerynqTestCopy=document.activeElement.value;return true}}")
+        page.locator('#copyQuery').click();page.wait_for_timeout(150)
+        assert page.evaluate('window.kerynqTestCopy')==page.locator('#queryPreview').text_content()
+        # Moteur qui ne reçoit pas le critère : jamais présenté comme transmis.
+        page.locator('#engineSelect').select_option('googleimages')
+        compat=page.locator('#queryCompatibility').inner_text()
+        assert 'Transmis à' not in compat and 'Non transmis à Google Images' in compat and page.locator('#resultTitle').inner_text()=='Votre recherche est prête' and 'ne lui sont pas transmis' in page.locator('#resultDestination').inner_text()
+        assert page.locator('#queryExact').is_hidden()
+        # Web, IA, retour : critères conservés, panneau IA inchangé.
+        page.locator('#tabPrompt').click();assert page.locator('#promptPreview').is_visible() and page.locator('#webSuggestions').is_hidden() and 'Votre texte pour' in page.locator('#resultTitle').inner_text()
+        page.locator('#tabWeb').click();assert page.locator('.chip').count()==1
+        assert overflow(page)<=2 and not errors,errors;ctx.close()
+        # PDF, exclusions et sites, plusieurs critères.
+        ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'previewTab':'web','topic':'Sujet','filetype':'pdf','excludeWords':'pub','includeSites':'ameli.fr','region':'France'}})
+        compat=page.locator('#queryCompatibility').inner_text()
+        for label in ('Type de fichier','Exclusions','Site ciblé'):assert label in compat,label
+        assert 'Région' in compat.split('Non transmis à Google')[1] and page.locator('#webGuide').is_hidden()
+        assert not errors,errors;ctx.close()
+        # Les 28 moteurs : suggestions limitées à leurs capacités, requête inchangée sans critère.
+        ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'previewTab':'web','topic':'Sujet'}})
+        engines=page.evaluate('KerynqSearch.ENGINES.map(e=>[e.id,e.ops])');assert len(engines)==28
+        for id,ops in engines:
+            page.locator('#engineSelect').select_option(id)
+            shown=page.locator('.suggestion').evaluate_all('l=>l.map(e=>e.dataset.suggest)')
+            assert len(shown)<=4 and all(ops.get(k) for k in shown),(id,shown)
+            assert shown or page.locator('#webGuideNone').is_visible(),id
+            assert page.locator('#queryExact').is_hidden(),id
+        assert not errors,errors;ctx.close()
         # Un fournisseur importé ne peut pas viser une propriété héritée.
         ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'aiProvider':'constructor'}})
         assert page.locator('#aiProvider').input_value()=='chatgpt'

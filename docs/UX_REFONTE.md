@@ -86,3 +86,19 @@ Non vérifié : avis d'utilisateurs réels, Safari et Chrome réels, téléphone
 ## Aperçu du texte pour l'IA
 
 Le texte est affiché en HTML structuré : titres de section à la couleur d'accent du thème, libellés en gras, listes espacées, quelques mots-clés renforcés. La chaîne de `buildPrompt()` reste la seule source : la copie et l'export la reprennent telle quelle, sans HTML. `KerynqPrompt.structure` découpe les lignes, et l'affichage passe uniquement par `textContent` et des nœuds de texte. Les marques Markdown restent visibles en discret. Seuls les titres de section connus sont stylés comme des titres : la question de l'utilisateur reste du texte simple.
+
+## Panneau Web
+
+Le bloc du haut sert à saisir et lancer. Le panneau du bas sert à comprendre, personnaliser et contrôler. Il ne contient aucun bouton de lancement.
+
+| Situation | Contenu |
+|---|---|
+| Sans question | Deux exemples |
+| Question sans critère | « Votre recherche est prête », et jusqu'à quatre suggestions limitées aux capacités du moteur. Une suggestion ouvre le réglage et y place le focus, sans rien appliquer. |
+| Critères transmis | « Votre recherche est personnalisée », avec ce qui est transmis et ce qui ne l'est pas. |
+| Critères tous refusés | « Votre recherche est prête », avec le moteur qui ne les reçoit pas. |
+| Requête différente de la question | « Voir la requête exacte », replié par défaut. |
+
+![Recherche Web avec critères](images/ux-apres-web-filtres.png)
+
+Le mot « transmis » est employé à la place de « appliqué » : un moteur peut ignorer un opérateur reçu. Le panneau IA ne change pas.
