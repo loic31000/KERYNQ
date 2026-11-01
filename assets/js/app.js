@@ -10,7 +10,7 @@ function updatePrivateUI(){
  $('privateSearchInfo').textContent=privateMode
   ?'Mode privé actif : aucune nouvelle recherche ni modification de filtre n’est conservée localement. Les moteurs externes voient toujours vos requêtes. Quitter ce mode effacera les champs privés.'
   :'Mode privé désactivé : vos réglages et votre recherche peuvent être enregistrés sur cet appareil. Les moteurs externes reçoivent les requêtes lancées.';
- for(const id of ['saveResearch','exportConfig','importConfig'])$(id).disabled=privateMode;
+ for(const id of ['exportConfig','importConfig'])$(id).disabled=privateMode;
 }
 function togglePrivateMode(){
  if(!privateMode){
@@ -20,7 +20,7 @@ function togglePrivateMode(){
   updatePrivateUI();notify('Mode privé activé : aucune recherche en cours enregistrée');
  }else{
   privateMode=false;
-  state=load();initOptions(state.category);sync();renderSaved();
+  state=load();initOptions(state.category);sync();
   updatePrivateUI();notify('Mode privé désactivé : champs temporaires effacés');
  }
 }
@@ -29,9 +29,8 @@ function eraseAllKerynqData(){
  const keys=[LS,SAVED_KEY,CUSTOM_TEMPLATES_KEY,'kerynq-premium-v1',WELCOME_KEY];
  try{for(const key of keys)localStorage.removeItem(key)}catch{notify('Effacement incomplet : vérifier les données du navigateur');return}
  privateMode=false;state=clone(DEFAULT);initOptions(state.category);$('categorySearch').value='';summaryOpen=false;
- $('favoriteTitle').value='';$('favoriteFolder').value='';$('favoriteSearch').value='';
  suppressSave=true;
- try{sync();renderSaved();updatePrivateUI()}
+ try{sync();updatePrivateUI()}
  finally{suppressSave=false}
  notify('Données locales KERYNQ effacées');
 }
@@ -230,25 +229,13 @@ $('profileFile').addEventListener('change',async e=>{const file=e.target.files&&
    if(imported.favorites!==null)localStorage.setItem(SAVED_KEY,JSON.stringify(imported.favorites));
    if(imported.templates!==null)localStorage.setItem(CUSTOM_TEMPLATES_KEY,JSON.stringify(imported.templates));
   }catch(storageError){for(let i=0;i<keys.length;i++)try{if(previous[i]===null)localStorage.removeItem(keys[i]);else localStorage.setItem(keys[i],previous[i])}catch{}throw Error('Stockage indisponible ou plein : import annulé')}
-  state=imported.settings;initOptions(state.category);sync();renderSaved();
+  state=imported.settings;initOptions(state.category);sync();
   notify('Import validé et appliqué');
  }catch(err){notify('Import impossible : '+err.message)}finally{e.target.value=''}
 });
 $('reset').addEventListener('click',()=>{if(!window.confirm('Effacer tous les réglages et critères personnalisés de KERYNQ ?'))return;state=clone(DEFAULT);initOptions(state.category);$('categorySearch').value='';save();sync();notify('Préférences KERYNQ réinitialisées')});}setup();setupV5();
 const SAVED_KEY='kerynq-saved-v1';
 function getSaved(){return readStoredItems(SAVED_KEY,'favoris')}
-function putSaved(data){try{localStorage.setItem(SAVED_KEY,JSON.stringify(data.slice(0,80)))}catch{notify('Sauvegarde locale indisponible')}}
-function renderFolders(){const select=$('folderFilter'),selected=select.value,folders=[...new Set(getSaved().map(x=>x.folder||'Général'))].sort((a,b)=>a.localeCompare(b,'fr'));select.replaceChildren();const all=node('option','','Tous les dossiers');all.value='';select.append(all);for(const f of folders){const o=node('option','',f);o.value=f;select.append(o)}select.value=folders.includes(selected)?selected:''}
-function renderSaved(){renderFolders();const root=$('savedList');root.replaceChildren();let items=getSaved();const folder=$('folderFilter').value;const query=$('favoriteSearch').value.trim().toLocaleLowerCase('fr');if(folder)items=items.filter(x=>(x.folder||'Général')===folder);if(query)items=items.filter(x=>[x.name,x.topic,x.folder,x.category].join(' ').toLocaleLowerCase('fr').includes(query));items.sort((a,b)=>Number(!!b.pinned)-Number(!!a.pinned));
- if(!items.length){root.append(node('p','saved-empty',getSaved().length?'Aucun favori ne correspond aux filtres.':'Aucun favori enregistré. Vos recherches restent sur cet appareil.'));return}
- for(const item of items){const row=node('div','saved-entry');const load=node('button','saved-load');load.type='button';load.dataset.savedId=item.id;const name=item.name||item.topic||'Sans titre';load.append(node('strong','',name),node('small','',(item.folder||'Général')+' · '+(item.category||'Tous les sujets')));load.setAttribute('aria-label','Charger le favori '+name);load.addEventListener('click',()=>{state=normalize(KerynqPrivacy.withCurrentPreferences(item.settings,state));initOptions(state.category);save();sync();notify('Favori restauré : '+name);$('topic').focus()});
- const actions=node('span','saved-actions');const pin=node('button','icon-action ico '+(item.pinned?'ico-star-on':'ico-star'));pin.type='button';pin.dataset.savedPin=item.id;pin.title=item.pinned?'Détacher':'Épingler';pin.setAttribute('aria-label',(item.pinned?'Détacher':'Épingler')+' le favori '+name);pin.addEventListener('click',()=>{const entries=getSaved();const x=entries.find(x=>x.id===item.id);if(x)x.pinned=!x.pinned;putSaved(entries);renderSaved();[...$('savedList').querySelectorAll('[data-saved-pin]')].find(b=>b.dataset.savedPin===item.id)?.focus()});
- const rename=node('button','icon-action ico ico-edit');rename.type='button';rename.title='Renommer';rename.setAttribute('aria-label','Renommer '+name);rename.addEventListener('click',()=>{const editor=document.createElement('input');editor.className='mini-field saved-editor';editor.maxLength=90;editor.value=name;editor.setAttribute('aria-label','Nouveau nom du favori '+name);load.replaceWith(editor);editor.focus();editor.select();let completed=false;const commit=()=>{if(completed)return;completed=true;const entries=getSaved(),x=entries.find(x=>x.id===item.id);if(x)x.name=editor.value.trim().slice(0,90)||name;putSaved(entries);renderSaved()};editor.addEventListener('keydown',e=>{if(e.key==='Enter')commit();if(e.key==='Escape'){completed=true;renderSaved()}});editor.addEventListener('blur',commit)});
- const rm=node('button','icon-action ico ico-close');rm.type='button';rm.title='Supprimer';rm.setAttribute('aria-label','Supprimer le favori '+name);rm.addEventListener('click',()=>{const after=[...$('savedList').querySelectorAll('.saved-load')].map(b=>b.dataset.savedId);const next=after[after.indexOf(item.id)+1]??after[after.indexOf(item.id)-1];putSaved(getSaved().filter(x=>x.id!==item.id));renderSaved();notify('Favori supprimé');([...$('savedList').querySelectorAll('.saved-load')].find(b=>b.dataset.savedId===next)||$('favoriteSearch')).focus()});actions.append(pin,rename,rm);row.append(load,actions);root.append(row)}
-}
-function saveResearch(){if(privateMode)return notify('Quittez le mode privé pour enregistrer un favori');if(!state.topic.trim()){notify('Saisissez un sujet pour enregistrer le favori');$('topic').focus();return}const list=getSaved();if(list.length>=80){notify('Limite de 80 favoris : supprimez-en avant d’ajouter');return}const entry={id:String(Date.now())+'-'+Math.random().toString(36).slice(2),name:$('favoriteTitle').value.trim().slice(0,90)||state.topic.trim().slice(0,90),topic:state.topic.trim().slice(0,160),folder:$('favoriteFolder').value.trim().slice(0,50)||'Général',category:topicById(state.category).name,pinned:false,settings:clone(state)};putSaved([entry,...list]);$('favoriteTitle').value='';renderSaved();notify('Recherche enregistrée sur cet appareil')}
-$('folderFilter').addEventListener('change',renderSaved);$('favoriteSearch').addEventListener('input',renderSaved);
-$('saveResearch').addEventListener('click',saveResearch);
 $('privateSearchToggle').addEventListener('click',togglePrivateMode);
 $('clearAllData').addEventListener('click',eraseAllKerynqData);
 updatePrivateUI();
@@ -266,6 +253,5 @@ async function openAssistant(){
  window.open(url,'_blank','noopener,noreferrer');
  notify('Texte copié : collez-le dans la conversation de l’IA');
 }
-renderSaved();
 
 })();

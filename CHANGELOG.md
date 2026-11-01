@@ -8,7 +8,7 @@ Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent 
 - Sélecteur de domaine compact, filtrable au clavier et groupé par famille.
 - Réglages fermés par défaut, en sections repliables. Réglages réservés à l'IA masqués en mode Web, sans être perdus.
 - Résumé des critères actifs, retirables un par un, distinguant ce qui est transmis au moteur.
-- Résultat compact sans question. Détails techniques, favoris, aide et données repliés.
+- Résultat compact sans question. Détails techniques, aide et données repliés. Section « Mes recherches » retirée, favoris conservés dans les sauvegardes.
 - Six moteurs d'images (29 au total), cinq thèmes (11 au total). Section « Partir d'un modèle » retirée, modèles conservés dans les sauvegardes.
 - Tests d'équivalence des requêtes et consignes par rapport à `main`. Voir [docs/UX_REFONTE.md](docs/UX_REFONTE.md).
 

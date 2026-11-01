@@ -24,7 +24,8 @@ Le résultat suit. Sans question, il se limite à une phrase et à deux exemples
 | Critères actifs | Liste retirable, limitée à trois, puis « +N » | Le compteur inclut tous les critères actifs, même repliés. |
 | Web ou IA dans le résumé | Vert : transmis au moteur choisi, d'après le compilateur. Pointillés : texte pour une IA seulement | Le classement suit le moteur choisi. La région est transmise à certains moteurs, pas à Google. |
 | Bouton « Copier et ouvrir » du panneau | Retiré | Il doublait l'action principale. |
-| Aide, favoris, données | Sections repliées en bas de page | Toujours accessibles, moins de concurrence visuelle. |
+| Aide, données | Sections repliées en bas de page | Toujours accessibles, moins de concurrence visuelle. |
+| Mes recherches | Retiré à la demande du propriétaire | Les favoris déjà enregistrés restent dans le navigateur et dans les sauvegardes, sans pouvoir être rechargés depuis la page. |
 | Domaines récents | Non ajoutés | La liste filtrable suffit et cela alourdirait le parcours. |
 | Style | Moins d'animations, de dégradés et de verre ; polices et thèmes conservés | Les couleurs d'accent marquent l'action et l'état actif. |
 
@@ -53,7 +54,7 @@ Avant, puis après, sur mobile :
 
 ## Contrôles
 
-Automatiques, sous Playwright : parcours en 1440, 768, 390 et 320 px, clavier du sélecteur, focus après sélection, retrait d'un critère, conservation des réglages, anciens favoris et profils, tous les thèmes, reflow équivalent à un zoom de 200 % et 400 %, PWA hors ligne.
+Automatiques, sous Playwright : parcours en 1440, 768, 390 et 320 px, clavier du sélecteur, focus après sélection, retrait d'un critère, conservation des réglages, anciens profils et conservation des favoris, tous les thèmes, reflow équivalent à un zoom de 200 % et 400 %, PWA hors ligne.
 
 Non vérifié : Safari et Chrome réels, téléphones réels, lecteurs d'écran, vrai zoom du navigateur, GitHub Pages. Ces contrôles ne valent pas conformité WCAG : aucun audit complet n'a été réalisé.
 

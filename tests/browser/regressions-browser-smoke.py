@@ -23,14 +23,6 @@ def open_app(browser,width,storage=None):
 with sync_playwright() as p:
     browser=p.chromium.launch(headless=True,executable_path=os.environ.get('KERYNQ_CHROMIUM') or None)
     for width in (1440,320):
-        # Une entrée invalide ne masque ni n'écrase les favoris valides.
-        ctx,page,errors=open_app(browser,width,{'kerynq-saved-v1':[{'id':1,'settings':{}},GOOD('ok','Favori sain')]})
-        assert page.locator('.saved-entry').count()==1
-        assert 'ignorée' in page.locator('#status').inner_text()
-        page.locator('#topic').fill('Nouveau');page.locator('#saveResearch').click()
-        assert page.locator('.saved-entry').count()==2
-        assert 'Favori sain' in page.locator('#savedList').inner_text()
-        assert not errors,errors;ctx.close()
         # Ctrl+Entrée lance la recherche sans copier la consigne.
         ctx,page,errors=open_app(browser,width)
         page.locator('#topic').fill('Sujet')
@@ -40,17 +32,6 @@ with sync_playwright() as p:
         assert page.evaluate('window.kerynqTestCopy===undefined')
         assert len(ctx.pages)==2,len(ctx.pages)
         assert not errors,errors;ctx.close()
-        # Un favori ou un modèle restaure la recherche, pas les préférences.
-        prefs={'theme':'light','largeText':True,'aiProvider':'claude'}
-        ctx,page,errors=open_app(browser,width,{'kerynq-saved-v1':[GOOD('f','Favori',engine='brave',**prefs)],'kerynq-v5-templates':[{'id':'t','label':'Modele','settings':{'topic':'Modele',**prefs}}]})
-        def assert_prefs():
-            assert page.evaluate('document.documentElement.dataset.theme')=='dark'
-            assert not page.evaluate("document.body.classList.contains('large-text')")
-            assert page.locator('#aiProvider').input_value()=='chatgpt'
-        page.locator('.saved-load').click()
-        assert page.locator('#topic').input_value()=='Favori' and page.locator('#engineSelect').input_value()=='brave'
-        assert_prefs()
-        assert not errors,errors;ctx.close()
         # Les sites ignorés sont signalés.
         ctx,page,errors=open_app(browser,width)
         page.locator('#topic').fill('Sujet');page.locator('#includeSites').fill('a.fr b.fr, ameli.fr')
@@ -58,21 +39,6 @@ with sync_playwright() as p:
         assert 'Sites ignorés' in compat and 'a.fr b.fr' in compat
         page.locator('#includeSites').fill('ameli.fr')
         assert 'Sites ignorés' not in page.locator('#queryCompatibility').inner_text()
-        assert not errors,errors;ctx.close()
-        # Le focus reste utilisable au clavier après les actions sur les favoris.
-        ctx,page,errors=open_app(browser,width,{'kerynq-saved-v1':[GOOD('a','Premier'),GOOD('b','Second')]})
-        pin=page.get_by_role('button',name='Épingler le favori Second')
-        pin.focus();pin.press('Enter')
-        assert page.evaluate('document.activeElement.getAttribute("aria-label")')=='Détacher le favori Second'
-        page.get_by_role('button',name='Renommer Premier').click()
-        assert page.locator('.saved-editor').get_attribute('aria-label')=='Nouveau nom du favori Premier'
-        page.keyboard.press('Escape')
-        rm=page.get_by_role('button',name='Supprimer le favori Premier')
-        rm.focus();rm.press('Enter')
-        assert page.evaluate('document.activeElement.getAttribute("aria-label")')=='Charger le favori Second'
-        rm=page.get_by_role('button',name='Supprimer le favori Second')
-        rm.focus();rm.press('Enter')
-        assert page.evaluate('document.activeElement.id')=='favoriteSearch'
         assert not errors,errors;ctx.close()
         # Le parcours IA copie le texte, ouvre l'assistant sans la consigne dans l'adresse, et le bouton principal l'annonce.
         ctx,page,errors=open_app(browser,width)
@@ -273,12 +239,14 @@ with sync_playwright() as p:
             now=page.evaluate("s=>Object.fromEntries(%s.map(id=>[id,KerynqSearch.compile(KerynqCatalog.normalize(s),id,new Date('2026-01-15T12:00:00')).query]))"%json.dumps(golden['engines']),case['input'])
             assert now==case['queries'],case['input']
             ctx.close()
-        # Favori et profil anciens, écrits avant la refonte, restent lisibles.
+        # Un ancien profil reste lisible ; favoris et modèles déjà enregistrés sont conservés et exportés.
         old={'mode':'advanced','showAll':True,'category':'law','topic':'Ancien profil','previewTab':'prompt','aiProvider':'claude'}
-        ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':old,'kerynq-saved-v1':[GOOD('v','Vieux favori',category='manga',engine='brave')]})
+        ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':old,'kerynq-saved-v1':[GOOD('v','Vieux favori',category='manga')]})
         assert 'Droit' in page.locator('#domainName').inner_text() and page.locator('#aiProvider').input_value()=='claude'
-        page.locator('.saved-load').click()
-        assert 'Mangas' in page.locator('#domainName').inner_text() and page.locator('#engineSelect').input_value()=='brave'
+        assert page.locator('#savedList,#saveResearch').count()==0
+        assert 'Vieux favori' in page.evaluate("localStorage.getItem('kerynq-saved-v1')")
+        with page.expect_download() as dl:page.locator('#exportConfig').click()
+        assert 'Vieux favori' in Path(dl.value.path()).read_text(encoding='utf-8')
         assert not errors,errors;ctx.close()
         # Un fournisseur importé ne peut pas viser une propriété héritée.
         ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'aiProvider':'constructor'}})
