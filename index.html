@@ -17,9 +17,16 @@
 <a href="#topic" class="skip">Aller directement à la recherche</a>
 <div class="shell">
 <header class="header">
-  <div class="brand"><img src="./assets/icons/favicon.svg" alt="" width="30" height="30"><span class="brand-name">KERYNQ</span></div>
-  <div class="header-actions"><button id="fontToggle" class="tool-button" type="button" aria-pressed="false" aria-label="Agrandir les caractères">A+ Texte</button><div class="theme-picker"><button id="themeToggle" class="tool-button" type="button" aria-expanded="false" aria-controls="themeMenu">Thème</button><div id="themeMenu" class="theme-menu" role="group" aria-label="Choisir un thème" hidden></div></div></div>
+  <div class="brand"><svg class="logo" viewBox="0 0 64 64" fill="none" stroke="url(#logoInk)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><linearGradient id="logoInk" x1="0" y1="0" x2="1" y2="1"><stop class="logo-a" offset="0"/><stop class="logo-b" offset="1"/></linearGradient></defs>
+<g class="logo-v logo-dark"><circle cx="27" cy="27" r="19"/><path d="m27 13 4 10 10 4-10 4-4 10-4-10-10-4 10-4 4-10Z"/><path d="M41 41l15 15" stroke-width="5"/></g>
+<g class="logo-v logo-light"><circle cx="27" cy="27" r="19"/><circle cx="27" cy="27" r="7" fill="url(#logoInk)"/><path d="M41 41l15 15" stroke-width="5"/></g>
+<g class="logo-v logo-pro"><rect x="8" y="8" width="48" height="48" rx="6"/><path d="M24 20v24M42 20 24 32l18 12" stroke-width="4"/></g>
+<g class="logo-v logo-cyber"><path d="M32 5 55 18v28L32 59 9 46V18L32 5Z"/><path d="M25 21v22M41 21 25 32l16 11"/><path d="M32 5v6M32 53v6M9 18l5 3M55 46l-5-3M55 18l-5 3M9 46l5-3" stroke-width="2"/></g>
+<g class="logo-v logo-girly"><path d="M32 56S8 42 8 24c0-9 7-15 14-15 4 0 8 2 10 6 2-4 6-6 10-6 7 0 14 6 14 15 0 18-24 32-24 32Z"/><path d="m32 21 3 8 8 3-8 3-3 8-3-8-8-3 8-3 3-8Z" fill="url(#logoInk)"/></g>
+<g class="logo-v logo-aurora"><path d="M6 44C14 22 24 12 32 12s18 10 26 32"/><path d="M15 44c5-13 11-20 17-20s12 7 17 20"/><path d="M24 44c2-6 5-9 8-9s6 3 8 9"/><path d="M6 52h52"/></g></svg><span class="brand-name">KERYNQ</span></div>
+  <div class="header-actions"><button type="button" id="privateSearchToggle" class="tool-button private-toggle ico-after ico-lock" aria-pressed="false" aria-controls="privateSearchInfo">Mode privé</button><button id="fontToggle" class="tool-button" type="button" aria-pressed="false" aria-label="Agrandir les caractères">A+ Texte</button><div class="theme-picker"><button id="themeToggle" class="tool-button" type="button" aria-expanded="false" aria-controls="themeMenu">Thème</button><div id="themeMenu" class="theme-menu" role="group" aria-label="Choisir un thème" hidden></div></div></div>
 </header>
+<p id="privateSearchInfo" class="private-banner" aria-live="polite" hidden></p>
 
 <section class="intro" aria-labelledby="pageTitle">
   <h1 id="pageTitle">Posez votre question. KERYNQ la rend plus précise.</h1>
@@ -29,6 +36,7 @@
     <li><strong>Précisez</strong><span>le domaine et les filtres, si vous le souhaitez.</span></li>
     <li><strong>Lancez</strong><span>sur le Web, ou copiez le texte dans une IA.</span></li>
   </ol>
+  <div id="welcome" class="welcome" role="region" aria-label="Première visite" hidden><p>Première visite ? Essayez avec une question déjà préparée.</p><div class="welcome-actions"><button type="button" id="tryExample" class="btn primary">Essayer un exemple</button><button type="button" id="hideWelcome" class="btn">Masquer</button></div></div>
 </section>
 
 <section class="composer" aria-label="Votre recherche">
@@ -50,7 +58,7 @@
 <div class="main-stack">
 <section class="panel" aria-labelledby="refineTitle">
   <div class="panel-head"><div><h2 id="refineTitle">Précisez, si besoin</h2><p class="sub">Tout est facultatif. Vous pouvez lancer votre recherche sans rien changer ici.</p></div>
-    <div class="panel-tools"><div class="mode-switch" role="group" aria-label="Quantité d’options affichées"><button type="button" id="modeSimple" aria-pressed="true">Simple</button><button type="button" id="modeAdvanced" aria-pressed="false">Toutes les options</button></div><button id="showAll" class="link-button" type="button" aria-controls="categories" aria-expanded="false">Afficher tous les domaines</button><label class="sr-only" for="familyFilter">Famille de domaines</label><select id="familyFilter" class="text-search"><option value="all">Toutes les familles</option><option value="actus">Actualités &amp; société</option><option value="culture">Culture &amp; loisirs</option><option value="tech">Tech, IA &amp; cyber</option><option value="sciences">Santé &amp; sciences</option><option value="quotidien">Famille &amp; quotidien</option><option value="demarches">Démarches &amp; droit</option><option value="mobilite">Voyages &amp; mobilité</option><option value="formation">Études &amp; travail</option></select></div></div>
+    <div class="panel-tools"><div id="modeSwitch" class="mode-switch" role="group" aria-label="Quantité d’options affichées"><button type="button" id="modeSimple" aria-pressed="true">Simple</button><button type="button" id="modeAdvanced" aria-pressed="false">Toutes les options</button></div><button id="showAll" class="link-button" type="button" aria-controls="categories" aria-expanded="false">Afficher tous les domaines</button><label class="sr-only" for="familyFilter">Famille de domaines</label><select id="familyFilter" class="text-search"><option value="all">Toutes les familles</option><option value="actus">Actualités &amp; société</option><option value="culture">Culture &amp; loisirs</option><option value="tech">Tech, IA &amp; cyber</option><option value="sciences">Santé &amp; sciences</option><option value="quotidien">Famille &amp; quotidien</option><option value="demarches">Démarches &amp; droit</option><option value="mobilite">Voyages &amp; mobilité</option><option value="formation">Études &amp; travail</option></select></div></div>
 
   <h3 id="category-title">Domaine de votre question</h3>
   <div class="category-grid" id="categories" role="group" aria-labelledby="category-title"></div>
@@ -96,11 +104,12 @@
   <div class="active-stats"><span id="themeStatus" class="mini-stat">Tous les sujets</span><span id="filterStatus" class="mini-stat">0 critère</span></div>
   <section id="panelPrompt" class="preview-panel" role="tabpanel" aria-labelledby="tabPrompt" tabindex="-1">
     <p class="sub">Copiez ce texte, puis collez-le dans la conversation de l’assistant. KERYNQ ne lui envoie rien.</p>
-    <label for="aiProvider" class="control-label">Assistant</label>
+    <label for="aiProvider" id="assistantLabel" class="control-label">Assistant</label>
     <select id="aiProvider" class="field" aria-describedby="aiTransferNote"><option value="chatgpt">ChatGPT</option><option value="claude">Claude</option><option value="gemini">Gemini</option><option value="kimi">Kimi</option><option value="grok">Grok</option><option value="deepseek">DeepSeek</option><option value="perplexity">Perplexity</option><option value="mistral">Mistral Vibe</option><option value="copilot">Microsoft Copilot</option><option value="custom">Autre assistant (URL HTTPS)</option></select>
     <div class="ai-custom" id="customAIWrap" hidden><label for="customAIUrl" class="control-label">Adresse HTTPS de l’assistant</label><input id="customAIUrl" class="field" inputmode="url" autocomplete="url" maxlength="300" placeholder="https://exemple.com/"></div>
     <div class="preview-actions"><button type="button" class="btn primary ico-after ico-external" id="openAIProvider" aria-describedby="aiTransferNote">Copier et ouvrir</button><button type="button" class="btn" id="copyPrompt">Copier seulement</button><button type="button" class="btn" id="downloadPrompt">Exporter .md</button></div>
     <p id="aiTransferNote" class="note">L’assistant applique ses propres conditions et peut demander un compte.</p>
+    <label for="promptStyle" id="promptStyleLabel" class="control-label">Format du texte</label><select id="promptStyle" class="field"><option value="detailed">Détaillé</option><option value="short">Court</option></select>
     <label for="promptPreview" class="control-label">Texte préparé</label><textarea id="promptPreview" class="preview-field" readonly spellcheck="false"></textarea>
   </section>
   <section id="panelWeb" class="preview-panel" role="tabpanel" aria-labelledby="tabWeb" tabindex="-1" hidden>
@@ -110,7 +119,7 @@
     <details class="details engine-other"><summary>Ouvrir sur un autre moteur</summary><div class="go-search" id="engineButtons" role="group" aria-label="Ouvrir la recherche"></div></details>
     <button type="button" class="btn full" id="copyQuery">Copier la recherche</button>
     <div id="queryCompatibility" class="query-compatibility" aria-live="polite"></div>
-    <details class="details engine-table-wrap"><summary>Que transmet KERYNQ à chaque moteur ?</summary><div class="engine-scroll" tabindex="0" role="group" aria-label="Tableau des filtres, défilable"><table class="engine-table"><caption class="sr-only">Filtres transmis par KERYNQ selon le moteur</caption><thead><tr id="engineTableHead"></tr></thead><tbody id="engineTable"></tbody></table></div><p class="note">« Transmis » signifie que le filtre figure dans la recherche envoyée. Le moteur peut l’ignorer ou l’interpréter à sa façon.</p></details>
+    <details class="details engine-table-wrap"><summary>Que transmet KERYNQ à ce moteur ?</summary><table class="engine-table"><caption class="sr-only">Filtres transmis par KERYNQ au moteur choisi</caption><thead><tr><th scope="col">Filtre</th><th scope="col" id="engineTableName">Moteur</th></tr></thead><tbody id="engineTable"></tbody></table><p class="note">« Transmis » signifie que le filtre figure dans la recherche envoyée. Le moteur peut l’ignorer ou l’interpréter à sa façon.</p></details>
   </section>
 </aside>
 </main>
@@ -123,9 +132,18 @@
   </div>
 </section>
 
+<section class="panel" aria-labelledby="helpTitle">
+  <h2 id="helpTitle">Aide</h2>
+  <details class="details"><summary>À quoi sert KERYNQ ?</summary><p class="sub">Il transforme votre question en recherche plus précise. Il n’affiche pas de résultats : ils s’ouvrent chez le moteur ou l’assistant que vous choisissez.</p></details>
+  <details class="details"><summary>Web ou IA : que choisir ?</summary><p class="sub">Le Web, pour trouver vous-même des pages. Une IA, pour obtenir une synthèse : KERYNQ prépare un texte que vous collez dans la conversation. Vérifiez toujours les sources citées.</p></details>
+  <details class="details"><summary>Mes données partent-elles quelque part ?</summary><p class="sub">Rien ne part sans votre clic. Votre recherche va alors au seul moteur choisi. Le texte pour une IA n’est envoyé que si vous le collez vous-même. Vos réglages restent dans ce navigateur.</p></details>
+  <details class="details"><summary>Pourquoi un filtre ne semble pas appliqué ?</summary><p class="sub">Tous les moteurs ne reçoivent pas tous les filtres, et un moteur peut ignorer ce qu’il reçoit. La section « Que transmet KERYNQ à ce moteur ? » indique ce qui est envoyé.</p></details>
+  <button type="button" id="helpExample" class="btn help-example">Essayer un exemple</button>
+</section>
+
 <section class="panel" aria-labelledby="privacyTitle">
   <h2 id="privacyTitle">Confidentialité et données</h2>
-  <div class="privacy-row"><button type="button" id="privateSearchToggle" class="btn" aria-pressed="false" aria-controls="privateSearchInfo">Mode privé</button><p id="privateSearchInfo" class="sub" aria-live="polite"></p></div>
+  <div class="privacy-row"><p class="sub">Le mode privé, en haut de la page, évite de garder votre recherche en cours sur cet appareil.</p></div>
   <details class="details"><summary>Sauvegarder, restaurer ou effacer</summary><div class="action-row"><button id="exportConfig" type="button" class="btn">Exporter mon profil</button><button id="importConfig" type="button" class="btn">Importer un profil</button><button id="reset" type="button" class="btn">Réinitialiser les réglages</button><button id="clearAllData" type="button" class="btn danger">Effacer mes données locales</button></div><input id="profileFile" type="file" accept=".json,application/json" hidden><p class="note">Un profil exporté peut contenir vos recherches : conservez-le prudemment.</p></details>
 </section>
 
@@ -135,6 +153,7 @@
 <div id="status" class="status" role="status" aria-live="polite" aria-atomic="true"></div>
 <script src="./assets/js/core/search-query-core.js"></script>
 <script src="./assets/js/core/privacy-core.js"></script>
+<script src="./assets/js/core/prompt-core.js"></script>
 <script src="./assets/js/core/catalog-core.js"></script>
 <script src="./assets/js/app.js"></script>
 <script src="./assets/js/register-sw.js"></script>

@@ -115,6 +115,9 @@ with sync_playwright() as p:
                 assert ratio(t[fg],t[bg])>=4.5,(theme,fg,bg,ratio(t[fg],t[bg]))
             dim=page.evaluate('({a:document.documentElement.scrollWidth,b:document.documentElement.clientWidth})')
             assert dim['a']<=dim['b']+2,(theme,width,dim)
+            assert page.locator(f'.logo-{theme}').is_visible() and page.locator('.logo-v:visible').count()==1,theme
+            assert page.locator('.logo').bounding_box()['width']>=44
+            assert page.locator('.brand-name').bounding_box()['height']<=44,theme
         page.reload()
         assert page.evaluate('document.documentElement.dataset.theme')=='aurora'
         assert page.locator('#themeToggle').inner_text()=='Thème : Aurore'
@@ -125,9 +128,10 @@ with sync_playwright() as p:
             box=page.locator('#tipBubble').bounding_box()
             assert box and box['x']>=0 and box['x']+box['width']<=width and box['y']>=0,(width,box)
             assert tip.get_attribute('aria-describedby')=='tipBubble'
+            assert len(tip.get_attribute('data-tip'))<=170,tip.get_attribute('data-tip')
             page.keyboard.press('Escape')
             assert page.locator('#tipBubble').is_hidden()
-        assert page.locator('.tip').count()==9
+        assert page.locator('.tip').count()==17
         assert not errors,errors;ctx.close()
         # Un ancien thème reste valide ; un thème inconnu revient au thème par défaut.
         for stored,expected in (('light','light'),('inconnu','dark')):
@@ -149,19 +153,46 @@ with sync_playwright() as p:
         page.locator('#showAll').click()
         assert page.locator('#showAll').inner_text()=='Afficher moins de domaines' and page.locator('.category-btn').count()==39
         ctx.close()
-        # Tableau des moteurs : complet, moteur courant repéré, sans débordement.
+        # Tableau limité au moteur choisi.
         ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'previewTab':'web','engine':'brave'}})
         page.evaluate("document.querySelectorAll('details').forEach(d=>d.open=true)")
         assert page.locator('#engineTable tr').count()==9
-        assert page.locator('thead th.cap-current').inner_text()=='Brave'
+        assert page.locator('#engineTableName').inner_text()=='Brave'
         page.locator('#engineSelect').select_option('duck')
-        assert 'Duck' in page.locator('thead th.cap-current').inner_text()
-        assert page.locator('#engineTable tr:nth-child(4) td.cap-current').inner_text()=='Non'
-        dim=page.evaluate('({a:document.documentElement.scrollWidth,b:document.documentElement.clientWidth})')
-        assert dim['a']<=dim['b']+2,(width,dim)
-        box=page.locator('.engine-scroll').bounding_box();panel=page.locator('#resultPreview').bounding_box()
+        assert page.locator('#engineTableName').inner_text()=='DuckDuckGo'
+        assert page.locator('#engineTable tr:nth-child(4) td').inner_text()=='Non transmis'
+        assert page.evaluate('document.documentElement.scrollWidth-document.documentElement.clientWidth')<=2
+        box=page.locator('.engine-table').bounding_box();panel=page.locator('#resultPreview').bounding_box()
         assert box['x']+box['width']<=panel['x']+panel['width'],(width,box,panel)
         assert not errors,errors;ctx.close()
+        # Consigne : méthode du domaine, format et assistant ; ancien profil en format détaillé.
+        ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'previewTab':'prompt','category':'osint','topic':'Sujet'}})
+        prompt=lambda:page.locator('#promptPreview').input_value()
+        assert page.locator('#promptStyle').input_value()=='detailed'
+        assert 'Méthode pour ce domaine' in prompt() and 'provenance' in prompt() and 'pas accès au Web' in prompt()
+        long=len(prompt())
+        page.locator('#promptStyle').select_option('short')
+        assert len(prompt())<long and 'provenance' in prompt()
+        page.locator('#aiProvider').select_option('perplexity')
+        assert 'source citée' in prompt() and 'pas accès au Web' not in prompt()
+        page.reload()
+        assert page.locator('#promptStyle').input_value()=='short'
+        assert not errors,errors;ctx.close()
+        # Première visite : proposée une fois, exemple sans écraser une question.
+        ctx,page,errors=open_app(browser,width)
+        assert page.locator('#welcome').is_visible()
+        page.locator('#tryExample').click()
+        assert page.locator('#welcome').is_hidden() and 'logement' in page.locator('#topic').input_value()
+        assert page.locator('.category-btn[data-category-id="housing"]').get_attribute('aria-pressed')=='true'
+        page.reload()
+        assert page.locator('#welcome').is_hidden()
+        page.locator('#topic').fill('Ma question')
+        page.locator('#helpExample').click()
+        assert page.locator('#topic').input_value()=='Ma question'
+        assert not errors,errors;ctx.close()
+        ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'topic':'Ancien'}})
+        assert page.locator('#welcome').is_hidden()
+        ctx.close()
         # Moteurs spécialisés : suggestion sans bascule automatique, requête limitée, bonne adresse.
         ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'previewTab':'web','category':'health','topic':'Migraine','includeSites':'ameli.fr','engine':'google'}})
         assert page.locator('#engineSelect').input_value()=='google'
@@ -178,6 +209,15 @@ with sync_playwright() as p:
         page.wait_for_timeout(200)
         assert any(u.startswith('https://pubmed.ncbi.nlm.nih.gov/?term=Migraine') for u in requests),requests
         assert page.locator('#engineButtons .btn').count()==23
+        assert page.evaluate('document.documentElement.scrollWidth-document.documentElement.clientWidth')<=2
+        assert not errors,errors;ctx.close()
+        # Mode privé en haut de page, explication visible seulement quand il est actif.
+        ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'topic':'Secret'}})
+        assert page.locator('header #privateSearchToggle').is_visible() and page.locator('#privateSearchInfo').is_hidden()
+        assert page.locator('#privateSearchToggle').bounding_box()['y']<page.locator('#topic').bounding_box()['y']
+        page.locator('#privateSearchToggle').click()
+        assert page.locator('#privateSearchToggle').get_attribute('aria-pressed')=='true' and page.locator('#privateSearchInfo').is_visible()
+        assert 'Secret' not in page.evaluate("localStorage.getItem('kerynq-premium-v5')")
         assert page.evaluate('document.documentElement.scrollWidth-document.documentElement.clientWidth')<=2
         assert not errors,errors;ctx.close()
         # Un fournisseur importé ne peut pas viser une propriété héritée.

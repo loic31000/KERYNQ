@@ -32,3 +32,7 @@ Sources utiles :
 - Grok : https://docs.x.ai/grok/overview
 - Mistral Vibe : https://help.mistral.ai/fr/articles/682992-le-chat-devient-vibe
 - Copilot : https://support.microsoft.com/fr-fr/microsoft-365-copilot/what-is-microsoft-copilot-app
+
+## Adaptation de la consigne
+
+La consigne varie peu selon l'assistant, car leurs fonctions changent souvent : Perplexity reçoit une demande de citation des sources, l'URL personnalisée aucune note, et les autres la demande de signaler l'absence d'accès au Web. Cette note ne garantit pas une recherche réelle.

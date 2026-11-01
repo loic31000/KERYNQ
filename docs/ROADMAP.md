@@ -87,3 +87,11 @@ Les univers supplémentaires et les moteurs de recherche restent planifiés pour
 - [x] Distinction véhicule / réseau de transports collectifs, titres métier / scolarité.
 - [x] Tests 39 univers, navigation 8 familles et régression des requêtes Web.
 - Packs de sources officielles : retirés à la demande du propriétaire.
+
+## Dernière passe avant publication
+
+- [x] Consignes adaptées au domaine et à l'assistant, format court ou détaillé.
+- [x] Exemple au premier lancement et section d'aide.
+- [x] Détail des filtres limité au moteur choisi.
+- Écartés par le propriétaire : variantes de requêtes. Reporté pour éviter de complexifier : lien de partage.
+- [ ] Audit de sécurité, puis publication : décision du propriétaire.

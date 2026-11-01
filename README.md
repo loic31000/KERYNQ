@@ -13,7 +13,7 @@ Ouvrir `index.html` dans un navigateur moderne. Écrivez votre question, précis
 - **Sans installation** : ouverture directe de `index.html`.
 - **Hébergement statique** : fichiers utilisables sur GitHub Pages après décision de publication.
 - **Fonctionnement hors ligne** : préparation de requêtes et favoris locaux possibles, mais les moteurs et assistants externes nécessitent Internet. La mise en cache PWA est destinée aux environnements HTTPS/localhost.
-- **Vérifier le code** : `node tests/check-static.mjs` puis `node --test tests/unit/search-query.test.mjs tests/unit/privacy.test.cjs tests/unit/catalog.test.cjs` (Node.js récent).
+- **Vérifier le code** : `node tests/check-static.mjs` puis `node --test tests/unit/search-query.test.mjs tests/unit/privacy.test.cjs tests/unit/catalog.test.cjs tests/unit/prompt.test.cjs` (Node.js récent).
 
 ## Organisation
 
@@ -23,7 +23,9 @@ Ouvrir `index.html` dans un navigateur moderne. Écrivez votre question, précis
 
 - Recherche directe, `Ctrl + K`, affichage simple ou toutes les options, bulles d'aide.
 - 39 univers et leurs filtres contextuels, modèles et recherches favorites par dossier.
-- 23 moteurs généraux et spécialisés (dont OSINT, journalisme, science, code, culture), avec suggestion par domaine et tableau des filtres transmis. Voir [docs/MOTEURS.md](docs/MOTEURS.md).
+- 23 moteurs généraux et spécialisés (dont OSINT, journalisme, science, code, culture), avec suggestion par domaine et détail des filtres transmis. Voir [docs/MOTEURS.md](docs/MOTEURS.md).
+- Consignes IA adaptées : méthode propre au domaine, format court ou détaillé, note selon l'assistant.
+- Exemple au premier lancement et section d'aide.
 - Export et import validé de profils JSON ; export des consignes Markdown.
 - **Mode privé temporaire** : pas de sauvegarde des nouvelles recherches, effacement de la recherche courante déjà enregistrée à l’activation et disparition de la session privée à la fermeture/recharge. Les favoris existants ne sont pas supprimés.
 - **Effacer mes données locales** : suppression confirmée des préférences, favoris et modèles stockés par KERYNQ (ne supprime pas les fichiers déjà exportés).
