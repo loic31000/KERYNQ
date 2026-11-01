@@ -4,13 +4,16 @@ Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent 
 
 ## Non publié : refonte UX
 
-- Parcours simplifié : question, Web ou IA, moteur ou assistant, action unique.
-- Sélecteur de domaine compact, filtrable au clavier et groupé par famille.
-- Réglages fermés par défaut, en sections repliables. Réglages réservés à l'IA masqués en mode Web, sans être perdus.
-- Résumé des critères actifs, retirables un par un, distinguant ce qui est transmis au moteur.
-- Résultat compact sans question. Détails techniques, aide et données repliés. Section « Mes recherches » retirée, favoris conservés dans les sauvegardes.
-- Six moteurs d'images (29 au total), cinq thèmes (11 au total). Section « Partir d'un modèle » retirée, modèles conservés dans les sauvegardes.
-- Tests d'équivalence des requêtes et consignes par rapport à `main`. Voir [docs/UX_REFONTE.md](docs/UX_REFONTE.md).
+- Nouvel espace de recherche : la question d'abord, Web ou IA, sujet, moteur ou assistant et action dans un même bloc.
+- Thème signature KERYNQ, par défaut pour les nouveaux utilisateurs. Le thème enregistré est conservé.
+- Contours propres à chacun des 11 thèmes historiques, sans autre changement de leurs couleurs, polices ou rayons.
+- Réglages dans un panneau « Personnaliser ma recherche », limités au mode Web ou IA en cours.
+- Critères : seuls les choix de l'utilisateur sont affichés, retirables un par un. Les critères ignorés par le moteur sont signalés.
+- Recherche préparée : service, texte exact, critères pris en compte et action suivante.
+- « Ma bibliothèque » : favoris, dossiers, modèles, sauvegarde et données restaurés.
+- Textes de l'interface réécrits.
+- Six moteurs d'images (29 au total), cinq thèmes ajoutés auparavant (Manga, Médecine, Tuning, Animaux, Finance).
+- Tests d'équivalence des requêtes et consignes, et de fidélité des thèmes. Voir [docs/UX_REFONTE.md](docs/UX_REFONTE.md) et [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md).
 
 ## Non publié (branche de préparation)
 

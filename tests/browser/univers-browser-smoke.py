@@ -10,11 +10,11 @@ def serve(route):
 EXPECT={'administration':'Administration','family':'Famille / Parentalité','animals':'Animaux','housing':'Logement','law':'Droit / Justice','personalfinance':'Finances personnelles','childhood':'Enfance & Scolarité','work':'Travail & Emploi','retirement':'Retraite & Autonomie','cooking':'Cuisine & Alimentation','homegarden':'Maison & Jardin','transport':'Transports & Déplacements'}
 with sync_playwright() as p:
  browser=p.chromium.launch(headless=True,executable_path=os.environ.get('KERYNQ_CHROMIUM') or None)
- for width in [1440,390,320]:
+ for width in [1440,1024,768,390,320]:
   ctx=browser.new_context(viewport={'width':width,'height':850},reduced_motion='reduce',service_workers='block')
   page=ctx.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.route('**/*',serve);page.goto('http://kerynq.test/index.html')
-  page.locator('#tabPrompt').click();page.locator('#refineToggle').click()
+  page.locator('#tabPrompt').click()
   page.locator('#domainToggle').click()
   assert page.locator('.domain-option').count()==39,('count',page.locator('.domain-option').count())
   assert page.locator('#categories svg').count()==39

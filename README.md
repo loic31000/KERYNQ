@@ -30,7 +30,7 @@ Ouvrir `index.html` dans un navigateur moderne. Écrivez votre question, précis
 - **Mode privé temporaire** : pas de sauvegarde des nouvelles recherches, effacement de la recherche courante déjà enregistrée à l’activation et disparition de la session privée à la fermeture/recharge. Les favoris existants ne sont pas supprimés.
 - **Effacer mes données locales** : suppression confirmée des préférences, favoris et modèles stockés par KERYNQ (ne supprime pas les fichiers déjà exportés).
 - **Assistants IA au choix** : ChatGPT, Claude, Gemini, Kimi, Grok, DeepSeek, Perplexity, Mistral Vibe, Copilot, autre URL HTTPS. Aucun compte ni API de fournisseur n'est connecté à KERYNQ.
-- Icônes SVG, onze thèmes (Nuit, Clair, Pro, Cyber, Girly, Aurore, Manga, Médecine, Tuning, Animaux, Finance), texte agrandi, adaptations mobiles et animation réduite.
+- Icônes SVG, douze thèmes (KERYNQ par défaut, Nuit, Clair, Pro, Cyber, Girly, Aurore, Manga, Médecine, Tuning, Animaux, Finance), texte agrandi, adaptations mobiles et animation réduite.
 
 ## Documentation
 
@@ -65,3 +65,7 @@ Les filtres ne garantissent pas la qualité des résultats. Une consigne demanda
 
 **Le dépôt reste privé :** ce choix de licence ne rend pas KERYNQ public et n'active pas GitHub Pages.
 
+
+## Interface
+
+La page s'organise autour de la question. Réglages et bibliothèque s'ouvrent à la demande : voir [docs/UX_REFONTE.md](docs/UX_REFONTE.md) et [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md).

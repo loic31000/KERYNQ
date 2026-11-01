@@ -32,9 +32,11 @@ def assert_csp(page,engine,label):
 def journey(page,label):
     page.locator('#topic').fill('Sujet')
     assert page.locator('#queryPreview').text_content()=='Sujet',label
-    page.locator('#refineToggle').click();page.locator('#domainToggle').click()
+    page.locator('#domainToggle').click()
     assert page.locator('.domain-option').count()==39,label
     page.keyboard.press('Escape')
+    page.locator('#libraryToggle').click();assert page.locator('#libraryPanel').is_visible(),label;page.locator('#libraryClose').click()
+    page.locator('#refineToggle').click();assert page.locator('#refinePanel').is_visible(),label;page.locator('#refineClose').click()
     page.locator('#themeToggle').click();page.locator('[data-theme-choice="cyber"]').click();page.keyboard.press('Escape')
     assert page.evaluate('document.documentElement.dataset.theme')=='cyber',label
     icon=page.evaluate("(()=>{const s=getComputedStyle(document.querySelector('.run-search'),'::after');return s.maskImage||s.webkitMaskImage})()")
@@ -58,7 +60,7 @@ with sync_playwright() as p:
     # 200 % et 400 % sur un écran de 1280 px, toutes options ouvertes.
     for zoom,width,height in ((200,640,400),(400,320,256)):
         page=browser.new_page(viewport={'width':width,'height':height});page.goto(URL)
-        page.locator('#tabPrompt').click();page.locator('#refineToggle').click();page.evaluate("document.querySelectorAll('details').forEach(d=>d.open=true)")
+        page.locator('#tabPrompt').click();page.locator('#topic').fill('x');page.locator('#refineToggle').click();page.evaluate("document.querySelectorAll('details').forEach(d=>d.open=true)")
         assert overflow(page)<=2,(zoom,overflow(page))
         page.close()
     print('PASS reflow équivalent zoom 200 % et 400 %')
@@ -84,7 +86,7 @@ with sync_playwright() as p:
     ctx.set_offline(True);page.reload()
     page.locator('#topic').fill('Hors ligne')
     assert page.locator('#queryPreview').text_content()=='Hors ligne'
-    assert page.evaluate('getComputedStyle(document.querySelector(".panel")).borderRadius')!='0px'
+    assert page.evaluate('getComputedStyle(document.querySelector(".composer")).borderRadius')!='0px'
     ctx.set_offline(False)
     cdp=ctx.new_cdp_session(page)
     print('Installabilité Chromium :',cdp.send('Page.getInstallabilityErrors').get('installabilityErrors') or 'aucune erreur signalée')
