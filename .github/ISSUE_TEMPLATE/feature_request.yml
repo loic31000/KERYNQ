@@ -1,0 +1,25 @@
+name: Demande d'amélioration
+description: Proposer une amélioration de KERYNQ
+title: "feat: "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problème utilisateur
+      description: Quel besoin réel l'amélioration résout-elle ?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposition
+      description: Décrire l'interaction et les éventuels risques de confidentialité.
+    validations:
+      required: true
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Compatibilité
+      options:
+        - label: L'amélioration conserve une expérience gratuite sans compte obligatoire.
+        - label: Elle est utilisable sur mobile et au clavier.
