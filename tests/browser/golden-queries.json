@@ -1,0 +1,180 @@
+{
+"engines": [
+"google",
+"brave",
+"duck",
+"bing",
+"qwant",
+"startpage",
+"scholar",
+"pubmed",
+"arxiv",
+"youtube",
+"wikipedia",
+"github",
+"reddit",
+"bingnews",
+"factcheck",
+"archive",
+"shodan",
+"datagouv",
+"openlibrary",
+"myanimelist",
+"steam",
+"musicbrainz",
+"openstreetmap"
+],
+"cases": [
+{
+"input": {
+"topic": "Aides rénovation"
+},
+"prompt": "# Recherche structurée\n\n## Sujet\nAides rénovation\n\n## Thème\nTous les sujets\n\n## Objectif\nExplique le sujet clairement puis approfondis selon les besoins.\n\n## Critères sélectionnés\n- Explication simple\n- Exemples concrets\n\n## Sources à privilégier\n- Sources officielles\n- Presse et médias\n\n## Format de réponse\n- Résumé simple\n- Liens et références\n\n## Périmètre\n- Période : Toutes les périodes\n- Langue des sources : Français et anglais\n\n## Qualité et fiabilité\n- Cherche réellement sur le Web si les outils nécessaires sont disponibles. Ne prétends jamais avoir effectué une recherche qui n’a pas été faite.\n- Cite les sources utiles avec liens et dates, et privilégie les documents originaux lorsque cela apporte une preuve.\n- Distingue les faits confirmés, les informations non vérifiées, les rumeurs et les opinions.\n- Pour une actualité, une sortie, un prix, une disponibilité ou une règle, vérifie que l’information est toujours valable.\n- Ne déduis pas une implication ou une causalité du simple fait que des noms ou des événements sont associés.\n- En cas de désaccord entre sources fiables, présente les points de divergence.\n- Indique clairement les limites de ce qui a pu être vérifié.\n- Réponds en français, avec des titres simples et une structure lisible.\n- Si tu n’as pas accès au Web dans cette conversation, dis-le dès le début de ta réponse.",
+"queries": {
+"google": "Aides rénovation",
+"brave": "Aides rénovation",
+"duck": "Aides rénovation",
+"bing": "Aides rénovation",
+"qwant": "Aides rénovation",
+"startpage": "Aides rénovation",
+"scholar": "Aides rénovation",
+"pubmed": "Aides rénovation",
+"arxiv": "Aides rénovation",
+"youtube": "Aides rénovation",
+"wikipedia": "Aides rénovation",
+"github": "Aides rénovation",
+"reddit": "Aides rénovation",
+"bingnews": "Aides rénovation",
+"factcheck": "Aides rénovation",
+"archive": "Aides rénovation",
+"shodan": "Aides rénovation",
+"datagouv": "Aides rénovation",
+"openlibrary": "Aides rénovation",
+"myanimelist": "Aides rénovation",
+"steam": "Aides rénovation",
+"musicbrainz": "Aides rénovation",
+"openstreetmap": "Aides rénovation"
+}
+},
+{
+"input": {
+"topic": "Migraine traitement",
+"category": "health",
+"period": "year",
+"language": "fr",
+"includeSites": "ameli.fr, has-sante.fr",
+"excludeWords": "forum",
+"goal": "verify",
+"engine": "google"
+},
+"prompt": "# Recherche structurée\n\n## Sujet\nMigraine traitement\n\n## Thème\nSanté & Médecine\n\n## Objectif\nTeste les affirmations à partir de sources vérifiables et précise ce qui reste incertain.\n\n## Critères sélectionnés\n- Recommandations médicales\n- Études cliniques\n- Incertitudes\n\n## Sources à privilégier\n- Sources officielles\n- Presse et médias\n\n## Format de réponse\n- Résumé simple\n- Liens et références\n\n## Périmètre\n- Période : 12 derniers mois\n- Langue des sources : Français\n- Éviter ces termes : forum\n- Sites à privilégier : ameli.fr, has-sante.fr\n\n## Méthode pour ce domaine\n- Privilégie les recommandations officielles et les synthèses reconnues, avec leur date.\n- Indique le niveau de preuve et les signes qui justifient de consulter.\n- Donne des informations générales sourcées, sans poser de diagnostic. Oriente vers un professionnel compétent lorsque nécessaire.\n\n## Qualité et fiabilité\n- Cherche réellement sur le Web si les outils nécessaires sont disponibles. Ne prétends jamais avoir effectué une recherche qui n’a pas été faite.\n- Cite les sources utiles avec liens et dates, et privilégie les documents originaux lorsque cela apporte une preuve.\n- Distingue les faits confirmés, les informations non vérifiées, les rumeurs et les opinions.\n- Pour une actualité, une sortie, un prix, une disponibilité ou une règle, vérifie que l’information est toujours valable.\n- Ne déduis pas une implication ou une causalité du simple fait que des noms ou des événements sont associés.\n- En cas de désaccord entre sources fiables, présente les points de divergence.\n- Indique clairement les limites de ce qui a pu être vérifié.\n- Réponds en français, avec des titres simples et une structure lisible.\n- Si tu n’as pas accès au Web dans cette conversation, dis-le dès le début de ta réponse.",
+"queries": {
+"google": "Migraine traitement -forum (site:ameli.fr OR site:has-sante.fr) after:2025-01-15 before:2026-01-16",
+"brave": "Migraine traitement -forum (site:ameli.fr OR site:has-sante.fr) lang:fr",
+"duck": "Migraine traitement -forum",
+"bing": "Migraine traitement -forum (site:ameli.fr OR site:has-sante.fr)",
+"qwant": "Migraine traitement -forum",
+"startpage": "Migraine traitement -forum",
+"scholar": "Migraine traitement -forum",
+"pubmed": "Migraine traitement",
+"arxiv": "Migraine traitement",
+"youtube": "Migraine traitement",
+"wikipedia": "Migraine traitement",
+"github": "Migraine traitement",
+"reddit": "Migraine traitement",
+"bingnews": "Migraine traitement",
+"factcheck": "Migraine traitement",
+"archive": "Migraine traitement",
+"shodan": "Migraine traitement",
+"datagouv": "Migraine traitement",
+"openlibrary": "Migraine traitement",
+"myanimelist": "Migraine traitement",
+"steam": "Migraine traitement",
+"musicbrainz": "Migraine traitement",
+"openstreetmap": "Migraine traitement"
+}
+},
+{
+"input": {
+"topic": "One Piece tome",
+"category": "manga",
+"region": "Japon",
+"filetype": "pdf",
+"includeWords": "édition, couleur",
+"excludeSites": "pinterest.com",
+"language": "fr-en",
+"sources": [
+"official"
+],
+"formats": [
+"table"
+],
+"context": "pour un débutant",
+"promptStyle": "short",
+"aiProvider": "perplexity"
+},
+"prompt": "# Recherche structurée\n\n## Sujet\nOne Piece tome\n\n## Thème\nMangas\n\n## Objectif\nExplique le sujet clairement puis approfondis selon les besoins.\n\n## Précisions\npour un débutant\n\n## Critères sélectionnés\n- Sans spoilers\n- Dates de sortie\n- Éditions françaises\n\n## Sources à privilégier\n- Sources officielles\n\n## Format de réponse\n- Tableau comparatif\n\n## Périmètre\n- Période : Toutes les périodes\n- Langue des sources : Français et anglais\n- Zone géographique : Japon\n- Format documentaire : PDF\n- Inclure ces mots ou expressions : édition ; couleur\n- Sites à exclure : pinterest.com\n\n## Méthode pour ce domaine\n- Distingue les informations officielles, les critiques et les avis de communauté.\n- Signale les rumeurs et les annonces non confirmées.\n- Préviens avant de révéler un élément d’intrigue.\n\n## Qualité et fiabilité\n- Ne prétends jamais avoir effectué une recherche qui n’a pas été faite.\n- Cite tes sources avec liens et dates, et indique les limites de ce qui a pu être vérifié.\n- Réponds en français, de façon brève : l’essentiel d’abord.\n- Appuie chaque affirmation importante sur une source citée dans ta réponse.",
+"queries": {
+"google": "One Piece tome édition couleur -site:pinterest.com filetype:pdf",
+"brave": "One Piece tome édition couleur -site:pinterest.com filetype:pdf loc:jp",
+"duck": "One Piece tome édition couleur -site:pinterest.com filetype:pdf",
+"bing": "One Piece tome édition couleur -site:pinterest.com filetype:pdf",
+"qwant": "One Piece tome édition couleur -site:pinterest.com",
+"startpage": "One Piece tome édition couleur -site:pinterest.com",
+"scholar": "One Piece tome édition couleur",
+"pubmed": "One Piece tome édition couleur",
+"arxiv": "One Piece tome édition couleur",
+"youtube": "One Piece tome édition couleur",
+"wikipedia": "One Piece tome édition couleur",
+"github": "One Piece tome édition couleur",
+"reddit": "One Piece tome édition couleur",
+"bingnews": "One Piece tome édition couleur",
+"factcheck": "One Piece tome édition couleur",
+"archive": "One Piece tome édition couleur",
+"shodan": "One Piece tome édition couleur",
+"datagouv": "One Piece tome édition couleur",
+"openlibrary": "One Piece tome édition couleur",
+"myanimelist": "One Piece tome édition couleur",
+"steam": "One Piece tome édition couleur",
+"musicbrainz": "One Piece tome édition couleur",
+"openstreetmap": "One Piece tome édition couleur"
+}
+},
+{
+"input": {
+"topic": "Loi climat",
+"category": "politics",
+"period": "custom",
+"dateFrom": "2024-01-01",
+"dateTo": "2024-12-31",
+"language": "en"
+},
+"prompt": "# Recherche structurée\n\n## Sujet\nLoi climat\n\n## Thème\nPolitique\n\n## Objectif\nExplique le sujet clairement puis approfondis selon les besoins.\n\n## Critères sélectionnés\n- Documents officiels\n- Points de vue contradictoires\n- Vérification de propos\n\n## Sources à privilégier\n- Sources officielles\n- Presse et médias\n\n## Format de réponse\n- Résumé simple\n- Liens et références\n\n## Périmètre\n- Période : Plage personnalisée (2024-01-01 à 2024-12-31)\n- Langue des sources : Anglais\n\n## Méthode pour ce domaine\n- Date chaque fait et distingue la date de l’événement de celle de la publication.\n- Croise au moins deux sources indépendantes avant de présenter un fait comme établi.\n- Sépare les faits, les déclarations et les analyses.\n\n## Qualité et fiabilité\n- Cherche réellement sur le Web si les outils nécessaires sont disponibles. Ne prétends jamais avoir effectué une recherche qui n’a pas été faite.\n- Cite les sources utiles avec liens et dates, et privilégie les documents originaux lorsque cela apporte une preuve.\n- Distingue les faits confirmés, les informations non vérifiées, les rumeurs et les opinions.\n- Pour une actualité, une sortie, un prix, une disponibilité ou une règle, vérifie que l’information est toujours valable.\n- Ne déduis pas une implication ou une causalité du simple fait que des noms ou des événements sont associés.\n- En cas de désaccord entre sources fiables, présente les points de divergence.\n- Indique clairement les limites de ce qui a pu être vérifié.\n- Réponds en français, avec des titres simples et une structure lisible.\n- Si tu n’as pas accès au Web dans cette conversation, dis-le dès le début de ta réponse.",
+"queries": {
+"google": "Loi climat after:2024-01-01 before:2025-01-01",
+"brave": "Loi climat lang:en",
+"duck": "Loi climat",
+"bing": "Loi climat",
+"qwant": "Loi climat",
+"startpage": "Loi climat",
+"scholar": "Loi climat",
+"pubmed": "Loi climat",
+"arxiv": "Loi climat",
+"youtube": "Loi climat",
+"wikipedia": "Loi climat",
+"github": "Loi climat",
+"reddit": "Loi climat",
+"bingnews": "Loi climat",
+"factcheck": "Loi climat",
+"archive": "Loi climat",
+"shodan": "Loi climat",
+"datagouv": "Loi climat",
+"openlibrary": "Loi climat",
+"myanimelist": "Loi climat",
+"steam": "Loi climat",
+"musicbrainz": "Loi climat",
+"openstreetmap": "Loi climat"
+}
+}
+]
+}

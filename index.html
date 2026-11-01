@@ -35,12 +35,7 @@
 
 <section class="intro" aria-labelledby="pageTitle">
   <h1 id="pageTitle">Posez votre question. KERYNQ la rend plus précise.</h1>
-  <p class="lead">KERYNQ n’est pas un moteur de recherche : il prépare votre question, puis l’ouvre sur le Web ou la met en forme pour un assistant IA. Gratuit, sans compte. Rien ne part sans votre clic.</p>
-  <ol class="how">
-    <li><strong>Écrivez</strong><span>votre question, avec vos mots.</span></li>
-    <li><strong>Précisez</strong><span>le domaine et les filtres, si vous le souhaitez.</span></li>
-    <li><strong>Lancez</strong><span>sur le Web, ou copiez le texte dans une IA.</span></li>
-  </ol>
+  <p class="lead">Préparez votre recherche, puis ouvrez-la sur le Web ou dans un assistant IA. Gratuit, sans compte. Rien ne part sans votre clic.</p>
   <div id="welcome" class="welcome" role="region" aria-label="Première visite" hidden><p>Première visite ? Essayez avec une question déjà préparée.</p><div class="welcome-actions"><button type="button" id="tryExample" class="btn primary">Essayer un exemple</button><button type="button" id="hideWelcome" class="btn">Masquer</button></div></div>
 </section>
 
@@ -53,99 +48,98 @@
       <div class="segmented" role="tablist" aria-labelledby="destinationLabel"><button type="button" role="tab" id="tabWeb" aria-controls="panelWeb" aria-selected="false" tabindex="-1">Sur le Web</button><button type="button" role="tab" id="tabPrompt" aria-controls="panelPrompt" aria-selected="true" tabindex="0">Avec une IA</button></div>
     </div>
     <div class="engine-picker" id="enginePicker"><label class="control-label" id="engineLabel" for="engineSelect">Moteur</label><select id="engineSelect"></select></div>
+    <div class="engine-picker" id="assistantPicker"><label class="control-label" id="assistantLabel" for="aiProvider">Assistant</label><select id="aiProvider" ><option value="chatgpt">ChatGPT</option><option value="claude">Claude</option><option value="gemini">Gemini</option><option value="kimi">Kimi</option><option value="grok">Grok</option><option value="deepseek">DeepSeek</option><option value="perplexity">Perplexity</option><option value="mistral">Mistral Vibe</option><option value="copilot">Microsoft Copilot</option><option value="custom">Autre assistant (URL HTTPS)</option></select></div>
     <button id="runSearch" type="button" class="btn primary run-search ico-after ico-external">Rechercher</button>
   </div>
+  <div class="ai-custom" id="customAIWrap" hidden><label for="customAIUrl" class="control-label">Adresse HTTPS de l’assistant</label><input id="customAIUrl" class="field" inputmode="url" autocomplete="url" maxlength="300" placeholder="https://exemple.com/"></div>
   <p id="searchHint" class="hint"><kbd>Entrée</kbd> pour lancer · <kbd>Maj</kbd> + <kbd>Entrée</kbd> pour aller à la ligne · <kbd>Ctrl</kbd> + <kbd>K</kbd> pour revenir ici</p>
+  <div class="context-row">
+    <div class="domain-picker" id="domainPicker">
+      <button type="button" id="domainToggle" class="domain-toggle" aria-expanded="false" aria-controls="domainPanel"><span id="domainIcon" class="domain-icon"></span><span class="domain-prefix">Domaine :</span> <strong id="domainName">Tous les sujets</strong></button>
+      <div id="domainPanel" class="domain-panel" role="group" aria-label="Choisir un domaine" hidden>
+        <label for="categorySearch">Rechercher un domaine</label>
+        <input id="categorySearch" class="field" type="text" role="combobox" aria-autocomplete="list" aria-expanded="true" aria-controls="categories" autocomplete="off" placeholder="Ex. : santé, manga, droit">
+        <label class="domain-family-label" for="familyFilter">Famille</label>
+        <select id="familyFilter" class="field"><option value="all">Toutes les familles</option><option value="actus">Actualités &amp; société</option><option value="culture">Culture &amp; loisirs</option><option value="tech">Tech, IA &amp; cyber</option><option value="sciences">Santé &amp; sciences</option><option value="quotidien">Famille &amp; quotidien</option><option value="demarches">Démarches &amp; droit</option><option value="mobilite">Voyages &amp; mobilité</option><option value="formation">Études &amp; travail</option></select>
+        <p class="category-count" id="categoryCount" aria-live="polite"></p>
+        <div id="categories" class="domain-list" role="listbox" aria-label="Domaines"></div>
+      </div>
+    </div>
+    <div id="activeSummary" class="active-summary" role="group" aria-label="Critères actifs"></div>
+    <button type="button" id="refineToggle" class="link-button refine-toggle" aria-expanded="false" aria-controls="refinePanel">Affiner ma recherche</button>
+  </div>
 </section>
 
-<button class="btn primary jump-cta ico-after ico-down" id="jumpToResult" type="button" aria-controls="resultPreview">Voir mon résultat</button>
+<button class="btn jump-cta ico-after ico-down" id="jumpToResult" type="button" aria-controls="resultPreview">Voir mon résultat</button>
 <main id="main" class="layout">
-<div class="main-stack">
-<section class="panel" aria-labelledby="refineTitle">
-  <div class="panel-head"><div><h2 id="refineTitle">Précisez, si besoin</h2><p class="sub">Tout est facultatif. Vous pouvez lancer votre recherche sans rien changer ici.</p></div>
-    <div class="panel-tools"><div id="modeSwitch" class="mode-switch" role="group" aria-label="Quantité d’options affichées"><button type="button" id="modeSimple" aria-pressed="true">Simple</button><button type="button" id="modeAdvanced" aria-pressed="false">Toutes les options</button></div><button id="showAll" class="link-button" type="button" aria-controls="categories" aria-expanded="false">Afficher tous les domaines</button><label class="sr-only" for="familyFilter">Famille de domaines</label><select id="familyFilter" class="text-search"><option value="all">Toutes les familles</option><option value="actus">Actualités &amp; société</option><option value="culture">Culture &amp; loisirs</option><option value="tech">Tech, IA &amp; cyber</option><option value="sciences">Santé &amp; sciences</option><option value="quotidien">Famille &amp; quotidien</option><option value="demarches">Démarches &amp; droit</option><option value="mobilite">Voyages &amp; mobilité</option><option value="formation">Études &amp; travail</option></select></div></div>
-
-  <h3 id="category-title">Domaine de votre question</h3>
-  <div class="category-tools"><label class="sr-only" for="categorySearch">Rechercher un domaine</label><input id="categorySearch" class="text-search" type="search" placeholder="Rechercher un domaine"><span class="category-count" id="categoryCount" aria-live="polite"></span></div>
-  <div class="category-grid" id="categories" role="group" aria-labelledby="category-title"></div>
-
-  <div class="block"><h3 id="examplesTitle">Besoin d’une idée ?</h3><div id="examples" class="example-row" role="group" aria-labelledby="examplesTitle"></div></div>
-
-  <div class="block quick-filter-section"><h3 id="quickTitle">Ce que vous attendez</h3><div id="quickFilters" class="quick-filters" role="group" aria-labelledby="quickTitle"></div></div>
-
-  <div class="block advanced-only"><h3 id="goal-title">Votre objectif</h3><p class="sub">Change la façon dont l’IA répond. Sans effet sur la recherche Web.</p><div id="goals" class="goal-grid" role="group" aria-labelledby="goal-title"></div></div>
-
-  <div class="block advanced-only full-filters">
-    <div class="block-head"><h3 id="specificTitle">Filtres du domaine</h3><button type="button" id="clearSpecial" class="link-button">Tout décocher</button></div>
-    <p class="sub" id="specificHelp">Ces options changent selon le domaine.</p>
-    <div class="option-list" id="specialFilters" role="group" aria-labelledby="specificTitle"></div>
-    <div class="group-block"><h3 id="custom-title">Vos propres critères</h3><div class="custom-row"><input class="field" id="customInput" maxlength="100" placeholder="Ex. : disponible en France" aria-labelledby="custom-title"><button type="button" class="btn" id="addCustom">Ajouter</button></div><div class="custom-pills" id="customList" aria-live="polite"></div></div>
-    <div class="group-block"><h3 id="source-title">Types de sources</h3><div class="pills" id="sourceFilters" role="group" aria-labelledby="source-title"></div></div>
-    <div class="group-block"><h3 id="format-title">Présentation de la réponse</h3><div class="pills" id="formatFilters" role="group" aria-labelledby="format-title"></div></div>
-    <details class="details" id="advanced"><summary>Filtres précis : dates, langue, sites, mots</summary><div class="form-grid">
-      <div><label for="period">Période</label><select id="period" class="field"><option value="all">Toutes les dates</option><option value="day">24 dernières heures</option><option value="week">7 derniers jours</option><option value="month">30 derniers jours</option><option value="year">12 derniers mois</option><option value="custom">Dates précises</option></select></div>
-      <div><label for="language">Langue des sources</label><select id="language" class="field"><option value="all">Toutes les langues</option><option value="fr">Français</option><option value="en">Anglais</option><option value="fr-en">Français + anglais</option><option value="multi">Multilingue</option></select></div>
-      <div id="fromContainer" hidden><label for="dateFrom">À partir du</label><input type="date" class="field" id="dateFrom"></div><div id="toContainer" hidden><label for="dateTo">Jusqu’au</label><input type="date" class="field" id="dateTo"></div>
-      <div><label for="region">Pays ou région</label><input id="region" class="field" placeholder="Ex. : France, Japon"></div>
-      <div><label for="filetype">Type de fichier</label><select id="filetype" class="field"><option value="">Tous les formats</option><option value="pdf">PDF</option><option value="docx">Word (DOCX)</option><option value="xlsx">Excel (XLSX)</option><option value="pptx">PowerPoint (PPTX)</option></select></div>
-      <div class="wide"><label for="includeWords">Mots à inclure</label><input class="field" id="includeWords" placeholder="Séparés par une virgule"></div>
+<section class="panel refine-panel" id="refinePanel" aria-labelledby="refineTitle" hidden>
+  <h2 id="refineTitle">Affiner ma recherche</h2>
+  <p class="sub" id="refineHelp"></p>
+  <details class="fold" id="scopeGroup"><summary>Dates, langue et lieu</summary><div class="form-grid">
+    <div><label for="period">Période</label><select id="period" class="field"><option value="all">Toutes les dates</option><option value="day">24 dernières heures</option><option value="week">7 derniers jours</option><option value="month">30 derniers jours</option><option value="year">12 derniers mois</option><option value="custom">Dates précises</option></select></div>
+    <div><label for="language">Langue des sources</label><select id="language" class="field"><option value="all">Toutes les langues</option><option value="fr">Français</option><option value="en">Anglais</option><option value="fr-en">Français + anglais</option><option value="multi">Multilingue</option></select></div>
+    <div id="fromContainer" hidden><label for="dateFrom">À partir du</label><input type="date" class="field" id="dateFrom"></div><div id="toContainer" hidden><label for="dateTo">Jusqu’au</label><input type="date" class="field" id="dateTo"></div>
+    <div><label for="region">Pays ou région</label><input id="region" class="field" placeholder="Ex. : France, Japon"></div>
+  </div></details>
+  <details class="fold" id="advanced"><summary>Mots, sites et type de fichier</summary><div class="form-grid">
+    <div><label for="filetype">Type de fichier</label><select id="filetype" class="field"><option value="">Tous les formats</option><option value="pdf">PDF</option><option value="docx">Word (DOCX)</option><option value="xlsx">Excel (XLSX)</option><option value="pptx">PowerPoint (PPTX)</option></select></div>
+    <div class="wide"><label for="includeWords">Mots à inclure</label><input class="field" id="includeWords" placeholder="Séparés par une virgule"></div>
       <div class="wide"><label for="excludeWords">Mots à exclure</label><input class="field" id="excludeWords" placeholder="Ex. : spoiler, publicité"></div>
       <div class="wide"><label for="includeSites">Sites à privilégier</label><input class="field" id="includeSites" placeholder="Ex. : service-public.gouv.fr, ameli.fr"></div>
       <div class="wide"><label for="excludeSites">Sites à exclure</label><input class="field" id="excludeSites" placeholder="Ex. : pinterest.com"></div>
-      <div class="wide"><label for="context">Précisions pour l’IA</label><textarea id="context" class="field" rows="3" placeholder="Contexte, contraintes, public visé…"></textarea></div>
-    </div><p class="note">Chaque moteur n’applique pas tous ces filtres. Le résultat indique ce qui est réellement appliqué.</p></details>
+  </div><p class="note">Chaque moteur n’applique pas tous ces filtres. Le résultat indique ce qui est réellement transmis.</p></details>
+  <div class="only-ai">
+    <details class="fold"><summary>Objectif de la réponse</summary><p class="sub">Change la façon dont l’IA répond.</p><div id="goals" class="goal-grid" role="group" aria-label="Objectif de la réponse"></div></details>
+    <details class="fold"><summary id="specificTitle">Filtres du domaine</summary><div class="block-head"><p class="sub" id="specificHelp">Ces options changent selon le domaine.</p><button type="button" id="clearSpecial" class="link-button">Tout décocher</button></div><div class="option-list" id="specialFilters" role="group" aria-labelledby="specificTitle"></div></details>
+    <details class="fold"><summary>Sources et présentation</summary><h3 id="source-title">Types de sources</h3><div class="pills" id="sourceFilters" role="group" aria-labelledby="source-title"></div><h3 id="format-title">Présentation de la réponse</h3><div class="pills" id="formatFilters" role="group" aria-labelledby="format-title"></div><label for="promptStyle" id="promptStyleLabel" class="control-label">Longueur du texte préparé</label><select id="promptStyle" class="field"><option value="detailed">Détaillé</option><option value="short">Court</option></select></details>
+    <details class="fold"><summary>Vos critères et précisions</summary><h3 id="custom-title">Vos propres critères</h3><div class="custom-row"><input class="field" id="customInput" maxlength="100" placeholder="Ex. : disponible en France" aria-labelledby="custom-title"><button type="button" class="btn" id="addCustom">Ajouter</button></div><div class="custom-pills" id="customList" aria-live="polite"></div><label for="context">Précisions pour l’IA</label><textarea id="context" class="field" rows="3" placeholder="Contexte, contraintes, public visé…"></textarea></details>
   </div>
 </section>
 
-</div>
-
-<aside class="panel preview" id="resultPreview" aria-labelledby="resultTitle">
-  <h2 id="resultTitle">Votre résultat</h2>
-  <div class="active-stats"><span id="themeStatus" class="mini-stat">Tous les sujets</span><span id="filterStatus" class="mini-stat">0 critère</span></div>
+<aside class="panel preview is-empty" id="resultPreview" aria-labelledby="resultTitle">
+  <div class="result-head"><h2 id="resultTitle">Votre résultat</h2><div class="active-stats when-filled"><span id="themeStatus" class="mini-stat">Tous les sujets</span><span id="filterStatus" class="mini-stat">0 critère</span></div></div>
+  <div id="resultEmpty" class="result-empty"><p class="sub" id="resultEmptyText"></p><div id="examples" class="example-row" role="group" aria-label="Exemples de questions"></div></div>
   <section id="panelPrompt" class="preview-panel" role="tabpanel" aria-labelledby="tabPrompt" tabindex="-1">
-    <p class="sub">Copiez ce texte, puis collez-le dans la conversation de l’assistant. KERYNQ ne lui envoie rien.</p>
-    <label for="aiProvider" id="assistantLabel" class="control-label">Assistant</label>
-    <select id="aiProvider" class="field" aria-describedby="aiTransferNote"><option value="chatgpt">ChatGPT</option><option value="claude">Claude</option><option value="gemini">Gemini</option><option value="kimi">Kimi</option><option value="grok">Grok</option><option value="deepseek">DeepSeek</option><option value="perplexity">Perplexity</option><option value="mistral">Mistral Vibe</option><option value="copilot">Microsoft Copilot</option><option value="custom">Autre assistant (URL HTTPS)</option></select>
-    <div class="ai-custom" id="customAIWrap" hidden><label for="customAIUrl" class="control-label">Adresse HTTPS de l’assistant</label><input id="customAIUrl" class="field" inputmode="url" autocomplete="url" maxlength="300" placeholder="https://exemple.com/"></div>
-    <div class="preview-actions"><button type="button" class="btn primary ico-after ico-external" id="openAIProvider" aria-describedby="aiTransferNote">Copier et ouvrir</button><button type="button" class="btn" id="copyPrompt">Copier seulement</button><button type="button" class="btn" id="downloadPrompt">Exporter .md</button></div>
-    <p id="aiTransferNote" class="note">L’assistant applique ses propres conditions et peut demander un compte.</p>
-    <label for="promptStyle" id="promptStyleLabel" class="control-label">Format du texte</label><select id="promptStyle" class="field"><option value="detailed">Détaillé</option><option value="short">Court</option></select>
-    <label for="promptPreview" class="control-label">Texte préparé</label><textarea id="promptPreview" class="preview-field" readonly spellcheck="false"></textarea>
+    <div class="when-filled">
+    <label for="promptPreview" class="control-label">Texte à coller dans l’assistant</label><textarea id="promptPreview" class="preview-field" readonly spellcheck="false"></textarea>
+    <div class="preview-actions"><button type="button" class="btn" id="copyPrompt">Copier seulement</button><button type="button" class="btn" id="downloadPrompt">Exporter .md</button></div>
+    <p id="aiTransferNote" class="note">KERYNQ n’envoie rien à l’assistant. Il applique ses propres conditions et peut demander un compte.</p>
+    </div>
   </section>
   <section id="panelWeb" class="preview-panel" role="tabpanel" aria-labelledby="tabWeb" tabindex="-1" hidden>
-    <p class="sub">Voici ce qui sera envoyé au moteur quand vous cliquerez.</p>
-    <span class="control-label" id="queryLabel">Recherche préparée</span><output id="queryPreview" class="preview-mono" aria-labelledby="queryLabel" aria-live="polite">Saisissez une question pour commencer.</output>
+    <div class="when-filled">
+    <span class="control-label" id="queryLabel">Recherche envoyée au moteur</span><output id="queryPreview" class="preview-mono" aria-labelledby="queryLabel" aria-live="polite">Saisissez une question pour commencer.</output>
     <div id="engineSuggest" class="engine-suggest" hidden><span id="engineSuggestText"></span><button type="button" class="btn" id="useSuggestedEngine">Utiliser</button></div>
-    <details class="details engine-other"><summary>Ouvrir sur un autre moteur</summary><div class="go-search" id="engineButtons" role="group" aria-label="Ouvrir la recherche"></div></details>
-    <button type="button" class="btn full" id="copyQuery">Copier la recherche</button>
-    <div id="queryCompatibility" class="query-compatibility" aria-live="polite"></div>
-    <details class="details engine-table-wrap"><summary>Que transmet KERYNQ à ce moteur ?</summary><table class="engine-table"><caption class="sr-only">Filtres transmis par KERYNQ au moteur choisi</caption><thead><tr><th scope="col">Filtre</th><th scope="col" id="engineTableName">Moteur</th></tr></thead><tbody id="engineTable"></tbody></table><p class="note">« Transmis » signifie que le filtre figure dans la recherche envoyée. Le moteur peut l’ignorer ou l’interpréter à sa façon.</p></details>
+    <div class="preview-actions"><button type="button" class="btn" id="copyQuery">Copier la recherche</button></div>
+    <details class="fold engine-other"><summary>Ouvrir sur un autre moteur</summary><div class="go-search" id="engineButtons" role="group" aria-label="Ouvrir la recherche"></div></details>
+    <details class="fold engine-table-wrap"><summary>Que transmet KERYNQ à ce moteur ?</summary><div id="queryCompatibility" class="query-compatibility" aria-live="polite"></div><table class="engine-table"><caption class="sr-only">Filtres transmis par KERYNQ au moteur choisi</caption><thead><tr><th scope="col">Filtre</th><th scope="col" id="engineTableName">Moteur</th></tr></thead><tbody id="engineTable"></tbody></table><p class="note">« Transmis » signifie que le filtre figure dans la recherche envoyée. Le moteur peut l’ignorer ou l’interpréter à sa façon.</p></details>
+    </div>
   </section>
 </aside>
 </main>
 
-<section class="panel saved-panel" aria-labelledby="savedTitle">
-  <h2 id="savedTitle">Mes recherches</h2><p class="sub">Enregistrées uniquement dans ce navigateur, sans chiffrement.</p>
+<details class="panel fold-panel saved-panel">
+  <summary><h2 id="savedTitle">Mes recherches</h2></summary><p class="sub">Enregistrées uniquement dans ce navigateur, sans chiffrement.</p>
   <div class="saved-grid">
     <div class="save-fields"><label class="sr-only" for="favoriteTitle">Nom du favori</label><input id="favoriteTitle" class="field" maxlength="90" placeholder="Nom (facultatif)"><label class="sr-only" for="favoriteFolder">Dossier du favori</label><input id="favoriteFolder" class="field" maxlength="50" placeholder="Dossier : Général"><button id="saveResearch" type="button" class="btn">Enregistrer cette recherche</button></div>
     <div><div class="folder-tools"><label class="sr-only" for="folderFilter">Filtrer par dossier</label><select id="folderFilter" class="field"><option value="">Tous les dossiers</option></select><label class="sr-only" for="favoriteSearch">Filtrer les favoris</label><input type="search" id="favoriteSearch" class="field" placeholder="Filtrer"></div><div id="savedList" class="saved-list" aria-live="polite"></div></div>
   </div>
-</section>
+</details>
 
-<section class="panel" aria-labelledby="helpTitle">
-  <h2 id="helpTitle">Aide</h2>
+<details class="panel fold-panel">
+  <summary><h2 id="helpTitle">Aide</h2></summary>
   <details class="details"><summary>À quoi sert KERYNQ ?</summary><p class="sub">Il transforme votre question en recherche plus précise. Il n’affiche pas de résultats : ils s’ouvrent chez le moteur ou l’assistant que vous choisissez.</p></details>
   <details class="details"><summary>Web ou IA : que choisir ?</summary><p class="sub">Le Web, pour trouver vous-même des pages. Une IA, pour obtenir une synthèse : KERYNQ prépare un texte que vous collez dans la conversation. Vérifiez toujours les sources citées.</p></details>
   <details class="details"><summary>Mes données partent-elles quelque part ?</summary><p class="sub">Rien ne part sans votre clic. Votre recherche va alors au seul moteur choisi. Le texte pour une IA n’est envoyé que si vous le collez vous-même. Vos réglages restent dans ce navigateur.</p></details>
   <details class="details"><summary>Pourquoi un filtre ne semble pas appliqué ?</summary><p class="sub">Tous les moteurs ne reçoivent pas tous les filtres, et un moteur peut ignorer ce qu’il reçoit. La section « Que transmet KERYNQ à ce moteur ? » indique ce qui est envoyé.</p></details>
   <button type="button" id="helpExample" class="btn help-example">Essayer un exemple</button>
-</section>
+</details>
 
-<section class="panel" aria-labelledby="privacyTitle">
-  <h2 id="privacyTitle">Confidentialité et données</h2>
+<details class="panel fold-panel">
+  <summary><h2 id="privacyTitle">Confidentialité et données</h2></summary>
   <div class="privacy-row"><p class="sub">Le mode privé, en haut de la page, évite de garder votre recherche en cours sur cet appareil.</p></div>
   <details class="details"><summary>Sauvegarder, restaurer ou effacer</summary><div class="action-row"><button id="exportConfig" type="button" class="btn">Exporter mon profil</button><button id="importConfig" type="button" class="btn">Importer un profil</button><button id="reset" type="button" class="btn">Réinitialiser les réglages</button><button id="clearAllData" type="button" class="btn danger">Effacer mes données locales</button></div><input id="profileFile" type="file" accept=".json,application/json" hidden><p class="note">Un profil exporté peut contenir vos recherches : conservez-le prudemment.</p></details>
-</section>
+</details>
 
 <footer class="footer"><p>KERYNQ · Application statique, utilisable sur ordinateur et mobile. Les filtres ne garantissent pas la qualité des résultats.</p><p><a href="https://support.google.com/websearch/answer/2466433?hl=fr" target="_blank" rel="noopener noreferrer">Aide Google Search</a> · <a href="https://search.brave.com/help/operators" target="_blank" rel="noopener noreferrer">Opérateurs Brave</a></p></footer>
 </div>

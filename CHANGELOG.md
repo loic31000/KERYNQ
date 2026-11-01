@@ -2,6 +2,16 @@
 
 Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent le développement et ne signifient pas une publication publique.
 
+## Non publié : refonte UX
+
+- Parcours simplifié : question, Web ou IA, moteur ou assistant, action unique.
+- Sélecteur de domaine compact, filtrable au clavier et groupé par famille.
+- Réglages fermés par défaut, en sections repliables. Réglages réservés à l'IA masqués en mode Web, sans être perdus.
+- Résumé des critères actifs, retirables un par un, distinguant ce qui est transmis au moteur.
+- Résultat compact sans question. Détails techniques, favoris, aide et données repliés.
+- Six moteurs d'images (29 au total), cinq thèmes (11 au total). Section « Partir d'un modèle » retirée, modèles conservés dans les sauvegardes.
+- Tests d'équivalence des requêtes et consignes par rapport à `main`. Voir [docs/UX_REFONTE.md](docs/UX_REFONTE.md).
+
 ## Non publié (branche de préparation)
 
 - Ergonomie : domaines en pastilles compactes avec filtre, texte pour l'IA agrandi, section des modèles retirée. Six moteurs d'images ajoutés. Thèmes Manga, Médecine, Tuning, Animaux et Finance. Cache PWA `kerynq-static-v16`.

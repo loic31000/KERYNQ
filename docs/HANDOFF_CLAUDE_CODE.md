@@ -81,3 +81,7 @@ Relancer les tests depuis `main` sur le PC de développement. **Ne pas présente
 Changements limités, code lisible, tests reproduits et rapport honnête, `git diff --check`, absence de secrets, tests du thème et des moteurs concernés, état du dépôt connu, nouvelle branche/PR et **pas de fusion automatique** sans accord.
 
 Le résultat souhaité est une application réellement utile et compréhensible du grand public, et non un empilement de filtres visuels.
+
+## Interface
+
+La hiérarchie de la page et ses décisions sont décrites dans [UX_REFONTE.md](UX_REFONTE.md). `tests/browser/golden-queries.json` fixe les requêtes et consignes attendues.

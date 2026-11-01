@@ -37,7 +37,7 @@ catch (err) { fail(`Syntaxe service worker: ${err.message}`); }
 // Multi-assistant et documentation
 const assistants = ['chatgpt','claude','gemini','kimi','grok','deepseek','perplexity','mistral','copilot'];
 for (const assistant of assistants) assert(html.includes(`${assistant}:`), `Assistant disponible : ${assistant}`);
-assert(html.includes('id="aiProvider"') && html.includes('id="openAIProvider"'), 'Sélecteur et ouverture multi-IA présents');
+assert(html.includes('id="aiProvider"') && html.includes('function openAssistant'), 'Sélecteur et ouverture multi-IA présents');
 assert(html.includes('id="customAIUrl"'), 'Fournisseur personnalisé disponible');
 assert(html.includes('KerynqPrivacy.safeAssistantUrl'), 'Vérification HTTPS de l’URL personnalisée');
 assert(!html.includes('openChatGPT'), 'Pas de bouton ChatGPT codé en dur');

@@ -17,7 +17,7 @@ def open_app(browser,width,storage=None):
     ctx.route('**/*',lambda route:serve(route) if route.request.url.startswith(ORIGIN) else route.abort())
     ctx.add_init_script('if(!sessionStorage.seeded){sessionStorage.seeded=1;for(const [k,v] of Object.entries(%s))localStorage.setItem(k,v)}'%json.dumps({k:json.dumps(v) for k,v in (storage or {}).items()}))
     page=ctx.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)));page.on('console',lambda m:errors.append(m.text) if 'Content Security Policy' in m.text else None)
-    page.goto(ORIGIN+'index.html');page.locator('#modeAdvanced').click()
+    page.goto(ORIGIN+'index.html');page.locator('#refineToggle').click()
     page.evaluate("document.querySelectorAll('details').forEach(d=>d.open=true)")
     return ctx,page,errors
 with sync_playwright() as p:
@@ -47,7 +47,6 @@ with sync_playwright() as p:
             assert page.evaluate('document.documentElement.dataset.theme')=='dark'
             assert not page.evaluate("document.body.classList.contains('large-text')")
             assert page.locator('#aiProvider').input_value()=='chatgpt'
-            assert page.evaluate('document.body.dataset.mode')=='advanced'
         page.locator('.saved-load').click()
         assert page.locator('#topic').input_value()=='Favori' and page.locator('#engineSelect').input_value()=='brave'
         assert_prefs()
@@ -92,7 +91,7 @@ with sync_playwright() as p:
         assert not errors,errors;ctx.close()
         # Sans sujet, aucun assistant ne s'ouvre.
         ctx,page,errors=open_app(browser,width)
-        page.locator('#tabPrompt').click();page.locator('#openAIProvider').click()
+        page.locator('#tabPrompt').click();page.locator('#topic').press('Enter')
         assert len(ctx.pages)==1 and page.evaluate('document.activeElement.id')=='topic'
         assert not errors,errors;ctx.close()
         # Thèmes : choix conservé après rechargement, contraste suffisant, pas de débordement.
@@ -129,30 +128,15 @@ with sync_playwright() as p:
             assert len(tip.get_attribute('data-tip'))<=170,tip.get_attribute('data-tip')
             page.keyboard.press('Escape')
             assert page.locator('#tipBubble').is_hidden()
-        assert page.locator('.tip').count()==16
+        assert page.locator('.tip').count()==5
         assert not errors,errors;ctx.close()
         # Un ancien thème reste valide ; un thème inconnu revient au thème par défaut.
         for stored,expected in (('light','light'),('inconnu','dark')):
             ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'theme':stored}})
             assert page.evaluate('document.documentElement.dataset.theme')==expected
             ctx.close()
-        # Le bouton d'affichage des domaines est en haut, à côté du choix d'options.
-        ctx,page,errors=open_app(browser,width)
-        show=page.locator('.panel-tools #showAll').bounding_box();grid=page.locator('#categories').bounding_box()
-        assert show['y']+show['height']<=grid['y'],(width,show,grid)
-        mode=page.locator('.panel-tools .mode-switch').bounding_box()
-        assert show['x']>=mode['x']+mode['width'] or show['y']>=mode['y']+mode['height'],(width,show,mode)
-        family=page.locator('.panel-tools #familyFilter').bounding_box()
-        assert family['y']+family['height']<=grid['y'],(width,family,grid)
-        if width>600:assert family['x']>=show['x']+show['width'] and abs(family['y']-show['y'])<=12,(family,show)
-        tools=page.locator('.panel-tools').bounding_box()
-        assert abs(mode['x']-grid['x'])<=2,(width,mode,grid)
-        assert page.locator('#showAll').inner_text()=='Afficher tous les domaines'
-        page.locator('#showAll').click()
-        assert page.locator('#showAll').inner_text()=='Afficher moins de domaines' and page.locator('.category-btn').count()==39
-        ctx.close()
         # Tableau limité au moteur choisi.
-        ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'previewTab':'web','engine':'brave'}})
+        ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'previewTab':'web','engine':'brave','topic':'Sujet'}})
         page.evaluate("document.querySelectorAll('details').forEach(d=>d.open=true)")
         assert page.locator('#engineTable tr').count()==9
         assert page.locator('#engineTableName').inner_text()=='Brave'
@@ -181,10 +165,11 @@ with sync_playwright() as p:
         assert page.locator('#welcome').is_visible()
         page.locator('#tryExample').click()
         assert page.locator('#welcome').is_hidden() and 'logement' in page.locator('#topic').input_value()
-        assert page.locator('.category-btn[data-category-id="housing"]').get_attribute('aria-pressed')=='true'
+        assert 'Logement' in page.locator('#domainName').inner_text()
         page.reload()
         assert page.locator('#welcome').is_hidden()
         page.locator('#topic').fill('Ma question')
+        page.evaluate("document.querySelectorAll('details').forEach(d=>d.open=true)")
         page.locator('#helpExample').click()
         assert page.locator('#topic').input_value()=='Ma question'
         assert not errors,errors;ctx.close()
@@ -222,15 +207,54 @@ with sync_playwright() as p:
         ctx,page,errors=open_app(browser,width,{'kerynq-v5-templates':[{'id':'t','label':'Ancien','settings':{'topic':'x'}}]})
         assert page.locator('#templateList,#manageTemplates').count()==0
         assert 'Ancien' in page.evaluate("localStorage.getItem('kerynq-v5-templates')")
-        page.locator('#modeSimple').click()
-        assert page.locator('#categorySearch').is_visible()
-        page.locator('#categorySearch').fill('finances')
-        assert page.locator('.category-btn').count()==1
-        page.locator('#categorySearch').fill('')
-        assert page.locator('#categories').bounding_box()['height']<=240
-        page.locator('#showAll').click()
-        assert page.locator('.category-btn').count()==39 and page.locator('#categories').bounding_box()['height']<=240
-        assert page.evaluate("[...document.querySelectorAll('.category-btn')].every(b=>b.getBoundingClientRect().height>=44)")
+        # Parcours simple : la page se charge sans réglages ni grille, tout reste accessible à la demande.
+        page.reload()
+        assert page.locator('#refinePanel').is_hidden() and page.locator('#domainPanel').is_hidden()
+        assert page.locator('.category-btn,#modeSimple,#showAll,#quickFilters').count()==0
+        assert page.locator('#runSearch').bounding_box()['y']<page.locator('#resultPreview').bounding_box()['y']
+        # Sans question, le résultat reste compact ; avec une question, il affiche la requête.
+        assert page.locator('#resultEmpty').is_visible() and page.locator('#queryPreview').is_hidden()
+        if width>600:assert page.locator('#resultPreview').bounding_box()['height']<=260
+        page.locator('#tabWeb').click()
+        assert page.locator('#queryPreview').is_hidden()
+        page.locator('#topic').fill('Chat');assert page.locator('#queryPreview').is_visible() and page.locator('#resultEmpty').is_hidden()
+        page.locator('#topic').fill('')
+        # Web et IA : chaque mode présente ses réglages, sans rien perdre.
+        page.locator('#tabPrompt').click();page.locator('#refineToggle').click()
+        page.evaluate("document.querySelectorAll('#refinePanel details').forEach(d=>d.open=true)")
+        page.locator('.goal-btn').nth(1).click();goal=page.locator('.goal-btn[aria-pressed="true"]').inner_text()
+        assert page.locator('#goals').is_visible() and page.locator('#assistantPicker').is_visible() and page.locator('#enginePicker').is_hidden()
+        page.locator('#tabWeb').click()
+        assert page.locator('#goals').is_hidden() and page.locator('#assistantPicker').is_hidden() and page.locator('#enginePicker').is_visible() and page.locator('#period').is_visible()
+        page.locator('#tabPrompt').click()
+        assert page.locator('.goal-btn[aria-pressed="true"]').inner_text()==goal
+        # Résumé : exact, limité, et chaque retrait n'enlève qu'un critère.
+        page.locator('#tabWeb').click()
+        page.locator('#includeWords').fill('mot');page.locator('#excludeSites').fill('a.fr');page.locator('#filetype').select_option('pdf')
+        count=lambda:page.evaluate("()=>{const s=JSON.parse(localStorage.getItem('kerynq-premium-v5'));return s.sources.length+s.formats.length}")
+        assert page.locator('.chip-web').count()==3,page.locator('#activeSummary').inner_text()
+        more=page.locator('#summaryMore');assert 'IA' not in more.inner_text() or 'pour' in more.inner_text()
+        total=int(page.locator('#filterStatus').text_content().split()[0])
+        before=count();more.click()
+        assert page.locator('.chip').count()==total,(total,page.locator('.chip').count())
+        assert page.locator('.chip-ai').count()==total-3
+        page.get_by_role('button',name='Retirer le critère Avec : mot').click()
+        assert page.locator('#includeWords').input_value()=='' and page.locator('#excludeSites').input_value()=='a.fr' and count()==before
+        assert int(page.locator('#filterStatus').text_content().split()[0])==total-1
+        assert page.evaluate('document.activeElement.className').startswith('chip-remove')
+        # Un moteur qui ne reçoit pas le filtre le marque comme réservé à l'IA.
+        page.locator('#engineSelect').select_option('googleimages')
+        assert page.locator('.chip-web').count()==0
+        page.locator('#engineSelect').select_option('google')
+        page.locator('#excludeSites').fill('');page.locator('#filetype').select_option('')
+        # La région n'est pas transmise à Google : elle reste réservée à l'IA.
+        page.locator('#region').fill('France');assert page.locator('.chip-web').count()==0
+        page.locator('#region').fill('')
+        # Filtres conservés après fermeture et réouverture du panneau.
+        page.locator('#period').select_option('year');page.locator('#refineToggle').click()
+        assert page.locator('#refinePanel').is_hidden();page.locator('#refineToggle').click()
+        assert page.locator('#period').input_value()=='year'
+        page.locator('#period').select_option('all')
         # Moteur d'images : adresse dédiée, opérateurs non supposés.
         page.locator('#topic').fill('Chat')
         page.locator('#engineSelect').select_option('googleimages')
@@ -240,6 +264,21 @@ with sync_playwright() as p:
         with ctx.expect_page():page.locator('#runSearch').click()
         page.wait_for_timeout(200)
         assert any(u.startswith('https://www.google.com/search?udm=2&q=Chat') for u in requests),requests
+        assert not errors,errors;ctx.close()
+        # Requêtes et consignes identiques à celles de main avant la refonte.
+        golden=json.loads((ROOT/'tests/browser/golden-queries.json').read_text(encoding='utf-8'))
+        for case in golden['cases']:
+            ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':case['input']})
+            assert page.locator('#promptPreview').input_value()==case['prompt'],case['input']
+            now=page.evaluate("s=>Object.fromEntries(%s.map(id=>[id,KerynqSearch.compile(KerynqCatalog.normalize(s),id,new Date('2026-01-15T12:00:00')).query]))"%json.dumps(golden['engines']),case['input'])
+            assert now==case['queries'],case['input']
+            ctx.close()
+        # Favori et profil anciens, écrits avant la refonte, restent lisibles.
+        old={'mode':'advanced','showAll':True,'category':'law','topic':'Ancien profil','previewTab':'prompt','aiProvider':'claude'}
+        ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':old,'kerynq-saved-v1':[GOOD('v','Vieux favori',category='manga',engine='brave')]})
+        assert 'Droit' in page.locator('#domainName').inner_text() and page.locator('#aiProvider').input_value()=='claude'
+        page.locator('.saved-load').click()
+        assert 'Mangas' in page.locator('#domainName').inner_text() and page.locator('#engineSelect').input_value()=='brave'
         assert not errors,errors;ctx.close()
         # Un fournisseur importé ne peut pas viser une propriété héritée.
         ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'aiProvider':'constructor'}})

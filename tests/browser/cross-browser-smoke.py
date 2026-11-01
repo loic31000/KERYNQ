@@ -32,8 +32,9 @@ def assert_csp(page,engine,label):
 def journey(page,label):
     page.locator('#topic').fill('Sujet')
     assert page.locator('#queryPreview').text_content()=='Sujet',label
-    page.locator('#modeAdvanced').click();page.locator('#showAll').click()
-    assert page.locator('.category-btn').count()==39,label
+    page.locator('#refineToggle').click();page.locator('#domainToggle').click()
+    assert page.locator('.domain-option').count()==39,label
+    page.keyboard.press('Escape')
     page.locator('#themeToggle').click();page.locator('[data-theme-choice="cyber"]').click();page.keyboard.press('Escape')
     assert page.evaluate('document.documentElement.dataset.theme')=='cyber',label
     icon=page.evaluate("(()=>{const s=getComputedStyle(document.querySelector('.run-search'),'::after');return s.maskImage||s.webkitMaskImage})()")
@@ -57,20 +58,24 @@ with sync_playwright() as p:
     # 200 % et 400 % sur un écran de 1280 px, toutes options ouvertes.
     for zoom,width,height in ((200,640,400),(400,320,256)):
         page=browser.new_page(viewport={'width':width,'height':height});page.goto(URL)
-        page.locator('#modeAdvanced').click();page.evaluate("document.querySelectorAll('details').forEach(d=>d.open=true)")
+        page.locator('#tabPrompt').click();page.locator('#refineToggle').click();page.evaluate("document.querySelectorAll('details').forEach(d=>d.open=true)")
         assert overflow(page)<=2,(zoom,overflow(page))
         page.close()
     print('PASS reflow équivalent zoom 200 % et 400 %')
     # Clavier et structure.
     page=browser.new_page(viewport={'width':1280,'height':800});page.goto(URL)
+    reached=0
     for _ in range(45):
         page.keyboard.press('Tab')
+        if page.evaluate('document.activeElement===document.body'):break
+        reached+=1
         style=page.evaluate('getComputedStyle(document.activeElement).outlineStyle')
         assert style!='none',page.evaluate('document.activeElement.outerHTML.slice(0,90)')
+    assert reached>=10,reached
     assert page.evaluate("[...document.querySelectorAll('button,select,input,textarea')].filter(e=>e.type!=='file'&&!(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.labels?.length||e.textContent.trim())).length")==0
     assert page.evaluate("(()=>{const a=[...document.querySelectorAll('[id]')].map(e=>e.id);return a.filter((x,i)=>a.indexOf(x)!==i).length})()")==0
     page.close()
-    print('PASS focus visible sur 45 tabulations, contrôles nommés, identifiants uniques')
+    print('PASS focus visible sur toute la séquence de tabulation, contrôles nommés, identifiants uniques')
     # PWA : cache, hors ligne, purge d'un ancien cache.
     ctx=browser.new_context();page=ctx.new_page();page.goto(URL)
     page.evaluate("()=>caches.open('kerynq-static-ancien').then(c=>c.put('/ancien',new Response('x')))")
