@@ -11,6 +11,7 @@ Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent 
 
 ## Non publié (branche de préparation)
 
+- Packs de sources officielles facultatifs pour la France, couvrant explicitement les 39 univers : ajout au clic, retrait ciblé, limite de 10 sites et avertissement DuckDuckGo. Voir `docs/SOURCES_OFFICIELLES.md`.
 - Six thèmes interchangeables (Nuit, Clair, Pro, Cyber, Girly, Aurore), effets visuels désactivés si l'animation réduite est demandée, bulles d'aide au survol, au focus et au toucher.
 - Nouvelle interface : KERYNQ explique ce qu'il fait dès l'accueil, parcours en trois étapes, vocabulaire simplifié, favoris et données regroupés à part.
 - Bouton principal unique : il annonce sa cible et, pour une IA, copie le texte puis ouvre l'assistant ; le texte n'est jamais placé dans l'adresse.

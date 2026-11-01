@@ -76,7 +76,8 @@ Les univers supplémentaires et les moteurs de recherche restent planifiés pour
 
 - [x] **Lot 4A** : 6 univers du quotidien (administration, famille, animaux, logement, droit, finances personnelles) ; navigation par 8 familles ; enrichissement Santé & Médecine.
 - [x] **Lot 4B** : enfance/scolarité, travail/emploi, retraite/autonomie, cuisine/alimentation, maison/jardin, mobilité/transports (réutiliser ou distinguer l'univers auto/mobilité existant).
-- [ ] Packs de sources institutionnelles **opt-in** et adaptés à la juridiction : pas de `site:` automatique sans pays ni contrôle de l'utilisateur.
+- [x] Packs de sources institutionnelles **opt-in** : France livrée, pas de `site:` automatique sans pays ni clic.
+- [ ] Packs d'autres pays, par petits lots.
 - [ ] Tests de validation sur tous les univers avant fusion.
 - [ ] Autres moteurs de recherche, **après** stabilisation, sans API payante.
 
@@ -85,4 +86,4 @@ Les univers supplémentaires et les moteurs de recherche restent planifiés pour
 - [x] Six domaines ajoutés, options contextualisées, SVG et familles conservées.
 - [x] Distinction véhicule / réseau de transports collectifs, titres métier / scolarité.
 - [x] Tests 39 univers, navigation 8 familles et régression des requêtes Web.
-- [ ] Packs de sources officielles opt-in adaptés au pays (prochain lot).
+- [x] Packs de sources officielles opt-in : premier pays (France) livré.

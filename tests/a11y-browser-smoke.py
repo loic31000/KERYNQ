@@ -3,7 +3,7 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 root=Path(__file__).resolve().parents[1]
 html=(root/'index.html').read_text(encoding='utf-8')
-for core in ['search-query-core.js','privacy-core.js','catalog-core.js','app.js']:
+for core in ['search-query-core.js','privacy-core.js','source-packs-core.js','catalog-core.js','app.js']:
     html=html.replace(f'<script src="./{core}"></script>', '<script>'+ (root/core).read_text(encoding='utf-8')+'</script>')
 html=html.replace('<link rel="stylesheet" href="./styles.css">','<style>'+(root/'styles.css').read_text(encoding='utf-8')+'</style>')
 with sync_playwright() as p:

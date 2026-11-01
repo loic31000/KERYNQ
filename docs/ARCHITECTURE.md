@@ -9,6 +9,7 @@ Application **statique côté navigateur**. Pas de serveur, de base distante ou 
 - `index.html` : structure de la page.
 - `styles.css` : thèmes et mise en page, sans ressource externe.
 - `catalog-core.js` : 39 thèmes, valeurs par défaut et `normalize()`, testables sans navigateur.
+- `source-packs-core.js` : packs facultatifs de sources officielles.
 - `app.js` : logique de l'interface.
 - `search-query-core.js` : générateur de requêtes Web sans dépendances, testé séparément (Google, Brave, DuckDuckGo).
 - `manifest.webmanifest` : manifeste d'installation.
