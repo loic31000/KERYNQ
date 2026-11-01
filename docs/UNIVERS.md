@@ -24,7 +24,7 @@ Le catalogue regroupe 39 univers (27 historiques, 6 du lot 4A et 6 du lot 4B), r
 
 ## Suite
 
-Packs de sources officiels opt-in, vérification d’accessibilité et validation de compatibilité. Les moteurs supplémentaires viendront plus tard.
+Vérification d’accessibilité et validation de compatibilité. Les moteurs supplémentaires viendront plus tard.
 
 ## Lot 4B : six nouveaux univers
 
