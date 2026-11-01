@@ -3,7 +3,7 @@
 ## Base intégrée
 
 - [x] Identité KERYNQ et recherche navigateur.
-- [x] 27 univers, modes simple/avancé, filtres par moteur.
+- [x] 33 univers après lot 4A, modes simple/avancé, filtres par moteur.
 - [x] Favoris et modèles locaux, import/export.
 - [x] Sélecteur de neuf IA + URL HTTPS personnalisée, sans transfert automatique.
 - [x] Documentation sécurité, contribution, licence provisoire, accessibilité.
@@ -64,10 +64,18 @@ Le nombre d'univers reste à 27 durant la fiabilisation ; les nouveaux thèmes g
 
 ## Phase 1, lot 3 : accessibilité clavier
 
-- [x] Navigation des onglets IA/Web par flèches/Home/End et tabindex piloté.
-- [x] Conservation du focus sur thèmes, objectifs et filtres essentiels.
-- [x] Gestion accessible des modèles et annonces d'état.
-- [x] Tests de navigation Chromium à 1440, 390 et 320 px.
-- [ ] Tests NVDA/VoiceOver/TalkBack et audit WCAG complet avant publication.
+- [x] Navigation des onglets IA/Web par flèches/Home/End et roving tabindex.
+- [x] Conservation du focus après sélection des thèmes, objectifs et filtres rapides.
+- [x] Commandes pour les modèles accessibles et annonces persistantes.
+- [x] Contrôles navigateur automatisés (Chromium, petits écrans).
+- [ ] Test NVDA/VoiceOver/TalkBack et audit WCAG complet avant publication.
 
-Les nouveaux univers et moteurs de recherche restent prévus pour les phases ultérieures.
+Les univers supplémentaires et les moteurs de recherche restent planifiés pour les phases ultérieures.
+
+## Phase 2 · Généralisation par petits lots
+
+- [x] **Lot 4A** : 6 univers du quotidien (administration, famille, animaux, logement, droit, finances personnelles) ; navigation par 8 familles ; enrichissement Santé & Médecine.
+- [ ] **Lot 4B** : enfance/scolarité, travail/emploi, retraite/autonomie, cuisine/alimentation, maison/jardin, mobilité/transports (réutiliser ou distinguer l'univers auto/mobilité existant).
+- [ ] Packs de sources institutionnelles **opt-in** et adaptés à la juridiction : pas de `site:` automatique sans pays ni contrôle de l'utilisateur.
+- [ ] Tests de validation sur tous les univers avant fusion.
+- [ ] Autres moteurs de recherche, **après** stabilisation, sans API payante.

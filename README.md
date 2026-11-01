@@ -13,14 +13,16 @@ Ouvrir `index.html` dans un navigateur moderne. Choisissez votre sujet, éventue
 - **Sans installation** : ouverture directe de `index.html`.
 - **Hébergement statique** : fichiers utilisables sur GitHub Pages après décision de publication.
 - **Fonctionnement hors ligne** : préparation de requêtes et favoris locaux possibles, mais les moteurs et assistants externes nécessitent Internet. La mise en cache PWA est destinée aux environnements HTTPS/localhost.
-- **Vérifier le code** : `node tests/check-static.mjs` (Node.js récent).
+- **Vérifier le code** : `node tests/check-static.mjs` puis `node --test tests/search-query.test.mjs tests/privacy.test.cjs` (Node.js récent).
 
 ## Fonctionnalités
 
 - Recherche directe, `Ctrl + K`, modes essentiel et avancé.
-- 27 univers et leurs filtres contextuels, modèles et recherches favorites par dossier.
+- 33 univers et leurs filtres contextuels, modèles et recherches favorites par dossier.
 - Requêtes dédiées à Google, Brave et DuckDuckGo, avec indication des limites des opérateurs.
-- Export et import de profils JSON ; export des consignes Markdown.
+- Export et import validé de profils JSON ; export des consignes Markdown.
+- **Mode privé temporaire** : pas de sauvegarde des nouvelles recherches, effacement de la recherche courante déjà enregistrée à l’activation et disparition de la session privée à la fermeture/recharge. Les favoris existants ne sont pas supprimés.
+- **Effacer mes données locales** : suppression confirmée des préférences, favoris et modèles stockés par KERYNQ (ne supprime pas les fichiers déjà exportés).
 - **Assistants IA au choix** : ChatGPT, Claude, Gemini, Kimi, Grok, DeepSeek, Perplexity, Mistral Vibe, Copilot, autre URL HTTPS. Aucun compte ni API de fournisseur n'est connecté à KERYNQ.
 - Icônes SVG, clair/sombre, texte agrandi, adaptations mobiles et animation réduite.
 
@@ -42,7 +44,7 @@ Ouvrir `index.html` dans un navigateur moderne. Choisissez votre sujet, éventue
 
 ## Vie privée et sécurité
 
-Les préférences, favoris et modèles sont stockés **localement dans le navigateur**. Ils ne sont pas chiffrés par KERYNQ ; évitez d'y conserver des données sensibles sur un appareil partagé. Quand vous ouvrez un moteur ou un assistant, vous quittez KERYNQ : ce site tiers applique ses propres conditions et sa propre politique de confidentialité. L'ouverture d'un assistant **n'envoie jamais la consigne**.
+Hors mode privé, la recherche en cours, les préférences, favoris et modèles sont stockés **localement dans le navigateur**. Ils ne sont pas chiffrés par KERYNQ ; évitez d'y conserver des données sensibles sur un appareil partagé. Quand vous ouvrez un moteur ou un assistant, vous quittez KERYNQ : ce site tiers applique ses propres conditions et sa propre politique de confidentialité. L'ouverture d'un assistant **n'envoie jamais la consigne**.
 
 Les filtres ne garantissent pas la qualité des résultats. Une consigne demandant de « vérifier les faits » ne signifie pas qu'une vérification a été réalisée.
 
@@ -50,6 +52,8 @@ Les filtres ne garantissent pas la qualité des résultats. Une consigne demanda
 
 **Aucune licence open source n'est accordée pour le moment.** Le code est sous droits réservés tant que le propriétaire n'a pas choisi et publié de licence. Voir [LICENSE.md](LICENSE.md). L'accès à un dépôt, même public ultérieurement, n'est pas en lui-même une autorisation de réutilisation.
 
-## Validation clavier (lot 3)
+### Nouveaux univers du lot 4A
 
-Avec Chromium et Python Playwright installés, lancer `python tests/a11y-browser-smoke.py` pour vérifier le focus, les onglets et le reflow à 1440, 390 et 320 px. Un audit avec lecteurs d'écran reste nécessaire.
+33 univers dont 6 nouveaux domaines du quotidien, organisés par 8 familles. Santé & Médecine comporte des critères supplémentaires sur la qualité des sources ; aucun thème ne remplace un professionnel. Les filtres thématiques concernent la consigne IA, sauf opérateur Web explicitement indiqué dans l'aperçu.
+
+Vérification des nouveaux univers (Chromium + Playwright Python) : `python tests/univers-browser-smoke.py`.

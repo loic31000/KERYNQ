@@ -56,10 +56,17 @@ assert(readFileSync(join(root,'service-worker.js'),'utf8').includes('privacy-cor
 try { new vm.Script(readFileSync(join(root,'privacy-core.js'),'utf8'));console.log('OK: Syntaxe confidentialité'); }
 catch(e){ fail('Syntaxe confidentialité : '+e.message); }
 
-// Contrat d'accessibilité clavier complété par le smoke test navigateur.
-assert(html.includes('aria-controls="panelPrompt"') && html.includes('aria-controls="panelWeb"'), 'Onglets reliés aux panneaux');
+// Accessibilité clavier : contrat minimal d'interface, complété par a11y-browser-smoke.py.
+assert(html.includes('aria-controls="panelPrompt"') && html.includes('aria-controls="panelWeb"'), 'Onglets reliés à leurs panneaux');
 assert(html.includes("$('tabPrompt').tabIndex=prompt?0:-1"), 'Un seul onglet dans la séquence Tab');
-assert(html.includes("e.key==='Home'") && html.includes("e.key==='End'"), 'Touches Home et End');
-assert(html.includes("selected?.focus({preventScroll:true})"), 'Focus maintenu après changement de thème');
-assert(html.includes('aria-atomic="true"'), 'Annonces de statut atomiques');
-assert(existsSync(join(root,'tests/a11y-browser-smoke.py')), 'Test navigateur inclus');
+assert(html.includes("e.key==='Home'") && html.includes("e.key==='End'"), 'Navigation clavier Home et End');
+assert(html.includes("selected?.focus({preventScroll:true})"), 'Restauration du focus sur thème actif');
+assert(html.includes('aria-atomic="true"'), 'Messages de statut annoncés de façon atomique');
+assert(existsSync(join(root,'tests/a11y-browser-smoke.py')), 'Test de navigation navigateur inclus');
+
+// Extension généraliste (lot 4A).
+for(const id of ['administration','family','animals','housing','law','personalfinance']) assert(html.includes("id:'"+id+"'") || html.includes('\"id\":\"'+id+'\"'), 'Univers : '+id);
+assert(html.includes('id="familyFilter"'), 'Navigation par familles');
+assert(html.includes('TOPIC_FAMILIES'), 'Regroupement thématique défini');
+assert(html.includes('Santé & Médecine'), 'Santé enrichie');
+assert(existsSync(join(root,'docs/UNIVERS.md')), 'Catalogue des univers documenté');

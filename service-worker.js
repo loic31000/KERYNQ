@@ -1,5 +1,5 @@
 // Offline cache for local UI assets only. Does not cache external search results.
-const CACHE = 'kerynq-static-v3';
+const CACHE = 'kerynq-static-v4';
 const CORE = ['./', './index.html', './search-query-core.js', './privacy-core.js', './app-icon.svg', './favicon.svg', './manifest.webmanifest'];
 self.addEventListener('install', event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(CORE)).then(() => self.skipWaiting())));
 self.addEventListener('activate', event => event.waitUntil(caches.keys().then(names => Promise.all(names.filter(name => name.startsWith('kerynq-static-') && name !== CACHE).map(name => caches.delete(name)))).then(() => self.clients.claim())));
