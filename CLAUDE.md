@@ -11,7 +11,7 @@ Conserver le coût d'hébergement à 0 euro et le fonctionnement sans serveur, A
 ## Règles à respecter
 
 1. Le dépôt doit rester **privé**. Ne pas activer GitHub Pages, ne pas publier de release et ne pas modifier sa visibilité sans instruction explicite du propriétaire.
-2. La licence est actuellement « tous droits réservés » dans `LICENSE.md`. **Ne pas** choisir MIT/GPL/Apache ni redistribuer des actifs visuels sans accord.
+2. La licence du **code et de la documentation** est **MIT** (`LICENSE`). Le nom et les logos sont exclus de cette licence (`BRANDING.md`). Ne pas modifier le choix juridique ni redistribuer des ressources graphiques historiques sans accord.
 3. Travailler sur des branches `feat/...` ou `fix/...`, tester, commiter et ouvrir une PR pour validation ; ne pas fusionner une future PR sans demande explicite.
 4. Éviter GitHub Actions. Les contrôles sont utilisables localement et doivent être documentés honnêtement.
 5. Utiliser `git` et éventuellement `gh` en CLI ; ne pas supposer GitHub Desktop. Préserver `main` et les sauvegardes locales existantes.

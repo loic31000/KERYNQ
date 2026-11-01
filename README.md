@@ -40,7 +40,8 @@ Ouvrir `index.html` dans un navigateur moderne. Écrivez votre question, précis
 | [CODE_OF_CONDUCT.md](docs/CODE_OF_CONDUCT.md) | Règles de participation |
 | [SECURITY.md](docs/SECURITY.md) | Signalement de failles et politique de sécurité |
 | [SUPPORT.md](docs/SUPPORT.md) | Aide et limites du support |
-| [LICENSE.md](LICENSE.md) | Statut juridique actuel et décision de licence à venir |
+| [LICENSE](LICENSE) | Licence MIT du code et de la documentation |
+| [BRANDING.md](BRANDING.md) | Nom et logos KERYNQ : droits distincts de la licence du code |
 | [ACCESSIBILITY.md](docs/ACCESSIBILITY.md) | Objectifs et vérifications d'accessibilité |
 | [CHANGELOG.md](CHANGELOG.md) | Historique des modifications |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Architecture et flux de données |
@@ -60,5 +61,7 @@ Les filtres ne garantissent pas la qualité des résultats. Une consigne demanda
 
 ## Licence
 
-**Aucune licence open source n'est accordée pour le moment.** Le code est sous droits réservés tant que le propriétaire n'a pas choisi et publié de licence. Voir [LICENSE.md](LICENSE.md). L'accès à un dépôt, même public ultérieurement, n'est pas en lui-même une autorisation de réutilisation.
+**Code et documentation sous licence MIT.** Voir [LICENSE](LICENSE). Le nom, les logos et les autres éléments d'identité visuelle sont traités séparément dans [BRANDING.md](BRANDING.md). Les ressources tierces restent soumises à leurs propres droits.
+
+**Le dépôt reste privé :** ce choix de licence ne rend pas KERYNQ public et n'active pas GitHub Pages.
 

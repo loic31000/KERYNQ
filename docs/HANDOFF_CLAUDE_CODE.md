@@ -66,7 +66,7 @@ Relancer les tests depuis `main` sur le PC de développement. **Ne pas présente
 - Préserver un fonctionnement local, sans télémétrie ni transmission masquée de requêtes sensibles.
 
 ## Issues GitHub existantes
-- [#2](https://github.com/loic31000/KERYNQ/issues/2) : licence et droits de ressources, **décision propriétaire requise**.
+- [#2](https://github.com/loic31000/KERYNQ/issues/2) : licence du code **MIT approuvée** ; audit des droits des visuels actuels et historiques restant à terminer.
 - [#3](https://github.com/loic31000/KERYNQ/issues/3) : sécurité, confidentialité et accessibilité.
 - [#4](https://github.com/loic31000/KERYNQ/issues/4) : profils et multi-moteurs.
 - [#5](https://github.com/loic31000/KERYNQ/issues/5) : multi-IA.
@@ -74,7 +74,7 @@ Relancer les tests depuis `main` sur le PC de développement. **Ne pas présente
 
 ## Décisions réservées au propriétaire
 - Visibilité du dépôt, activation de GitHub Pages et mise en ligne.
-- Licence open source définitive et droit de publier les visuels.
+- Licence du code choisie : **MIT** (`LICENSE`). Toute modification future de licence et les droits de publication des visuels restent soumis au propriétaire.
 - Fusion des futures PR, coûts récurrents, services externes avec API et nouvelles données envoyées à des tiers.
 
 ## Conditions de validation d'un nouveau lot

@@ -6,11 +6,12 @@
 - [x] 39 univers après les lots 4A et 4B, modes simple/avancé, filtres par moteur.
 - [x] Favoris et modèles locaux, import/export.
 - [x] Sélecteur de neuf IA + URL HTTPS personnalisée, sans transfert automatique.
-- [x] Documentation sécurité, contribution, licence provisoire, accessibilité.
+- [x] Documentation sécurité, contribution, licence MIT, accessibilité.
 
 ## Avant ouverture du dépôt
 
-- [ ] Décider d'une licence (MIT, Apache-2.0, GPL ou autre) et vérifier toutes les ressources (visuel du globe, icônes, polices).
+- [x] Choisir la licence MIT pour le code et la documentation ; voir `LICENSE` et `BRANDING.md`.
+- [ ] Vérifier la provenance et les droits des ressources graphiques actuelles **et historiques** avant publication (notamment l'ancien globe et les logos).
 - [ ] Tester sur navigateurs et appareils réels : moteurs et largeurs déjà automatisés, voir `AUDIT_PREPUBLICATION.md`.
 - [ ] Audit accessibilité WCAG 2.2 AA avec lecteurs d'écran et clavier.
 - [x] Lot 2 : garde-fous de schéma JSON, mode privé, effacement local, validation des URL personnalisées, tests unitaires.
