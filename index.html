@@ -16,7 +16,7 @@
 <div class="shell">
 <header class="header">
   <div class="brand"><img src="./favicon.svg" alt="" width="30" height="30"><span class="brand-name">KERYNQ</span></div>
-  <div class="header-actions"><button id="fontToggle" class="tool-button" type="button" aria-pressed="false" aria-label="Agrandir les caractères">A+ Texte</button><button id="themeToggle" class="tool-button ico-after" type="button" aria-pressed="false">Mode clair</button></div>
+  <div class="header-actions"><button id="fontToggle" class="tool-button" type="button" aria-pressed="false" aria-label="Agrandir les caractères">A+ Texte</button><div class="theme-picker"><button id="themeToggle" class="tool-button" type="button" aria-expanded="false" aria-controls="themeMenu">Thème</button><div id="themeMenu" class="theme-menu" role="group" aria-label="Choisir un thème" hidden></div></div></div>
 </header>
 
 <section class="intro" aria-labelledby="pageTitle">
@@ -30,14 +30,14 @@
 </section>
 
 <section class="composer" aria-label="Votre recherche">
-  <label for="topic" class="composer-label">Votre question</label>
+  <label for="topic" id="composerLabel" class="composer-label">Votre question</label>
   <textarea class="main-search" id="topic" rows="2" maxlength="2200" placeholder="Ex. : quelles aides pour rénover un logement ancien ?" aria-describedby="searchHint"></textarea>
   <div class="composer-row">
     <div class="destination">
       <span class="control-label" id="destinationLabel">Où chercher ?</span>
       <div class="segmented" role="tablist" aria-labelledby="destinationLabel"><button type="button" role="tab" id="tabWeb" aria-controls="panelWeb" aria-selected="false" tabindex="-1">Sur le Web</button><button type="button" role="tab" id="tabPrompt" aria-controls="panelPrompt" aria-selected="true" tabindex="0">Avec une IA</button></div>
     </div>
-    <div class="engine-picker" id="enginePicker"><label class="control-label" for="engineSelect">Moteur</label><select id="engineSelect"><option value="google">Google</option><option value="brave">Brave</option><option value="duck">DuckDuckGo</option></select></div>
+    <div class="engine-picker" id="enginePicker"><label class="control-label" id="engineLabel" for="engineSelect">Moteur</label><select id="engineSelect"><option value="google">Google</option><option value="brave">Brave</option><option value="duck">DuckDuckGo</option></select></div>
     <button id="runSearch" type="button" class="btn primary run-search ico-after ico-external">Rechercher</button>
   </div>
   <p id="searchHint" class="hint"><kbd>Entrée</kbd> pour lancer · <kbd>Maj</kbd> + <kbd>Entrée</kbd> pour aller à la ligne · <kbd>Ctrl</kbd> + <kbd>K</kbd> pour revenir ici</p>
@@ -127,6 +127,7 @@
 
 <footer class="footer"><p>KERYNQ · Application statique, utilisable sur ordinateur et mobile. Les filtres ne garantissent pas la qualité des résultats.</p><p><a href="https://support.google.com/websearch/answer/2466433?hl=fr" target="_blank" rel="noopener noreferrer">Aide Google Search</a> · <a href="https://search.brave.com/help/operators" target="_blank" rel="noopener noreferrer">Opérateurs Brave</a></p></footer>
 </div>
+<div id="tipBubble" class="tip-bubble" role="tooltip" hidden></div>
 <div id="status" class="status" role="status" aria-live="polite" aria-atomic="true"></div>
 <script src="./search-query-core.js"></script>
 <script src="./privacy-core.js"></script>

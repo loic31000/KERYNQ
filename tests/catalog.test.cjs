@@ -29,6 +29,10 @@ test('real normalize falls back safely on invalid values',()=>{
  assert.deepEqual([got.category,got.goal,got.engine,got.mode,got.aiProvider,got.theme],[DEFAULT.category,DEFAULT.goal,DEFAULT.engine,DEFAULT.mode,DEFAULT.aiProvider,DEFAULT.theme]);
  assert.equal(normalize({aiProvider:'custom'}).aiProvider,'custom');
 });
+test('themes accept historic and new values only',()=>{
+ for(const theme of ['dark','light','pro','cyber','girly','aurora'])assert.equal(normalize({theme}).theme,theme);
+ assert.equal(normalize({theme:'constructor'}).theme,'dark');
+});
 test('real v3 and v5 profiles import with the real normalize',()=>{
  const v3=privacy.validateImport({app:'KERYNQ',version:3,settings:{topic:'A',category:'manga'}},normalize);
  assert.equal(v3.settings.category,'manga');assert.equal(v3.favorites,null);
