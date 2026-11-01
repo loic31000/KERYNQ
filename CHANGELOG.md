@@ -19,3 +19,10 @@ Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent 
 - Compilateur local de requêtes Web isolé et couvert par tests.
 - Compatibilité des opérateurs plus transparente, prise en charge des dates invalides et des domaines ciblés.
 - Application HTML autonome conservée et compatible GitHub Pages gratuit.
+
+### Phase 1, lot 3 : accessibilité et ergonomie (novembre 2026)
+
+- Parcours clavier des onglets suivant le motif WAI-ARIA.
+- Maintien du focus après sélection des catégories, objectifs et filtres essentiels.
+- Gestion améliorée des modèles et annonces d'état.
+- Contrôles navigateur dédiés à la navigation et au reflow.

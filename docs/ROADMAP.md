@@ -61,3 +61,13 @@ Aucun nouvel univers ajouté dans ce lot ; les 12 catégories du rapport V6 rest
 - [ ] Différencier clairement les capacités de chaque moteur dans le compilateur de requêtes.
 
 Le nombre d'univers reste à 27 durant la fiabilisation ; les nouveaux thèmes généraux arrivent après validation de la phase 1.
+
+## Phase 1, lot 3 : accessibilité clavier
+
+- [x] Navigation des onglets IA/Web par flèches/Home/End et tabindex piloté.
+- [x] Conservation du focus sur thèmes, objectifs et filtres essentiels.
+- [x] Gestion accessible des modèles et annonces d'état.
+- [x] Tests de navigation Chromium à 1440, 390 et 320 px.
+- [ ] Tests NVDA/VoiceOver/TalkBack et audit WCAG complet avant publication.
+
+Les nouveaux univers et moteurs de recherche restent prévus pour les phases ultérieures.

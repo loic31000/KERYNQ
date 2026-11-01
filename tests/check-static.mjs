@@ -55,3 +55,11 @@ assert(existsSync(join(root,'privacy-core.js')),'Module confidentialité présen
 assert(readFileSync(join(root,'service-worker.js'),'utf8').includes('privacy-core.js'),'Module confidentialité mis en cache PWA');
 try { new vm.Script(readFileSync(join(root,'privacy-core.js'),'utf8'));console.log('OK: Syntaxe confidentialité'); }
 catch(e){ fail('Syntaxe confidentialité : '+e.message); }
+
+// Contrat d'accessibilité clavier complété par le smoke test navigateur.
+assert(html.includes('aria-controls="panelPrompt"') && html.includes('aria-controls="panelWeb"'), 'Onglets reliés aux panneaux');
+assert(html.includes("$('tabPrompt').tabIndex=prompt?0:-1"), 'Un seul onglet dans la séquence Tab');
+assert(html.includes("e.key==='Home'") && html.includes("e.key==='End'"), 'Touches Home et End');
+assert(html.includes("selected?.focus({preventScroll:true})"), 'Focus maintenu après changement de thème');
+assert(html.includes('aria-atomic="true"'), 'Annonces de statut atomiques');
+assert(existsSync(join(root,'tests/a11y-browser-smoke.py')), 'Test navigateur inclus');

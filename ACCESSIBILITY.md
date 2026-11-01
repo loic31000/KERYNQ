@@ -1,21 +1,24 @@
-# Accessibilité
+# Accessibilité de KERYNQ
 
-KERYNQ vise une expérience accessible à un large public, avec les recommandations **WCAG 2.2 AA** comme cible. Il ne revendique **pas** actuellement une conformité certifiée.
+KERYNQ vise les **WCAG 2.2 AA**. Le projet ne revendique pas encore une conformité certifiée.
 
-## Mesures présentes
+## Mesures ajoutées au lot 3
 
-- Sémantique des champs, boutons et zones de formulaire.
-- Focus clavier visible, taille du texte ajustable.
-- Disposition responsive, 320 px et 390 px pris en compte.
-- Respect de `prefers-reduced-motion` pour les effets décoratifs.
-- Contraste travaillé pour les thèmes clair et sombre.
+- Onglets IA/Web : **Tab**, flèches gauche/droite, **Home** / **End**, activation et focus visible.
+- Maintien du focus clavier lors des mises à jour de catégories, objectifs et filtres essentiels.
+- Gestion des modèles : `aria-expanded`, `aria-controls` et focus sur le champ lors de l'ouverture.
+- Messages d'état via une zone `role=status` conservée dans l'arbre d'accessibilité.
+- Focus renforcé, marges de défilement et adaptations pour petits écrans.
+- Prise en charge de `prefers-reduced-motion` pour les effets décoratifs.
 
-## Tests à effectuer avant publication
+## Vérifications
 
-- Navigation clavier complète, ordre de focus et annonce des messages d'état.
-- Lecteurs d'écran : NVDA/Firefox sur Windows, VoiceOver/Safari et TalkBack/Android si possible.
-- Zoom 200 % et 400 %, orientation mobile, grandes polices.
-- Mesure automatique du contraste et tests manuels (pas de conformité déduite d'un seul outil).
-- Envoi et sélection d'un assistant IA au clavier et dans un écran étroit.
+`node tests/check-static.mjs` et `python tests/a11y-browser-smoke.py` (nécessite Python Playwright et Chromium).
 
-Signaler les obstacles d'accessibilité via les futures issues du dépôt, sans données personnelles. Référence : https://www.w3.org/TR/WCAG22/
+## Restant à valider avant publication
+
+- Tests manuels NVDA avec Firefox/Windows, VoiceOver avec Safari/iOS et TalkBack/Android.
+- Audit complet WCAG 2.2 AA : calcul de contrastes, reflow, zoom 200 % et 400 %, focus masqué.
+- Vérification des annonces en situation réelle avec lecteur d'écran.
+
+Références : https://www.w3.org/TR/WCAG22/ et https://www.w3.org/WAI/ARIA/apg/patterns/tabs/

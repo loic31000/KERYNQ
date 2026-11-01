@@ -49,3 +49,7 @@ Les filtres ne garantissent pas la qualité des résultats. Une consigne demanda
 ## Licence
 
 **Aucune licence open source n'est accordée pour le moment.** Le code est sous droits réservés tant que le propriétaire n'a pas choisi et publié de licence. Voir [LICENSE.md](LICENSE.md). L'accès à un dépôt, même public ultérieurement, n'est pas en lui-même une autorisation de réutilisation.
+
+## Validation clavier (lot 3)
+
+Avec Chromium et Python Playwright installés, lancer `python tests/a11y-browser-smoke.py` pour vérifier le focus, les onglets et le reflow à 1440, 390 et 320 px. Un audit avec lecteurs d'écran reste nécessaire.
