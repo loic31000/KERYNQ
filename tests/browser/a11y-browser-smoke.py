@@ -9,22 +9,41 @@ def serve(route):
     else:route.abort()
 with sync_playwright() as p:
     browser=p.chromium.launch(headless=True)
-    for width in (1440,390,320):
+    for width in (1440,1024,768,390,320):
         page=browser.new_page(viewport={'width':width,'height':850}, reduced_motion='reduce')
         errors=[]
         page.on('pageerror',lambda error:errors.append(str(error)))
         page.route('**/*',serve);page.goto('http://kerynq.test/index.html')
-        page.locator('#modeSimple').click()
-        cats=page.locator('.category-btn')
-        cats.nth(1).focus();cats.nth(1).press('Enter')
-        assert page.evaluate('document.activeElement?.classList.contains("category-btn")')
-        quick=page.locator('.quick-filter').first
-        quick.focus();quick.press('Space')
-        assert page.evaluate('document.activeElement?.classList.contains("quick-filter")')
-        page.locator('#modeAdvanced').click()
+        # Sélecteur de domaine : flèches, Entrée, focus rendu, Échap.
+        page.evaluate('scrollTo(0,0)');page.locator('#domainToggle').focus();page.keyboard.press('Enter');assert page.evaluate('scrollY')==0 or width<=640,page.evaluate('scrollY')
+        assert page.evaluate('document.activeElement.id')=='categorySearch'
+        assert page.locator('#categorySearch').get_attribute('role')=='combobox'
+        page.keyboard.type('log')
+        assert page.locator('#categorySearch').get_attribute('aria-activedescendant')=='domain-housing'
+        page.locator('#categorySearch').fill('droit')
+        assert page.locator('[role=option]').count()==1
+        active=page.locator('#categorySearch').get_attribute('aria-activedescendant')
+        assert active=='domain-law',active
+        page.keyboard.press('Enter')
+        assert page.evaluate('document.activeElement.id')=='domainToggle' and page.locator('#domainPanel').is_hidden()
+        assert 'Droit' in page.locator('#domainName').inner_text()
+        page.keyboard.press('Enter');page.keyboard.press('ArrowDown')
+        moved=page.locator('#categorySearch').get_attribute('aria-activedescendant')
+        assert moved and moved!='domain-law'
+        page.keyboard.press('Escape')
+        assert page.locator('#domainPanel').is_hidden() and page.evaluate('document.activeElement.id')=='domainToggle'
+        assert 'Droit' in page.locator('#domainName').inner_text()
+        # Réglages : panneau modal, focus rendu à la fermeture.
+        page.locator('#tabPrompt').click()
+        toggle=page.locator('#refineToggle');assert page.locator('#refinePanel').is_hidden()
+        toggle.focus();page.keyboard.press('Enter')
+        assert page.evaluate("document.querySelector('#refinePanel').matches(':modal')")
+        page.evaluate("document.querySelectorAll('#refinePanel details').forEach(d=>d.open=true)")
         goal=page.locator('.goal-btn').nth(1)
         goal.focus();goal.press('Enter')
         assert page.evaluate('document.activeElement?.classList.contains("goal-btn")')
+        page.keyboard.press('Escape')
+        assert page.evaluate('document.activeElement.id')=='refineToggle'
         page.locator('#tabPrompt').click()
         assert page.locator('#tabPrompt').get_attribute('tabindex')=='0'
         assert page.locator('#tabWeb').get_attribute('tabindex')=='-1'
@@ -35,15 +54,6 @@ with sync_playwright() as p:
         assert page.evaluate('document.activeElement.id')=='tabPrompt'
         page.keyboard.press('End')
         assert page.evaluate('document.activeElement.id')=='tabWeb'
-        page.locator('#manageTemplates').click()
-        assert page.locator('#manageTemplates').get_attribute('aria-expanded')=='true'
-        assert page.evaluate('document.activeElement.id')=='templateName'
-        page.locator('#manageTemplates').click()
-        assert page.locator('#templateManager').is_hidden()
-        page.locator('#modeSimple').click()
-        if width<=390:
-            page.locator('#jumpToResult').click()
-            assert page.evaluate('document.activeElement.id') in ('tabPrompt','tabWeb')
         dims=page.evaluate('({scroll:document.documentElement.scrollWidth,view:document.documentElement.clientWidth})')
         assert dims['scroll']<=dims['view']+2,(width,dims)
         assert not errors,(width,errors)

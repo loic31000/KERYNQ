@@ -2,8 +2,25 @@
 
 Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent le développement et ne signifient pas une publication publique.
 
+## Non publié : refonte UX
+
+- Nouvel espace de recherche : la question d'abord, Web ou IA, sujet, moteur ou assistant et action dans un même bloc.
+- Thème signature KERYNQ, par défaut pour les nouveaux utilisateurs. Le thème enregistré est conservé.
+- Contours propres à chacun des 11 thèmes historiques, sans autre changement de leurs couleurs, polices ou rayons.
+- Réglages dans un panneau « Personnaliser ma recherche », limités au mode Web ou IA en cours.
+- Critères : seuls les choix de l'utilisateur sont affichés, retirables un par un. Les critères ignorés par le moteur sont signalés.
+- Recherche préparée : service, texte exact, critères pris en compte et action suivante.
+- « Ma bibliothèque » : favoris, dossiers, modèles, sauvegarde et données restaurés.
+- Textes de l'interface réécrits.
+- Panneau Web : suggestions réelles, synthèse des critères transmis, requête exacte repliée.
+- Aperçu du texte pour l'IA mis en forme, sans changement du texte copié ou exporté.
+- Fact Check Explorer retiré. Un profil qui l'utilisait revient à Google.
+- Six moteurs d'images (28 moteurs au total), cinq thèmes ajoutés auparavant (Manga, Médecine, Tuning, Animaux, Finance).
+- Tests d'équivalence des requêtes et consignes, et de fidélité des thèmes. Voir [docs/UX_REFONTE.md](docs/UX_REFONTE.md) et [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md).
+
 ## Non publié (branche de préparation)
 
+- Ergonomie : domaines en pastilles compactes avec filtre, texte pour l'IA agrandi, section des modèles retirée. Six moteurs d'images ajoutés. Thèmes Manga, Médecine, Tuning, Animaux et Finance. Cache PWA `kerynq-static-v16`.
 - Nettoyage : code et champs inutilisés retirés, icône en double supprimée, notes dupliquées du README retirées. Cache PWA `kerynq-static-v15`.
 - Audit de sécurité consigné dans `docs/AUDIT_PREPUBLICATION.md`.
 - Mode privé déplacé en haut de page ; logo agrandi, avec un dessin SVG propre à chaque thème. Cache PWA `kerynq-static-v14`.

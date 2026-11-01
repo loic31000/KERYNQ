@@ -22,7 +22,6 @@ Adresse appelée avec un mot de test. « Titre » : le titre de la page correspo
 | GitHub | Code | Titre | Mots |
 | Reddit | Communautés | Titre | Mots |
 | Bing Actualités | Journalisme et actualité | Titre | Mots |
-| Fact Check Explorer | Vérification des faits | Titre | Mots |
 | Internet Archive | OSINT et archives | Titre | Mots |
 | Shodan | OSINT et services exposés | Titre | Mots |
 | data.gouv.fr | Données publiques | Titre | Mots |
@@ -31,6 +30,12 @@ Adresse appelée avec un mot de test. « Titre » : le titre de la page correspo
 | Steam | Jeux vidéo | Titre | Mots |
 | MusicBrainz | Musique | Titre | Mots |
 | OpenStreetMap | Cartes et lieux | Titre | Mots |
+| Google Images | Images | Titre | Mots |
+| Bing Images | Images | Titre | Mots |
+| Brave Images | Images | Titre | Mots |
+| DuckDuckGo Images | Images | Titre | Mots |
+| Wikimedia Commons | Images | Titre | Mots |
+| Flickr | Images | Titre | Mots |
 
 ## Limites
 
@@ -45,3 +50,5 @@ Adresse appelée avec un mot de test. « Titre » : le titre de la page correspo
 ## Écartés pour l'instant
 
 Ecosia (pare-feu lors du contrôle), Mojeek (captcha), SearXNG (pas d'instance officielle unique), et, bloqués ou soumis à une vérification anti-robot lors du contrôle : Google Actualités, Légifrance, HAL, Pappers, OpenCorporates, IMDb et Stack Overflow. Ils pourront revenir après un contrôle manuel.
+
+Les moteurs d'images cherchent à partir de mots. Openverse, Unsplash et Pixabay ont bloqué le contrôle automatique. Yandex Images répond, mais n'est pas retenu par choix. La recherche inversée (Google Lens, TinEye) demande d'importer une image : elle n'est pas proposée ici.

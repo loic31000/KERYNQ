@@ -47,5 +47,22 @@
     const quality = short ? QUALITY_SHORT : QUALITY;
     return {method:[...method],quality:assistant ? [...quality,assistant] : [...quality]};
   }
-  return Object.freeze({guidance,FAMILY_METHODS,TOPIC_METHODS});
+  // Découpe la consigne pour l'affichage seulement : chaque ligne d'origine reste intacte dans raw.
+  const TITLES = ['Recherche structurée','Sujet','Thème','Objectif','Précisions','Critères sélectionnés','Sources à privilégier','Format de réponse','Périmètre','Méthode pour ce domaine','Qualité et fiabilité'];
+  const USER_SECTIONS = ['Sujet','Précisions'];
+  function structure(text) {
+    let section = '';
+    return String(text).split('\n').map(raw => {
+      const title = /^(#{1,2}) (.+)$/.exec(raw);
+      if (title && TITLES.includes(title[2])) { section = title[2]; return {type:title[1].length===1?'title':'section',raw,marker:title[1]+' ',text:title[2]}; }
+      if (!raw) return {type:'blank',raw};
+      const user = USER_SECTIONS.includes(section);
+      if (!user && raw.startsWith('- ')) {
+        const label = /^- ([^:]{1,40} : )(.*)$/.exec(raw);
+        return label ? {type:'item',raw,marker:'- ',label:label[1],text:label[2]} : {type:'item',raw,marker:'- ',label:'',text:raw.slice(2)};
+      }
+      return {type:'text',raw,text:raw,user};
+    });
+  }
+  return Object.freeze({guidance,structure,FAMILY_METHODS,TOPIC_METHODS});
 });
