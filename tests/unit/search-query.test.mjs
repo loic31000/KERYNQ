@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url);
-const {compile,domains,dates,siteReport}=require('../../assets/js/core/search-query-core.js');
+const {capabilities,compile,domains,dates,siteReport}=require('../../assets/js/core/search-query-core.js');
 const base={topic:'Démarches logement',includeWords:'',excludeWords:'',includeSites:'',excludeSites:'',period:'all',language:'all',region:'',filetype:''};
 const build=(params={},engine='google')=>compile({...base,...params},engine,new Date(2026,10,1));
 
@@ -17,3 +17,4 @@ test('date invalide ou inversée n’ajoute pas de faux filtre',()=>{for(const s
 test('langue et région seulement Brave',()=>{const params={language:'fr',region:'France'};assert.ok(build(params,'brave').query.includes('lang:fr loc:fr'));for(const e of ['google','duck']){assert.doesNotMatch(build(params,e).query,/lang:|loc:/);assert.ok(build(params,e).prompt.includes('Région (consigne IA seulement)'))}});
 test('sans sujet, la requête est vide',()=>assert.equal(build({topic:''},'google').query,''));
 test('les sites ignorés sont signalés',()=>{const eleven=Array.from({length:11},(_,i)=>'s'+i+'.fr').join(',');assert.deepEqual(siteReport(eleven).overflow,['s10.fr']);assert.equal(siteReport(eleven).valid.length,10);assert.deepEqual(siteReport('a.fr b.fr, école.fr, ameli.fr').invalid,['a.fr b.fr','école.fr']);assert.deepEqual(siteReport('https://www.ameli.fr/x ; ameli.fr'),{valid:['ameli.fr'],invalid:[],overflow:[]});assert.deepEqual(domains('ameli.fr, bad host'),['ameli.fr'])});
+test('le tableau des moteurs reflète le compilateur',()=>{const got=Object.fromEntries(capabilities().map(f=>[f.id,[f.engines.google,f.engines.brave,f.engines.duck]]));assert.deepEqual(got,{words:[true,true,true],exclude:[true,true,true],site:[true,true,true],sites:[true,true,false],excludeSite:[true,true,true],filetype:[true,true,true],period:[true,false,false],language:[false,true,false],region:[false,true,false]})});
