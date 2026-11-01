@@ -1,6 +1,6 @@
 # Contribuer à KERYNQ
 
-Merci de votre intérêt. **Les contributions externes ne sont pas encore ouvertes** tant que le dépôt reste privé et que la licence n'est pas choisie. Ce guide prépare l'ouverture future.
+Merci de votre intérêt. **Les contributions externes ne sont pas encore ouvertes** tant que le dépôt reste privé. La licence du code a été choisie : MIT. Ce guide prépare l'ouverture future.
 
 ## Principes
 
@@ -34,4 +34,4 @@ Merci de votre intérêt. **Les contributions externes ne sont pas encore ouvert
 
 ## Licence des contributions
 
-Il n'existe actuellement **aucun accord de contribution open source ni de transfert implicite de droits**. Un cadre adapté sera décidé avant l'acceptation de contributions extérieures.
+Le code et sa documentation sont sous [MIT](../LICENSE). Les personnes qui proposeront des changements devront disposer des droits nécessaires sur leur contribution et accepter sa distribution sous cette licence. La contribution n'implique aucun transfert automatique de propriété des droits. Le nom et les logos sont traités séparément dans [BRANDING.md](../BRANDING.md). Les contributions externes restent fermées tant que le dépôt est privé.
