@@ -18,6 +18,7 @@ Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent 
 - Focus clavier conservé après les actions sur les favoris, modèles et critères ; champ de renommage étiqueté.
 - Un fournisseur IA importé ne peut plus désigner une propriété héritée (`constructor`).
 - Tests : `tests/regressions-browser-smoke.py` ajouté ; test `univers` exécutable hors Linux et sans `--no-sandbox`.
+- Retrait de l'archive héritée `osint-search-v5-github-pages.zip` du suivi Git ; elle reste dans l'historique.
 - Documentation communautaire, sécurité, statut de licence et architecture.
 - Sélecteur de neuf assistants IA + fournisseur personnalisé HTTPS, sans transmission automatique de la consigne.
 - Mise à jour des tests statiques et vérifications d'interface associées.
