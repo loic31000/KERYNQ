@@ -140,6 +140,9 @@ with sync_playwright() as p:
         assert show['y']+show['height']<=grid['y'],(width,show,grid)
         mode=page.locator('.panel-tools .mode-switch').bounding_box()
         assert show['x']>=mode['x']+mode['width'] or show['y']>=mode['y']+mode['height'],(width,show,mode)
+        family=page.locator('.panel-tools #familyFilter').bounding_box()
+        assert family['y']+family['height']<=grid['y'],(width,family,grid)
+        if width>600:assert family['x']>=show['x']+show['width'] and abs(family['y']-show['y'])<=12,(family,show)
         tools=page.locator('.panel-tools').bounding_box()
         assert abs(mode['x']-grid['x'])<=2,(width,mode,grid)
         assert page.locator('#showAll').inner_text()=='Afficher tous les domaines'
