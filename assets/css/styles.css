@@ -260,3 +260,10 @@ h1{background:linear-gradient(100deg,var(--text) 35%,var(--accent) 75%,var(--acc
 @media(prefers-reduced-motion:reduce){body::before,body::after,.intro,.composer,.panel,.tip-bubble{animation:none!important}}
 .panel-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;flex:1 1 100%}
 @media(max-width:600px){.panel-tools{width:100%}}
+.engine-table-wrap{margin-top:14px}
+.engine-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:.75rem}
+.engine-table th,.engine-table td{padding:6px 4px;border-bottom:1px solid var(--line);text-align:left;font-weight:500}
+.engine-table thead th,.engine-table tbody th{font-weight:650}
+.cap-yes{color:var(--ok);font-weight:650}
+.cap-no{color:var(--muted)}
+.cap-current{background:var(--accent-soft)}

@@ -146,6 +146,19 @@ with sync_playwright() as p:
         page.locator('#showAll').click()
         assert page.locator('#showAll').inner_text()=='Afficher moins de domaines' and page.locator('.category-btn').count()==39
         ctx.close()
+        # Tableau des moteurs : complet, moteur courant repéré, sans débordement.
+        ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'previewTab':'web','engine':'brave'}})
+        page.evaluate("document.querySelectorAll('details').forEach(d=>d.open=true)")
+        assert page.locator('#engineTable tr').count()==9
+        assert page.locator('th.cap-current').inner_text()=='Brave'
+        page.locator('#engineSelect').select_option('duck')
+        assert 'Duck' in page.locator('th.cap-current').inner_text()
+        assert page.locator('#engineTable tr:nth-child(4) td.cap-current').inner_text()=='Non'
+        dim=page.evaluate('({a:document.documentElement.scrollWidth,b:document.documentElement.clientWidth})')
+        assert dim['a']<=dim['b']+2,(width,dim)
+        box=page.locator('.engine-table').bounding_box();panel=page.locator('#resultPreview').bounding_box()
+        assert box['x']+box['width']<=panel['x']+panel['width'],(width,box,panel)
+        assert not errors,errors;ctx.close()
         # Un fournisseur importé ne peut pas viser une propriété héritée.
         ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'aiProvider':'constructor'}})
         assert page.locator('#aiProvider').input_value()=='chatgpt'

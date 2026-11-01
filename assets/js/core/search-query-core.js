@@ -106,5 +106,20 @@
     }
     return {query:parts.join(' ').replace(/\s+/g,' ').trim(),web,prompt,engine:provider,invalidDates:date.invalid};
   }
-  return Object.freeze({compile,tokens,domains,siteReport,dates,validISO,regionCountry});
+  // Tableau issu du compilateur : il décrit ce que KERYNQ envoie, pas ce que le moteur respecte ensuite.
+  const features = [
+    ['words','Mots à inclure',{includeWords:'mot exact'},'"mot exact"'],
+    ['exclude','Mots à exclure',{excludeWords:'autre'},'-autre'],
+    ['site','Un site',{includeSites:'a.fr'},'site:a.fr'],
+    ['sites','Plusieurs sites',{includeSites:'a.fr,b.fr'},'site:a.fr OR site:b.fr'],
+    ['excludeSite','Site à exclure',{excludeSites:'a.fr'},'-site:a.fr'],
+    ['filetype','Type de fichier',{filetype:'pdf'},'filetype:pdf'],
+    ['period','Période',{period:'custom',dateFrom:'2026-01-01',dateTo:'2026-01-31'},'after:2026-01-01'],
+    ['language','Langue',{language:'fr'},'lang:fr'],
+    ['region','Pays',{region:'France'},'loc:fr']
+  ];
+  function capabilities() {
+    return features.map(([id,label,settings,marker]) => ({id,label,engines:Object.fromEntries(engines.map(engine => [engine,compile({topic:'x',...settings},engine).query.includes(marker)]))}));
+  }
+  return Object.freeze({capabilities,compile,tokens,domains,siteReport,dates,validISO,regionCountry});
 });
