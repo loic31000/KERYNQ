@@ -102,7 +102,3 @@ Le bloc du haut sert à saisir et lancer. Le panneau du bas sert à comprendre, 
 ![Recherche Web avec critères](images/ux-apres-web-filtres.png)
 
 Le mot « transmis » est employé à la place de « appliqué » : un moteur peut ignorer un opérateur reçu. Le panneau IA ne change pas.
-
-## Partir d'un fichier
-
-Un bouton discret, à côté de « Personnaliser ma recherche », ouvre un panneau latéral. Choisir « Utiliser comme question » ou « Ajouter au texte pour l'IA » referme le panneau et revient à la recherche. Voir [IMPORT_FICHIERS.md](IMPORT_FICHIERS.md).
