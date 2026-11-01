@@ -36,6 +36,7 @@ def journey(page,label):
     assert page.locator('.domain-option').count()==39,label
     page.keyboard.press('Escape')
     page.locator('#libraryToggle').click();assert page.locator('#libraryPanel').is_visible(),label;page.locator('#libraryClose').click()
+    page.locator('#fileToggle').click();assert page.locator('#fileDrop').is_visible(),label;page.locator('#fileClose').click()
     page.locator('#refineToggle').click();assert page.locator('#refinePanel').is_visible(),label;page.locator('#refineClose').click()
     page.locator('#themeToggle').click();page.locator('[data-theme-choice="cyber"]').click();page.keyboard.press('Escape')
     assert page.evaluate('document.documentElement.dataset.theme')=='cyber',label

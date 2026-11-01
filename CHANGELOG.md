@@ -2,6 +2,11 @@
 
 Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent le développement et ne signifient pas une publication publique.
 
+## Recherche par fichier et mises à jour
+
+- « Partir d'un fichier » : images, PDF et documents lus localement, métadonnées sensibles masquées, OCR sur demande, recherche inversée manuelle, effacement. Voir [docs/IMPORT_FICHIERS.md](docs/IMPORT_FICHIERS.md).
+- Correction : après une publication, le cache du navigateur pouvait associer une page récente à un ancien CSS et un ancien script, avec une page mal agencée. Les fichiers sont maintenant versionnés.
+
 ## Non publié : refonte UX
 
 - Nouvel espace de recherche : la question d'abord, Web ou IA, sujet, moteur ou assistant et action dans un même bloc.

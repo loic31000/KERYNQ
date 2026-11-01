@@ -215,7 +215,7 @@ $('tabPrompt').addEventListener('click',()=>switchPreview('prompt'));$('tabWeb')
 $('copyPrompt').addEventListener('click',()=>copy(buildPrompt()));$('copyQuery').addEventListener('click',()=>copy(searchQuery(state.engine)));$('downloadPrompt').addEventListener('click',()=>download('kerynq-consigne.md',buildPrompt()+'\n','text/markdown;charset=utf-8'));
 for(const b of document.querySelectorAll('[data-engine]'))b.addEventListener('click',()=>{if(!state.topic.trim())return notify('Écrivez d’abord votre question');const engine=b.dataset.engine;state.engine=engine;$('engineSelect').value=engine;save();renderResult();const url=searchUrl(engine);const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener noreferrer';document.body.append(a);a.click();a.remove()});
 $('refinePanel').addEventListener('close',()=>{const a=document.activeElement;if(!a||a===document.body||$('refinePanel').contains(a)||!a.offsetParent)$('refineToggle').focus()});
-for(const [toggle,sheet,close] of [['refineToggle','refinePanel','refineClose'],['libraryToggle','libraryPanel','libraryClose']]){$(toggle).addEventListener('click',()=>{if(sheet==='libraryPanel')renderLibrary();$(sheet).showModal()});$(close).addEventListener('click',()=>$(sheet).close());$(sheet).addEventListener('click',e=>{if(e.target===$(sheet))$(sheet).close()})}
+for(const [toggle,sheet,close] of [['refineToggle','refinePanel','refineClose'],['libraryToggle','libraryPanel','libraryClose'],['fileToggle','filePanel','fileClose']]){$(toggle).addEventListener('click',()=>{if(sheet==='libraryPanel')renderLibrary();$(sheet).showModal()});$(close).addEventListener('click',()=>$(sheet).close());$(sheet).addEventListener('click',e=>{if(e.target===$(sheet))$(sheet).close()})}
 $('fontToggle').addEventListener('click',()=>{state.largeText=!state.largeText;save();sync()});$('themeToggle').addEventListener('click',()=>toggleThemeMenu());
 $('exportConfig').addEventListener('click',()=>{if(privateMode)return notify('Quittez le mode privé pour exporter un profil');download('kerynq-v5-sauvegarde.json',JSON.stringify({app:'KERYNQ',version:5,settings:state,favorites:getSaved(),templates:getCustomTemplates()},null,2),'application/json;charset=utf-8')});
 $('importConfig').addEventListener('click',()=>{if(privateMode)return notify('Quittez le mode privé pour importer');$('profileFile').click()});
@@ -285,5 +285,7 @@ async function openAssistant(){
  notify('Texte copié : collez-le dans la conversation de l’IA');
 }
 renderLibrary();
+// Passerelle volontaire pour la recherche par fichier : seul le texte choisi rejoint la recherche.
+window.KerynqApp=Object.freeze({notify,useAsQuestion(text){$('filePanel').close();state.topic=text;$('topic').value=text;switchPreview('web');save();renderResult();$('topic').focus()},addToContext(block){$('filePanel').close();state.context=(state.context.trim()?state.context.trim()+'\n\n':'')+block;$('context').value=state.context;switchPreview('prompt');save();renderResult();if(!state.topic.trim()){notify('Écrivez votre question pour compléter le texte pour l’IA');$('topic').focus()}}});
 
 })();

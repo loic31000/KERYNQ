@@ -2,7 +2,7 @@
 <html lang="fr" data-theme="kerynq">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; manifest-src 'self'; connect-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; manifest-src 'self'; connect-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light dark">
@@ -10,7 +10,7 @@
 <meta name="theme-color" content="#0b0d12">
 <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="./manifest.webmanifest">
-<link rel="stylesheet" href="./assets/css/styles.css">
+<link rel="stylesheet" href="./assets/css/styles.css?v=21">
 <title>KERYNQ · Préparez de meilleures recherches</title>
 </head>
 <body>
@@ -68,7 +68,7 @@
 
 <div class="context-row">
   <div id="activeSummary" class="active-summary" role="group" aria-label="Vos critères"></div>
-  <button type="button" id="refineToggle" class="btn refine-toggle ico-after ico-sliders" aria-haspopup="dialog">Personnaliser ma recherche</button>
+  <div class="context-actions"><button type="button" id="fileToggle" class="btn ico-after ico-upload" aria-haspopup="dialog">Partir d’un fichier</button><button type="button" id="refineToggle" class="btn refine-toggle ico-after ico-sliders" aria-haspopup="dialog">Personnaliser ma recherche</button></div>
 </div>
 
 <section class="panel prepared is-empty" id="resultPreview" aria-label="Votre recherche préparée">
@@ -144,15 +144,39 @@
   </div>
 </dialog>
 
+<dialog id="filePanel" class="sheet" aria-labelledby="fileTitle">
+  <div class="sheet-head"><div><h2 id="fileTitle">Partir d’un fichier</h2><p class="sub">Une image ou un document. Il reste sur votre appareil : rien n’est enregistré ni envoyé.</p></div><button type="button" id="fileClose" class="btn">Fermer</button></div>
+  <div class="sheet-body file-sheet">
+  <input id="fileInput" type="file" class="sr-only" tabindex="-1" aria-hidden="true" accept=".jpg,.jpeg,.png,.webp,.pdf,.txt,.md,.markdown,.csv,.json">
+  <button type="button" id="fileDrop" class="file-drop"><strong class="ico-after ico-upload">Choisir un fichier</strong><span>ou glissez-le ici</span><small>Image JPEG, PNG ou WebP · PDF · TXT, Markdown, CSV ou JSON</small></button>
+  <div id="fileBody" class="file-body" hidden>
+    <div class="file-summary"><img id="filePreview" class="file-preview" alt="Aperçu de votre image" hidden><dl id="fileInfo" class="file-list"></dl></div>
+    <p id="fileStatus" class="file-status" role="status" aria-live="polite"></p>
+    <div id="fileBusy" class="file-busy" hidden><progress id="fileProgress" max="1" aria-label="Progression"></progress><button type="button" id="fileCancel" class="btn">Annuler</button></div>
+    <div id="fileMetaWrap" hidden><h3>Informations du fichier</h3><dl id="fileMeta" class="file-list"></dl></div>
+    <div id="fileSensitiveWrap" class="file-sensitive" hidden><p id="fileSensitiveCount" class="sub"></p><button type="button" id="fileSensitiveToggle" class="btn" aria-expanded="false" aria-controls="fileSensitive">Afficher les données sensibles</button><dl id="fileSensitive" class="file-list" hidden></dl></div>
+    <div id="fileOcr" class="file-block" hidden><h3>Lire le texte de l’image</h3><p class="sub">La première lecture charge environ 8 Mo depuis KERYNQ. L’image reste sur votre appareil.</p><div class="custom-row"><label class="sr-only" for="fileOcrLang">Langue du texte</label><select id="fileOcrLang" class="field"><option value="fra">Français</option><option value="eng">Anglais</option><option value="fra+eng">Français et anglais</option></select><button type="button" id="fileOcrStart" class="btn">Lire le texte</button></div></div>
+    <div id="fileTextWrap" class="file-block" hidden><label for="fileText">Texte extrait, modifiable</label><textarea id="fileText" class="field file-text" spellcheck="false"></textarea><p id="fileSelection" class="note" aria-live="polite"></p>
+      <div class="custom-row"><label class="sr-only" for="fileFind">Chercher dans le texte</label><input id="fileFind" class="field" type="search" placeholder="Chercher dans le texte"><button type="button" id="fileFindNext" class="btn" disabled>Suivant</button></div><p id="fileFindCount" class="note" aria-live="polite"></p>
+      <div class="action-row"><button type="button" id="fileUseWeb" class="btn primary">Utiliser comme question</button><button type="button" id="fileUseAi" class="btn">Ajouter au texte pour l’IA</button></div><p class="note">Rien ne part à ce stade. Votre choix rejoint votre recherche, qui reste enregistrée dans ce navigateur hors mode privé.</p></div>
+    <div id="fileReverse" class="file-block" hidden><h3>Chercher des images similaires</h3><p class="sub">Vous quittez KERYNQ. Importez vous-même votre image sur le service choisi : KERYNQ ne lui envoie rien, et sa propre politique de confidentialité s’applique.</p><div class="action-row"><a id="fileLens" class="btn ico-after ico-external" href="https://lens.google.com/" target="_blank" rel="noopener noreferrer">Google Lens</a><a id="fileTineye" class="btn ico-after ico-external" href="https://tineye.com/" target="_blank" rel="noopener noreferrer">TinEye</a></div></div>
+    <button type="button" id="fileClear" class="btn danger file-clear">Effacer le fichier et les données extraites</button>
+  </div>
+  <p class="note">Pour restaurer une sauvegarde KERYNQ, passez par Ma bibliothèque.</p>
+  </div>
+</dialog>
+
 <footer class="footer"><p>Les filtres ne garantissent pas la qualité des résultats.</p><p><a href="https://support.google.com/websearch/answer/2466433?hl=fr" target="_blank" rel="noopener noreferrer">Aide Google Search</a> · <a href="https://search.brave.com/help/operators" target="_blank" rel="noopener noreferrer">Opérateurs Brave</a></p></footer>
 </div>
 <div id="tipBubble" class="tip-bubble" role="tooltip" hidden></div>
 <div id="status" class="status" role="status" aria-live="polite" aria-atomic="true"></div>
-<script src="./assets/js/core/search-query-core.js"></script>
-<script src="./assets/js/core/privacy-core.js"></script>
-<script src="./assets/js/core/prompt-core.js"></script>
-<script src="./assets/js/core/catalog-core.js"></script>
-<script src="./assets/js/app.js"></script>
-<script src="./assets/js/register-sw.js"></script>
+<script src="./assets/js/core/search-query-core.js?v=21"></script>
+<script src="./assets/js/core/privacy-core.js?v=21"></script>
+<script src="./assets/js/core/prompt-core.js?v=21"></script>
+<script src="./assets/js/core/catalog-core.js?v=21"></script>
+<script src="./assets/js/core/file-core.js?v=21"></script>
+<script src="./assets/js/app.js?v=21"></script>
+<script src="./assets/js/file-panel.js?v=21"></script>
+<script src="./assets/js/register-sw.js?v=21"></script>
 </body>
 </html>

@@ -36,3 +36,7 @@ Les sauvegardes sont limitées à 1,2 Mo, vérifiées avant application, et limi
 - Vérifier les exports JSON, qui peuvent contenir l'historique des requêtes favorites.
 - Éviter de conserver les recherches privées sur un ordinateur partagé.
 - Ne pas supposer qu'un filtre ou une demande « sources fiables » représente une vérification factuelle accomplie.
+
+## Recherche par fichier
+
+Les fichiers sont lus dans le navigateur, sans stockage ni envoi. Seul le passage que vous choisissez rejoint votre recherche. Détail : `IMPORT_FICHIERS.md`.
