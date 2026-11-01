@@ -5,7 +5,7 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
 ORIGIN='http://kerynq.test/'
-TYPES={'.html':'text/html','.js':'text/javascript','.svg':'image/svg+xml','.webmanifest':'application/json'}
+TYPES={'.html':'text/html','.css':'text/css','.js':'text/javascript','.svg':'image/svg+xml','.webmanifest':'application/json'}
 GOOD=lambda id,topic,**settings:{'id':id,'name':topic,'topic':topic,'folder':'Général','category':'Tous les sujets','pinned':False,'settings':{'topic':topic,**settings}}
 def serve(route):
     path=route.request.url.replace(ORIGIN,'').split('?')[0] or 'index.html'
@@ -76,6 +76,26 @@ with sync_playwright() as p:
         rm=page.get_by_role('button',name='Supprimer le favori Second')
         rm.focus();rm.press('Enter')
         assert page.evaluate('document.activeElement.id')=='favoriteSearch'
+        assert not errors,errors;ctx.close()
+        # Le parcours IA copie le texte, ouvre l'assistant sans la consigne dans l'adresse, et le bouton principal l'annonce.
+        ctx,page,errors=open_app(browser,width)
+        page.locator('#tabWeb').click()
+        assert page.locator('#runSearch').inner_text().startswith('Rechercher sur Google')
+        assert page.locator('#runSearch').is_disabled()
+        page.locator('#tabPrompt').click()
+        assert page.locator('#enginePicker').is_hidden()
+        page.locator('#aiProvider').select_option('claude')
+        assert page.locator('#runSearch').inner_text().startswith('Copier et ouvrir Claude')
+        page.locator('#topic').fill('Sujet confidentiel')
+        page.evaluate("()=>{document.execCommand=()=>{window.kerynqTestCopy=document.activeElement.value;return true}}")
+        with ctx.expect_page() as popup:page.locator('#runSearch').click()
+        assert 'Sujet' not in popup.value.url and 'confidentiel' not in popup.value.url,popup.value.url
+        assert 'Sujet confidentiel' in page.evaluate('window.kerynqTestCopy')
+        assert not errors,errors;ctx.close()
+        # Sans sujet, aucun assistant ne s'ouvre.
+        ctx,page,errors=open_app(browser,width)
+        page.locator('#tabPrompt').click();page.locator('#openAIProvider').click()
+        assert len(ctx.pages)==1 and page.evaluate('document.activeElement.id')=='topic'
         assert not errors,errors;ctx.close()
         # Un fournisseur importé ne peut pas viser une propriété héritée.
         ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'aiProvider':'constructor'}})

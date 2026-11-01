@@ -6,7 +6,10 @@ Application **statique côté navigateur**. Pas de serveur, de base distante ou 
 
 ## Fichiers principaux
 
-- `index.html` : interface, données des 39 thèmes, CSS et logique UI.
+- `index.html` : structure de la page.
+- `styles.css` : thèmes et mise en page, sans ressource externe.
+- `catalog-core.js` : 39 thèmes, valeurs par défaut et `normalize()`, testables sans navigateur.
+- `app.js` : logique de l'interface.
 - `search-query-core.js` : générateur de requêtes Web sans dépendances, testé séparément (Google, Brave, DuckDuckGo).
 - `manifest.webmanifest` : manifeste d'installation.
 - `favicon.svg` / `app-icon.svg` : identité SVG.
@@ -36,7 +39,7 @@ Application **statique côté navigateur**. Pas de serveur, de base distante ou 
 
 ## Risques, coûts et limites
 
-- Un fichier HTML monolithique reste simple à déployer, mais devra être modularisé si les tests et fonctionnalités grossissent.
+- Les scripts restent classiques, sans module ni compilation, pour conserver l'ouverture directe en `file://`.
 - Les moteurs peuvent changer leurs opérateurs ou conditions d'accès.
 - Les IA peuvent exiger une connexion ou un abonnement : leur ouverture ne garantit pas un accès gratuit.
 - Pas de filtrage de résultats côté KERYNQ, pas de comparaison automatique de réponses IA.

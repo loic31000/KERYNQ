@@ -8,12 +8,12 @@
 
 ## Démarrer
 
-Ouvrir `index.html` dans un navigateur moderne. Choisissez votre sujet, éventuellement un thème et des filtres, puis lancez Google, Brave ou DuckDuckGo. Pour l'IA, passez à l'onglet **Pour une IA**, copiez la consigne, choisissez le fournisseur et ouvrez-le dans un nouvel onglet. Collez la consigne manuellement.
+Ouvrir `index.html` dans un navigateur moderne. Écrivez votre question, précisez éventuellement le domaine et les filtres, puis choisissez **Sur le Web** ou **Avec une IA**. Pour une IA, le bouton principal copie le texte et ouvre l'assistant : collez-le vous-même dans la conversation.
 
 - **Sans installation** : ouverture directe de `index.html`.
 - **Hébergement statique** : fichiers utilisables sur GitHub Pages après décision de publication.
 - **Fonctionnement hors ligne** : préparation de requêtes et favoris locaux possibles, mais les moteurs et assistants externes nécessitent Internet. La mise en cache PWA est destinée aux environnements HTTPS/localhost.
-- **Vérifier le code** : `node tests/check-static.mjs` puis `node --test tests/search-query.test.mjs tests/privacy.test.cjs` (Node.js récent).
+- **Vérifier le code** : `node tests/check-static.mjs` puis `node --test tests/search-query.test.mjs tests/privacy.test.cjs tests/catalog.test.cjs` (Node.js récent).
 
 ## Fonctionnalités
 

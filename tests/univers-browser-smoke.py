@@ -3,9 +3,10 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
 HTML=(ROOT/'index.html').read_text(encoding='utf-8')
-for fn in ['search-query-core.js','privacy-core.js']:
+for fn in ['search-query-core.js','privacy-core.js','catalog-core.js','app.js']:
  HTML=HTML.replace(f'<script src="./{fn}"></script>',f'<script>{(ROOT/fn).read_text(encoding="utf-8")}</script>')
 EXPECT={'administration':'Administration','family':'Famille / Parentalité','animals':'Animaux','housing':'Logement','law':'Droit / Justice','personalfinance':'Finances personnelles','childhood':'Enfance & Scolarité','work':'Travail & Emploi','retirement':'Retraite & Autonomie','cooking':'Cuisine & Alimentation','homegarden':'Maison & Jardin','transport':'Transports & Déplacements'}
+HTML=HTML.replace('<link rel="stylesheet" href="./styles.css">','<style>'+(ROOT/'styles.css').read_text(encoding='utf-8')+'</style>')
 with sync_playwright() as p:
  browser=p.chromium.launch(headless=True,executable_path=os.environ.get('KERYNQ_CHROMIUM') or None)
  for width in [1440,390,320]:
@@ -31,7 +32,7 @@ with sync_playwright() as p:
    assert name in prompt and 'Question de test' in prompt
    if id in ('law','administration','personalfinance','housing'):
     assert 'juridiction' in prompt.lower()
-   assert page.locator('#queryPreview').inner_text().strip()=='Question de test'
+   assert page.locator('#queryPreview').text_content().strip()=='Question de test'
    page.locator('#categorySearch').fill('')
   page.locator('#familyFilter').select_option('quotidien')
   assert page.locator('.category-btn').count()==6
