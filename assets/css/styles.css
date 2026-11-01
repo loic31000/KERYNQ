@@ -274,3 +274,21 @@ h1{background:linear-gradient(100deg,var(--text) 35%,var(--accent) 75%,var(--acc
 .welcome-actions{display:flex;gap:8px;flex-wrap:wrap}
 .help-example{margin-top:16px}
 #promptStyle{margin-bottom:2px}
+/* Logo propre à chaque thème. */
+.logo{width:48px;height:48px;flex:none;filter:drop-shadow(0 0 10px var(--glow));transition:transform .25s}
+.brand:hover .logo{transform:scale(1.06) rotate(-3deg)}
+.logo-a{stop-color:var(--accent)}
+.logo-b{stop-color:var(--accent2)}
+.logo-v{display:none}
+[data-theme="dark"] .logo-dark,[data-theme="light"] .logo-light,[data-theme="pro"] .logo-pro,[data-theme="cyber"] .logo-cyber,[data-theme="girly"] .logo-girly,[data-theme="aurora"] .logo-aurora{display:inline}
+.brand{gap:12px;flex:none}
+.brand-name{white-space:nowrap;overflow-wrap:normal}
+.brand-name{font-family:var(--display);font-size:1.3rem;font-weight:750;letter-spacing:.16em}
+[data-theme="girly"] .brand-name{letter-spacing:.06em}
+[data-theme="cyber"] .logo{filter:drop-shadow(0 0 7px var(--accent))}
+[data-theme="pro"] .logo{filter:none}
+/* Mode privé en haut de page. */
+.ico-lock{--ico:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='11' width='14' height='9' rx='2'/%3E%3Cpath d='M8 11V8a4 4 0 0 1 8 0v3'/%3E%3C/svg%3E")}
+.private-toggle{display:inline-flex;align-items:center;border:1px solid var(--line-strong)}
+.private-toggle[aria-pressed="true"]{color:var(--ok);border-color:var(--ok);background:var(--soft)}
+.private-banner{margin:0 0 8px;padding:10px 14px;border:1px solid var(--ok);border-radius:var(--radius-sm);background:var(--surface);font-size:.875rem}

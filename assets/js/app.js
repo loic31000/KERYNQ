@@ -5,7 +5,7 @@ const LS='kerynq-premium-v5', $=id=>document.getElementById(id), topicById=id=>T
 function load(){try{const raw=localStorage.getItem(LS);if(raw)return normalize(JSON.parse(raw));const old=localStorage.getItem('kerynq-premium-v1');if(old){const o=normalize(JSON.parse(old));o.previewTab='web';o.mode='simple';o.engine='google';return o}return clone(DEFAULT)}catch{return clone(DEFAULT)}}let state=load(), toastTimeout, privateMode=false, suppressSave=false;
 function save(){if(privateMode||suppressSave)return;try{localStorage.setItem(LS,JSON.stringify(state))}catch{notify('Stockage local indisponible')}}
 function updatePrivateUI(){
- const b=$('privateSearchToggle');b.setAttribute('aria-pressed',String(privateMode));
+ const b=$('privateSearchToggle');b.setAttribute('aria-pressed',String(privateMode));$('privateSearchInfo').hidden=!privateMode;
  b.textContent=privateMode?'Mode privé activé':'Mode privé';
  $('privateSearchInfo').textContent=privateMode
   ?'Mode privé actif : aucune nouvelle recherche ni modification de filtre n’est conservée localement. Les moteurs externes voient toujours vos requêtes. Quitter ce mode effacera les champs privés.'
@@ -179,7 +179,7 @@ const TIPS=[
  ["assistantLabel","Assistant","Choisissez l’IA que vous voulez utiliser. Elle s’ouvre dans un nouvel onglet, et vous y collez le texte. Elle peut demander un compte."],
  ["promptStyleLabel","Format du texte","Détaillé : plus de consignes, pour une réponse plus complète. Court : un texte bref, pour une réponse rapide."],
  ["savedTitle","Mes recherches","Gardez une recherche pour la retrouver plus tard. Elle reste dans ce navigateur. Évitez d’y mettre des informations privées sur un appareil partagé."],
- ["privacyTitle","Mode privé","Votre recherche en cours n’est pas gardée sur cet appareil. Le moteur ou l’IA que vous utilisez la voit quand même."]
+ ["privacyTitle","Données","Vos réglages restent dans ce navigateur. Vous pouvez les sauvegarder dans un fichier, ou tout effacer. Le mode privé se trouve en haut de la page."]
 ];
 function setupTips(){const bubble=$('tipBubble');let active=null;
  const hide=()=>{if(active){active.removeAttribute('aria-describedby');active.setAttribute('aria-expanded','false')}active=null;bubble.hidden=true};

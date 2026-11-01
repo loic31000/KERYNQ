@@ -115,6 +115,9 @@ with sync_playwright() as p:
                 assert ratio(t[fg],t[bg])>=4.5,(theme,fg,bg,ratio(t[fg],t[bg]))
             dim=page.evaluate('({a:document.documentElement.scrollWidth,b:document.documentElement.clientWidth})')
             assert dim['a']<=dim['b']+2,(theme,width,dim)
+            assert page.locator(f'.logo-{theme}').is_visible() and page.locator('.logo-v:visible').count()==1,theme
+            assert page.locator('.logo').bounding_box()['width']>=44
+            assert page.locator('.brand-name').bounding_box()['height']<=44,theme
         page.reload()
         assert page.evaluate('document.documentElement.dataset.theme')=='aurora'
         assert page.locator('#themeToggle').inner_text()=='Thème : Aurore'
@@ -206,6 +209,15 @@ with sync_playwright() as p:
         page.wait_for_timeout(200)
         assert any(u.startswith('https://pubmed.ncbi.nlm.nih.gov/?term=Migraine') for u in requests),requests
         assert page.locator('#engineButtons .btn').count()==23
+        assert page.evaluate('document.documentElement.scrollWidth-document.documentElement.clientWidth')<=2
+        assert not errors,errors;ctx.close()
+        # Mode privé en haut de page, explication visible seulement quand il est actif.
+        ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'topic':'Secret'}})
+        assert page.locator('header #privateSearchToggle').is_visible() and page.locator('#privateSearchInfo').is_hidden()
+        assert page.locator('#privateSearchToggle').bounding_box()['y']<page.locator('#topic').bounding_box()['y']
+        page.locator('#privateSearchToggle').click()
+        assert page.locator('#privateSearchToggle').get_attribute('aria-pressed')=='true' and page.locator('#privateSearchInfo').is_visible()
+        assert 'Secret' not in page.evaluate("localStorage.getItem('kerynq-premium-v5')")
         assert page.evaluate('document.documentElement.scrollWidth-document.documentElement.clientWidth')<=2
         assert not errors,errors;ctx.close()
         # Un fournisseur importé ne peut pas viser une propriété héritée.
