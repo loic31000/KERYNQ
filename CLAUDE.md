@@ -10,7 +10,7 @@ Conserver le coût d'hébergement à 0 euro et le fonctionnement sans serveur, A
 
 ## Règles à respecter
 
-1. Le dépôt est **public** et le site publié sur GitHub Pages. Ne pas modifier la visibilité, la configuration de Pages ni publier de release sans instruction explicite du propriétaire.
+1. Le dépôt doit rester **privé**. Ne pas activer GitHub Pages, ne pas publier de release et ne pas modifier sa visibilité sans instruction explicite du propriétaire.
 2. La licence du **code et de la documentation** est **MIT** (`LICENSE`). Le nom et les logos sont exclus de cette licence (`BRANDING.md`). Ne pas modifier le choix juridique ni redistribuer des ressources graphiques historiques sans accord.
 3. Travailler sur des branches `feat/...` ou `fix/...`, tester, commiter et ouvrir une PR pour validation ; ne pas fusionner une future PR sans demande explicite.
 4. Éviter GitHub Actions. Les contrôles sont utilisables localement et doivent être documentés honnêtement.
@@ -23,12 +23,11 @@ Conserver le coût d'hébergement à 0 euro et le fonctionnement sans serveur, A
 
 ```bash
 node tests/check-static.mjs
-node --test tests/unit/search-query.test.mjs tests/unit/privacy.test.cjs tests/unit/catalog.test.cjs tests/unit/prompt.test.cjs tests/unit/file-core.test.cjs
+node --test tests/unit/search-query.test.mjs tests/unit/privacy.test.cjs tests/unit/catalog.test.cjs tests/unit/prompt.test.cjs
 python tests/browser/univers-browser-smoke.py
 python tests/browser/a11y-browser-smoke.py
 python tests/browser/regressions-browser-smoke.py
 python tests/browser/cross-browser-smoke.py
-python tests/browser/files-browser-smoke.py
 ```
 
 Les scripts Python requièrent Playwright et Chromium, de préférence dans un environnement virtuel hors du dépôt. `KERYNQ_CHROMIUM` permet d'indiquer un autre exécutable Chromium. Tester aussi manuellement les navigateurs concernés avant publication. Pour servir le site en local : `python -m http.server 8000`.

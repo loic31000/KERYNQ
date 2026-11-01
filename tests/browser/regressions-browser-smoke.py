@@ -5,7 +5,7 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[2]
 ORIGIN='http://kerynq.test/'
-TYPES={'.mjs':'text/javascript','.html':'text/html','.css':'text/css','.js':'text/javascript','.svg':'image/svg+xml','.webmanifest':'application/json'}
+TYPES={'.html':'text/html','.css':'text/css','.js':'text/javascript','.svg':'image/svg+xml','.webmanifest':'application/json'}
 THEMES=('kerynq','dark','light','pro','cyber','girly','aurora','manga','medecine','tuning','animaux','finance')
 GOOD=lambda id,topic,**settings:{'id':id,'name':topic,'topic':topic,'folder':'Général','category':'Tous les sujets','pinned':False,'settings':{'topic':topic,**settings}}
 def serve(route):
@@ -311,16 +311,6 @@ with sync_playwright() as p:
             assert shown or page.locator('#webGuideNone').is_visible(),id
             assert page.locator('#queryExact').is_hidden(),id
         assert not errors,errors;ctx.close()
-        # Mise à jour : la page ne demande aucun CSS ni script sans son numéro de version.
-        ctx,page,errors=open_app(browser,width)
-        seen=[];ctx.on('request',lambda q:seen.append(q.url) if q.url.split('?')[0].endswith(('.css','.js')) else None)
-        page.reload();page.wait_for_timeout(100)
-        assert seen and all('?v=' in u for u in seen),seen
-        # Le fichier reste à la demande : panneau modal, focus rendu, aucune bibliothèque chargée.
-        assert page.locator('#filePanel').is_hidden() and page.locator('#fileToggle').is_visible()
-        page.locator('#fileToggle').focus();page.keyboard.press('Enter');assert page.evaluate("document.querySelector('#filePanel').matches(':modal')")
-        page.keyboard.press('Escape');assert page.evaluate('document.activeElement.id')=='fileToggle'
-        assert not any('vendor' in u for u in seen) and not errors,errors;ctx.close()
         # Un fournisseur importé ne peut pas viser une propriété héritée.
         ctx,page,errors=open_app(browser,width,{'kerynq-premium-v5':{'aiProvider':'constructor'}})
         assert page.locator('#aiProvider').input_value()=='chatgpt'

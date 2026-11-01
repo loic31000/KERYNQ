@@ -4,7 +4,7 @@
 
 **KERYNQ** est un atelier de recherche web personnalisée, gratuit, sans inscription ni serveur applicatif. Il construit des requêtes adaptées au moteur choisi et des consignes pour différents assistants IA. Il **ne collecte pas de résultats lui-même** et **ne transmet pas de consignes automatiquement aux IA**.
 
-**État : publié.** Le dépôt est public et le site est en ligne : https://loic31000.github.io/KERYNQ/
+**État : développement privé / prépublication.** Le dépôt est volontairement privé. Aucune activation de GitHub Pages ni publication ouverte n'est prévue sans décision du propriétaire.
 
 ## Démarrer
 
@@ -13,7 +13,7 @@ Ouvrir `index.html` dans un navigateur moderne. Écrivez votre question, précis
 - **Sans installation** : ouverture directe de `index.html`.
 - **Hébergement statique** : fichiers utilisables sur GitHub Pages après décision de publication.
 - **Fonctionnement hors ligne** : préparation de requêtes et favoris locaux possibles, mais les moteurs et assistants externes nécessitent Internet. La mise en cache PWA est destinée aux environnements HTTPS/localhost.
-- **Vérifier le code** : `node tests/check-static.mjs` puis `node --test tests/unit/search-query.test.mjs tests/unit/privacy.test.cjs tests/unit/catalog.test.cjs tests/unit/prompt.test.cjs tests/unit/file-core.test.cjs` (Node.js récent).
+- **Vérifier le code** : `node tests/check-static.mjs` puis `node --test tests/unit/search-query.test.mjs tests/unit/privacy.test.cjs tests/unit/catalog.test.cjs tests/unit/prompt.test.cjs` (Node.js récent).
 
 ## Organisation
 
@@ -26,7 +26,6 @@ Ouvrir `index.html` dans un navigateur moderne. Écrivez votre question, précis
 - 28 moteurs généraux, d'images et spécialisés (dont OSINT, journalisme, science, code, culture), avec suggestion par domaine et détail des filtres transmis. Voir [docs/MOTEURS.md](docs/MOTEURS.md).
 - Consignes IA adaptées : méthode propre au domaine, format court ou détaillé, note selon l'assistant.
 - Exemple au premier lancement et section d'aide.
-- Recherche par fichier : images, PDF et documents lus sur votre appareil, OCR sur demande. Voir [docs/IMPORT_FICHIERS.md](docs/IMPORT_FICHIERS.md).
 - Export et import validé de profils JSON ; export des consignes Markdown.
 - **Mode privé temporaire** : pas de sauvegarde des nouvelles recherches, effacement de la recherche courante déjà enregistrée à l’activation et disparition de la session privée à la fermeture/recharge. Les favoris existants ne sont pas supprimés.
 - **Effacer mes données locales** : suppression confirmée des préférences, favoris et modèles stockés par KERYNQ (ne supprime pas les fichiers déjà exportés).
@@ -64,6 +63,7 @@ Les filtres ne garantissent pas la qualité des résultats. Une consigne demanda
 
 **Code et documentation sous licence MIT.** Voir [LICENSE](LICENSE). Le nom, les logos et les autres éléments d'identité visuelle sont traités séparément dans [BRANDING.md](BRANDING.md). Les ressources tierces restent soumises à leurs propres droits.
 
+**Le dépôt reste privé :** ce choix de licence ne rend pas KERYNQ public et n'active pas GitHub Pages.
 
 
 ## Interface

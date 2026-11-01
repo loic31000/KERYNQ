@@ -26,7 +26,3 @@ Un signalement utile contient : versions/navigateur, impact, étapes reproductib
 ## Publication
 
 Effectuer une revue de sécurité, de confidentialité et des vulnérabilités avant toute ouverture publique. Voir [docs/ROADMAP.md](ROADMAP.md).
-
-## Bibliothèques tierces
-
-`assets/vendor/` contient des copies figées, avec leurs licences, listées dans `IMPORT_FICHIERS.md`. Elles sont à vérifier et à mettre à jour manuellement.
