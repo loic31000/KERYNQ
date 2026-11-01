@@ -4,7 +4,7 @@ ROOT=Path(__file__).resolve().parents[1]
 HTML=(ROOT/'index.html').read_text(encoding='utf-8')
 for fn in ['search-query-core.js','privacy-core.js']:
  HTML=HTML.replace(f'<script src="./{fn}"></script>',f'<script>{(ROOT/fn).read_text(encoding="utf-8")}</script>')
-EXPECT={'administration':'Administration','family':'Famille / Parentalité','animals':'Animaux','housing':'Logement','law':'Droit / Justice','personalfinance':'Finances personnelles'}
+EXPECT={'administration':'Administration','family':'Famille / Parentalité','animals':'Animaux','housing':'Logement','law':'Droit / Justice','personalfinance':'Finances personnelles','childhood':'Enfance & Scolarité','work':'Travail & Emploi','retirement':'Retraite & Autonomie','cooking':'Cuisine & Alimentation','homegarden':'Maison & Jardin','transport':'Transports & Déplacements'}
 with sync_playwright() as p:
  browser=p.chromium.launch(headless=True,executable_path='/usr/bin/chromium',args=['--no-sandbox'])
  for width in [1440,390,320]:
@@ -14,8 +14,8 @@ with sync_playwright() as p:
   assert page.locator('#familyFilter').is_visible(), 'families should be visible in simple mode'
   page.locator('#modeAdvanced').click()
   page.locator('#showAll').click()
-  assert page.locator('.category-btn').count()==33,('count',page.locator('.category-btn').count())
-  assert page.locator('#categories svg').count()==33
+  assert page.locator('.category-btn').count()==39,('count',page.locator('.category-btn').count())
+  assert page.locator('#categories svg').count()==39
   for id,name in EXPECT.items():
    page.locator('#categorySearch').fill(name)
    btn=page.locator(f'.category-btn[data-category-id="{id}"]')
@@ -33,10 +33,10 @@ with sync_playwright() as p:
    assert page.locator('#queryPreview').inner_text().strip()=='Question de test'
    page.locator('#categorySearch').fill('')
   page.locator('#familyFilter').select_option('quotidien')
-  assert page.locator('.category-btn').count()==4
+  assert page.locator('.category-btn').count()==6
   assert page.locator('.category-btn[aria-pressed="true"]').count()==1
   page.locator('#familyFilter').select_option('demarches')
-  assert page.locator('.category-btn').count()==3
+  assert page.locator('.category-btn').count()==4
   page.locator('#familyFilter').select_option('all')
   page.locator('#categorySearch').fill('santé')
   health=page.locator('[data-category-id="health"]');assert health.count()==1;health.click()
@@ -45,9 +45,14 @@ with sync_playwright() as p:
   page.locator('#categorySearch').fill('')
   page.locator('#familyFilter').select_option('sciences')
   assert page.locator('.category-btn').count()==4
+  page.locator('#categorySearch').fill('')
+  page.locator('#familyFilter').select_option('formation')
+  assert page.locator('.category-btn').count()==3
+  page.locator('#familyFilter').select_option('mobilite')
+  assert page.locator('.category-btn').count()==3
   assert not errors,(width,errors)
   dim=page.evaluate('({a:document.documentElement.scrollWidth,b:document.documentElement.clientWidth})')
   assert dim['a']<=dim['b']+2,(width,dim)
-  print('PASS 33 thèmes, 8 familles, sécurité des consignes, reflow',width)
+  print('PASS 39 thèmes, 8 familles, sécurité des consignes, reflow',width)
   ctx.close()
  browser.close()

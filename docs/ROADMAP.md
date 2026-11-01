@@ -3,7 +3,7 @@
 ## Base intégrée
 
 - [x] Identité KERYNQ et recherche navigateur.
-- [x] 33 univers après lot 4A, modes simple/avancé, filtres par moteur.
+- [x] 39 univers après lot 4A, modes simple/avancé, filtres par moteur.
 - [x] Favoris et modèles locaux, import/export.
 - [x] Sélecteur de neuf IA + URL HTTPS personnalisée, sans transfert automatique.
 - [x] Documentation sécurité, contribution, licence provisoire, accessibilité.
@@ -75,7 +75,14 @@ Les univers supplémentaires et les moteurs de recherche restent planifiés pour
 ## Phase 2 · Généralisation par petits lots
 
 - [x] **Lot 4A** : 6 univers du quotidien (administration, famille, animaux, logement, droit, finances personnelles) ; navigation par 8 familles ; enrichissement Santé & Médecine.
-- [ ] **Lot 4B** : enfance/scolarité, travail/emploi, retraite/autonomie, cuisine/alimentation, maison/jardin, mobilité/transports (réutiliser ou distinguer l'univers auto/mobilité existant).
+- [x] **Lot 4B** : enfance/scolarité, travail/emploi, retraite/autonomie, cuisine/alimentation, maison/jardin, mobilité/transports (réutiliser ou distinguer l'univers auto/mobilité existant).
 - [ ] Packs de sources institutionnelles **opt-in** et adaptés à la juridiction : pas de `site:` automatique sans pays ni contrôle de l'utilisateur.
 - [ ] Tests de validation sur tous les univers avant fusion.
 - [ ] Autres moteurs de recherche, **après** stabilisation, sans API payante.
+
+## Phase 2 · Lot 4B (39 univers)
+
+- [x] Six domaines ajoutés, options contextualisées, SVG et familles conservées.
+- [x] Distinction véhicule / réseau de transports collectifs, titres métier / scolarité.
+- [x] Tests 39 univers, navigation 8 familles et régression des requêtes Web.
+- [ ] Packs de sources officielles opt-in adaptés au pays (prochain lot).

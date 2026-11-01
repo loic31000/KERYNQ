@@ -18,7 +18,7 @@ Ouvrir `index.html` dans un navigateur moderne. Choisissez votre sujet, éventue
 ## Fonctionnalités
 
 - Recherche directe, `Ctrl + K`, modes essentiel et avancé.
-- 33 univers et leurs filtres contextuels, modèles et recherches favorites par dossier.
+- 39 univers et leurs filtres contextuels, modèles et recherches favorites par dossier.
 - Requêtes dédiées à Google, Brave et DuckDuckGo, avec indication des limites des opérateurs.
 - Export et import validé de profils JSON ; export des consignes Markdown.
 - **Mode privé temporaire** : pas de sauvegarde des nouvelles recherches, effacement de la recherche courante déjà enregistrée à l’activation et disparition de la session privée à la fermeture/recharge. Les favoris existants ne sont pas supprimés.
@@ -54,6 +54,10 @@ Les filtres ne garantissent pas la qualité des résultats. Une consigne demanda
 
 ### Nouveaux univers du lot 4A
 
-33 univers dont 6 nouveaux domaines du quotidien, organisés par 8 familles. Santé & Médecine comporte des critères supplémentaires sur la qualité des sources ; aucun thème ne remplace un professionnel. Les filtres thématiques concernent la consigne IA, sauf opérateur Web explicitement indiqué dans l'aperçu.
+39 univers dont 12 nouveaux domaines généralistes, organisés par 8 familles. Santé & Médecine comporte des critères supplémentaires sur la qualité des sources ; aucun thème ne remplace un professionnel. Les filtres thématiques concernent la consigne IA, sauf opérateur Web explicitement indiqué dans l'aperçu.
 
 Vérification des nouveaux univers (Chromium + Playwright Python) : `python tests/univers-browser-smoke.py`.
+
+## Nouveaux univers (lot 4B)
+
+Enfance & Scolarité, Travail & Emploi, Retraite & Autonomie, Cuisine & Alimentation, Maison & Jardin et Transports & Déplacements. L’univers « Auto / Mobilité » reste distinct : il concerne les véhicules, tandis que « Transports & Déplacements » traite des trajets multimodaux et des transports collectifs.

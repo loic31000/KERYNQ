@@ -1,6 +1,6 @@
 # Catalogue des univers de KERYNQ
 
-Le catalogue regroupe 33 univers (27 historiques et 6 du lot 4A), rangés par huit familles dans l'interface. Les identifiants d'origine sont conservés afin que les sauvegardes des versions précédentes fonctionnent.
+Le catalogue regroupe 39 univers (27 historiques, 6 du lot 4A et 6 du lot 4B), rangés par huit familles dans l'interface. Les identifiants d'origine sont conservés afin que les sauvegardes des versions précédentes fonctionnent.
 
 ## Nouveautés du lot 4A
 
@@ -24,4 +24,17 @@ Le catalogue regroupe 33 univers (27 historiques et 6 du lot 4A), rangés par hu
 
 ## Suite
 
-Lot 4B : enfance et scolarité ; travail et emploi ; retraite et autonomie ; cuisine et alimentation ; maison et jardin ; mobilité et transports. Puis packs de sources, multi-moteurs et validation de compatibilité.
+Packs de sources officiels opt-in, vérification d’accessibilité et validation de compatibilité. Les moteurs supplémentaires viendront plus tard.
+
+## Lot 4B : six nouveaux univers
+
+| Univers | Filtres principaux | Limites |
+| --- | --- | --- |
+| Enfance & Scolarité | programmes, scolarisation, inclusion, calendrier | vérifier établissement, année et académie |
+| Travail & Emploi | droits, contrats, rémunération, formation | vérifier pays, convention et date, sans conseil juridique individualisé |
+| Retraite & Autonomie | régimes, estimations, aidants, accessibilité | éviter la divulgation de données personnelles |
+| Cuisine & Alimentation | allergènes, conservation, budget, recettes | contrôler allergènes et sécurité alimentaire |
+| Maison & Jardin | travaux, jardinage, sécurité, saison | rappeler les risques des travaux dangereux |
+| Transports & Déplacements | horaires, tarifs, perturbations, PMR | vérifier les informations datées auprès des opérateurs ; différent de Auto / Mobilité |
+
+Les huit familles sont préservées et les 27 identifiants initiaux ne changent pas. Les filtres thématiques enrichissent la consigne IA et ne constituent pas un filtrage automatique des résultats Web.

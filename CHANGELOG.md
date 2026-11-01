@@ -1,3 +1,10 @@
+## 2026-11-01 · Lot 4B : 39 univers (branche privée)
+
+- Ajout de six univers généralistes et de leurs filtres contextuels, exemples et icônes SVG.
+- Regroupement dans les huit familles existantes ; conservation des identifiants de favoris.
+- Distinction des transports collectifs avec l’univers automobile existant.
+- Tests statiques et de navigation portés à 39 univers.
+
 # Historique des changements
 
 Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent le développement et ne signifient pas une publication publique.

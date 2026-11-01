@@ -70,3 +70,10 @@ assert(html.includes('id="familyFilter"'), 'Navigation par familles');
 assert(html.includes('TOPIC_FAMILIES'), 'Regroupement thématique défini');
 assert(html.includes('Santé & Médecine'), 'Santé enrichie');
 assert(existsSync(join(root,'docs/UNIVERS.md')), 'Catalogue des univers documenté');
+
+// Lot 4B : les 6 univers complémentaires doivent être identifiables et illustrés.
+for (const id of ['childhood','work','retirement','cooking','homegarden','transport']) {
+  assert(html.includes('"id":"'+id+'"'), 'Univers lot 4B : '+id);
+  assert(html.includes(id+':`<svg'), 'Icône SVG lot 4B : '+id);
+  assert(html.includes('"'+id+'":"'), 'Famille du thème lot 4B : '+id);
+}
