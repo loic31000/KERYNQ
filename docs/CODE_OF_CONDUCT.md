@@ -1,6 +1,6 @@
 # Code de conduite
 
-KERYNQ est actuellement développé dans un dépôt privé. Les règles suivantes s'appliquent aux personnes autorisées à collaborer et à la communauté future.
+Le dépôt KERYNQ est public. Ces règles s'appliquent aux échanges, issues, pull requests et autres contributions.
 
 ## Comportement attendu
 

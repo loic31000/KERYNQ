@@ -1,5 +1,8 @@
 # Audit avant publication
 
+> **Statut au 2 novembre 2026 :** le dépôt est maintenant **public** et GitHub Pages est configuré. Le rapport ci-dessous conserve les résultats des vérifications du 1er novembre ; les affirmations relatives au dépôt privé décrivent cet état historique. Les tests encore ouverts restent nécessaires. L'ouverture publique ne vaut pas certification de sécurité, d'accessibilité ou de droits sur les visuels.
+
+
 Compte rendu pour l'issue #3, du 1er novembre 2026. Ce n'est **ni une certification de sécurité, ni une conformité WCAG**.
 
 Rejouer : `python tests/browser/cross-browser-smoke.py`, après `playwright install chromium firefox webkit`.
@@ -75,3 +78,10 @@ Ces essais ont été faits dans Chromium uniquement, avec un script ponctuel non
 
 - Un profil importé remplace les réglages, y compris les sites ciblés : n'importer que ses propres fichiers.
 - Une question part en clair dans l'adresse du moteur choisi, donc dans son historique de navigation.
+
+## Suivi après ouverture publique (2 novembre 2026)
+
+- [ ] Vérifier les réglages GitHub actuels : signalement privé des failles, analyse de secrets, règles de protection de `main`.
+- [ ] Revoir les éléments graphiques et archives de l'historique Git, ainsi que les métadonnées des commits désormais publics.
+- [ ] Tester la PWA sous HTTPS réel et réaliser les tests manuels d'accessibilité et de navigateurs ci-dessus.
+- [ ] Dater et sourcer tout nouveau contrôle ; les réglages n'ont pas été audités de nouveau dans ce changement documentaire.

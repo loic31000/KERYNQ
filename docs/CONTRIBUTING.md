@@ -1,6 +1,6 @@
 # Contribuer à KERYNQ
 
-Merci de votre intérêt. **Les contributions externes ne sont pas encore ouvertes** tant que le dépôt reste privé. La licence du code a été choisie : MIT. Ce guide prépare l'ouverture future.
+Merci de votre intérêt. Le **dépôt est public** et le code est sous licence MIT. Les demandes et propositions peuvent passer par les issues et PR ; leur acceptation reste à la discrétion du propriétaire.
 
 ## Principes
 
@@ -13,7 +13,7 @@ Merci de votre intérêt. **Les contributions externes ne sont pas encore ouvert
 
 ## Démarrage local
 
-1. Cloner le dépôt avec `git clone` (une fois l'accès accordé).
+1. Cloner le dépôt public avec `git clone https://github.com/loic31000/KERYNQ.git`.
 2. Ouvrir `index.html` dans un navigateur.
 3. Lancer `node tests/check-static.mjs` et les autres contrôles listés dans `CLAUDE.md` ; aucun paquet npm n'est nécessaire.
 4. Tester manuellement les parcours utilisateur dans Chrome/Brave et Firefox, à 320 px et 200 % de zoom.
@@ -34,4 +34,4 @@ Merci de votre intérêt. **Les contributions externes ne sont pas encore ouvert
 
 ## Licence des contributions
 
-Le code et sa documentation sont sous [MIT](../LICENSE). Les personnes qui proposeront des changements devront disposer des droits nécessaires sur leur contribution et accepter sa distribution sous cette licence. La contribution n'implique aucun transfert automatique de propriété des droits. Le nom et les logos sont traités séparément dans [BRANDING.md](../BRANDING.md). Les contributions externes restent fermées tant que le dépôt est privé.
+Le code et sa documentation sont sous [MIT](../LICENSE). Les personnes qui proposeront des changements devront disposer des droits nécessaires sur leur contribution et accepter sa distribution sous cette licence. La contribution n'implique aucun transfert automatique de propriété des droits. Le nom et les logos sont traités séparément dans [BRANDING.md](../BRANDING.md). Le dépôt est public, mais aucune contribution n'est fusionnée automatiquement.

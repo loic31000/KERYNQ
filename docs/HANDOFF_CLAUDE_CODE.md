@@ -4,7 +4,7 @@
 
 ## Contexte produit
 
-Nom : **KERYNQ** (« Explorez. Affinez. Découvrez. »). Dépôt : https://github.com/loic31000/KERYNQ. L'application reste **privée, en prépublication**, et a vocation à fonctionner gratuitement sur GitHub Pages **uniquement quand le propriétaire choisira de la rendre publique**.
+Nom : **KERYNQ** (« Explorez. Affinez. Découvrez. »). Dépôt : https://github.com/loic31000/KERYNQ. **Mise à jour du 2 novembre 2026 :** le dépôt est maintenant **public** et GitHub Pages est configuré. Cette passation conserve des étapes historiques du 1er novembre qui ne décrivent plus les réglages GitHub actuels.
 
 KERYNQ est un atelier de recherche personnalisée, non un moteur d'indexation. Le traitement local construit des requêtes vers 28 moteurs (`MOTEURS.md`), et des consignes destinées à ChatGPT, Claude, Gemini, Kimi, Grok, DeepSeek, Perplexity, Mistral Vibe, Copilot et une URL HTTPS personnalisée. Les assistants ne reçoivent **aucune consigne automatiquement**. La recherche et les pages IA s'ouvrent à l'initiative de l'utilisateur.
 
@@ -16,7 +16,7 @@ Les lignes ci-dessous conservent l'historique de la passation ; pour l'état cou
 
 - Lots 1 à 3 : compilateur de requêtes séparé (`assets/js/core/search-query-core.js`), tests des opérateurs et dates ; contrôles des imports et URL (`assets/js/core/privacy-core.js`), mode privé, effacement des données locales ; améliorations de l'accès clavier et du reflow.
 - Lots 4A et 4B : passage de 27 à **39 univers**, répartis en **8 familles**, avec des filtres propres et une compatibilité des identifiants historiques. Les douze nouvelles catégories concernent administration, famille, animaux, logement, droit, finances personnelles, enfance et scolarité, travail et emploi, retraite et autonomie, cuisine et alimentation, maison et jardin, transports et déplacements.
-- Multi-IA, favoris et dossiers, modèles, export/import JSON, onze thèmes interchangeables, bulles d'aide, interface responsive, manifeste PWA et service worker limitant le cache aux ressources de l'application.
+- Multi-IA, favoris et dossiers, modèles, export/import JSON, douze thèmes interchangeables, bulles d'aide, interface responsive, manifeste PWA et service worker limitant le cache aux ressources de l'application.
 - Documentation existante : README, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY, SUPPORT, ACCESSIBILITY, CHANGELOG, LICENSE et `docs/*`.
 - Aucune GitHub Action mise en place.
 
@@ -37,7 +37,7 @@ Le 1er novembre 2026, une copie locale du lot 4B a passé :
 - `python tests/browser/univers-browser-smoke.py` : **39 univers, 8 familles**, Chromium 1440, 390 et 320 px.
 - `python tests/browser/a11y-browser-smoke.py` : Chromium 1440, 390 et 320 px.
 
-Relancer les tests depuis `main` sur le PC de développement. **Ne pas présenter ces tests comme un audit exhaustif**. Les tests NVDA/VoiceOver/TalkBack, navigateurs Firefox/Safari, zoom fort, PWA installée sous HTTPS et audit XSS/CSP restent à accomplir. Aucun statut CI GitHub concluant n'a été relevé (pas de checks configurés).
+Relancer les tests depuis `main` sur le PC de développement. **Ne pas présenter ces tests comme un audit exhaustif**. Ce constat décrivait uniquement le lot 4B du 1er novembre. Des contrôles multi-navigateurs et CSP ont ensuite été documentés dans `docs/AUDIT_PREPUBLICATION.md`. Restent les lecteurs d'écran, appareils et navigateurs réels, zoom réel et installation PWA en HTTPS. Aucun statut CI GitHub concluant n'a été relevé (pas de checks configurés).
 
 ## Suite, par lots et sans serveur
 
@@ -45,7 +45,7 @@ Relancer les tests depuis `main` sur le PC de développement. **Ne pas présente
 1. `git pull origin main`, `git status`, identifier le HEAD.
 2. Lancer les tests et vérifier le catalogue, les anciens favoris/imports, la sécurité des URL.
 3. Revoir les derniers textes de `docs/ROADMAP.md` et les issues ; corriger les notes historiques obsolètes, sans effacer l'historique utile.
-4. Réaliser un audit visuel, clavier, zoom et sécurité avant toute mise en ligne. Ne pas afficher « conforme WCAG » sans contrôle.
+4. Réaliser un audit visuel, clavier, zoom et sécurité sur le site public, sans prétendre à un audit indépendant. Ne pas afficher « conforme WCAG » sans contrôle.
 
 ### Priorité 1 : packs de sources institutionnelles facultatifs (retirés à la demande du propriétaire, ne pas réintroduire sans sa demande)
 1. Prévoir des **packs par pays et par univers** : par exemple France + administration (Service Public), santé (Ameli/HAS), droit (Légifrance), recherche scientifique (sources reconnues), sans en imposer un par défaut.
@@ -73,7 +73,7 @@ Relancer les tests depuis `main` sur le PC de développement. **Ne pas présente
 - [#6](https://github.com/loic31000/KERYNQ/issues/6) : fermée.
 
 ## Décisions réservées au propriétaire
-- Visibilité du dépôt, activation de GitHub Pages et mise en ligne.
+- Futures modifications de visibilité, de configuration GitHub Pages ou de releases.
 - Licence du code choisie : **MIT** (`LICENSE`). Toute modification future de licence et les droits de publication des visuels restent soumis au propriétaire.
 - Fusion des futures PR, coûts récurrents, services externes avec API et nouvelles données envoyées à des tiers.
 

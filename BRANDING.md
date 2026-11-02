@@ -14,7 +14,7 @@ Ce document **ne prétend pas** que le nom ou le logo sont enregistrés comme ma
 
 Les noms, marques et services des moteurs de recherche ou des fournisseurs IA appartiennent à leurs titulaires respectifs. Ils ne sont pas couverts par la licence MIT de KERYNQ.
 
-Les anciennes images (par exemple le globe figurant dans des versions historiques) ne sont pas automatiquement relicenciées par la publication du code actuel. **Avant d'ouvrir le dépôt**, vérifier la provenance et les droits de ces ressources dans l'historique Git ; ne pas interpréter MIT comme une autorisation de republier des actifs tiers.
+Les anciennes images (par exemple le globe figurant dans des versions historiques) ne sont pas automatiquement relicenciées par la publication du code actuel. Le dépôt étant **déjà public**, vérifier rétrospectivement la provenance et les droits de ces ressources dans l'historique Git ; ne pas interpréter MIT comme une autorisation de republier des actifs tiers.
 
 ## Contributions
 
