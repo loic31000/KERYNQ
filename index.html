@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr" data-theme="kerynq">
+<html lang="fr" class="is-booting" data-theme="kerynq" data-boot-destination="web">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; manifest-src 'self'; connect-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
@@ -8,9 +8,11 @@
 <meta name="color-scheme" content="light dark">
 <meta name="description" content="KERYNQ prépare votre question pour Google, Brave, DuckDuckGo ou un assistant IA. Gratuit, sans compte, rien n'est envoyé sans votre clic.">
 <meta name="theme-color" content="#0b0d12">
+<meta name="kerynq-build" content="21">
 <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="./manifest.webmanifest">
-<link rel="stylesheet" href="./assets/css/styles.css">
+<script src="./assets/js/theme-boot.js?v=21"></script>
+<link rel="stylesheet" href="./assets/css/styles.css?v=21">
 <title>KERYNQ · Préparez de meilleures recherches</title>
 </head>
 <body>
@@ -31,12 +33,14 @@
 <g class="logo-v logo-animaux"><path d="M32 30c-9 0-16 8-16 16 0 6 5 8 9 7 4-1 10-1 14 0 4 1 9-1 9-7 0-8-7-16-16-16Z"/><circle cx="14" cy="26" r="5"/><circle cx="26" cy="14" r="5"/><circle cx="38" cy="14" r="5"/><circle cx="50" cy="26" r="5"/></g>
 <g class="logo-v logo-finance"><path d="M8 56h48"/><path d="M14 56V42M28 56V32M42 56V24" stroke-width="6"/><path d="M10 28 26 16l10 6L54 8M44 8h10v10"/></g></svg><span class="brand-name">KERYNQ</span></div>
   <div class="header-actions">
-    <button type="button" id="libraryToggle" class="tool-button" aria-haspopup="dialog">Ma bibliothèque</button>
-    <button type="button" id="privateSearchToggle" class="tool-button private-toggle ico-after ico-lock" aria-pressed="false" aria-controls="privateSearchInfo">Mode privé</button>
-    <div class="theme-picker"><button id="themeToggle" class="tool-button" type="button" aria-expanded="false" aria-controls="themeMenu">Apparence</button>
+    <button type="button" id="libraryToggle" class="tool-button" aria-haspopup="dialog" disabled>Ma bibliothèque</button>
+    <button type="button" id="privateSearchToggle" class="tool-button private-toggle ico-after ico-lock" aria-pressed="false" aria-controls="privateSearchInfo" disabled>Mode privé</button>
+    <div class="theme-picker"><button id="themeToggle" class="tool-button" type="button" aria-expanded="false" aria-controls="themeMenu" disabled>Apparence</button>
       <div id="themeMenu" class="theme-menu" role="group" aria-label="Apparence" hidden><button id="fontToggle" class="theme-choice" type="button" aria-pressed="false">Agrandir le texte</button><p class="menu-title">Thème</p><div id="themeChoices" class="theme-choices"></div></div></div>
   </div>
 </header>
+<p class="boot-error" role="alert">KERYNQ n’a pas pu se charger complètement. Vérifiez votre connexion, puis <a href="./index.html">rechargez la page</a>.</p>
+<noscript><p class="boot-error no-script">KERYNQ a besoin de JavaScript pour fonctionner.</p></noscript>
 <p id="privateSearchInfo" class="private-banner" aria-live="polite" hidden></p>
 
 <main id="main" class="workspace">
@@ -44,11 +48,11 @@
 <p class="lead">KERYNQ prépare votre question pour un moteur de recherche ou une IA. Rien ne part sans votre clic.</p>
 
 <section class="composer" aria-labelledby="pageTitle">
-  <div class="segmented" role="tablist" aria-label="Où chercher"><button type="button" role="tab" id="tabWeb" aria-controls="panelWeb" aria-selected="false" tabindex="-1">Sur le Web</button><button type="button" role="tab" id="tabPrompt" aria-controls="panelPrompt" aria-selected="true" tabindex="0">Avec une IA</button></div>
-  <textarea class="main-search" id="topic" rows="2" maxlength="2200" placeholder="Ex. : quelles aides pour rénover un logement ancien ?"></textarea>
+  <div class="segmented" role="tablist" aria-label="Où chercher"><button type="button" role="tab" id="tabWeb" aria-controls="panelWeb" aria-selected="false" tabindex="-1" disabled>Sur le Web</button><button type="button" role="tab" id="tabPrompt" aria-controls="panelPrompt" aria-selected="true" tabindex="0" disabled>Avec une IA</button></div>
+  <textarea class="main-search" id="topic" readonly rows="2" maxlength="2200" placeholder="Ex. : quelles aides pour rénover un logement ancien ?"></textarea>
   <div class="composer-tools">
     <div class="domain-picker" id="domainPicker">
-      <div class="domain-control"><button type="button" id="domainToggle" class="domain-toggle ico-after ico-chevron" aria-expanded="false" aria-controls="domainPanel"><span id="domainIcon" class="domain-icon"></span><span class="sr-only">Sujet : </span><span id="domainName">Tous les sujets</span></button><button type="button" id="domainReset" class="domain-reset ico ico-close" aria-label="Revenir à Tous les sujets" hidden></button></div>
+      <div class="domain-control"><button type="button" id="domainToggle" class="domain-toggle ico-after ico-chevron" aria-expanded="false" aria-controls="domainPanel" disabled><span id="domainIcon" class="domain-icon"></span><span class="sr-only">Sujet : </span><span id="domainName">Tous les sujets</span></button><button type="button" id="domainReset" class="domain-reset ico ico-close" aria-label="Revenir à Tous les sujets" hidden></button></div>
       <div id="domainPanel" class="domain-panel" role="group" aria-label="Choisir un sujet" hidden>
         <label for="categorySearch">Rechercher un sujet</label>
         <input id="categorySearch" class="field" type="text" role="combobox" aria-autocomplete="list" aria-expanded="true" aria-controls="categories" autocomplete="off" placeholder="Ex. : santé, manga, droit">
@@ -59,16 +63,16 @@
         <div id="categories" class="domain-list" role="listbox" aria-label="Sujets"></div>
       </div>
     </div>
-    <div class="tool-field" id="enginePicker"><label id="engineLabel" for="engineSelect">Moteur</label><select id="engineSelect"></select></div>
-    <div class="tool-field" id="assistantPicker"><label id="assistantLabel" for="aiProvider">Assistant</label><select id="aiProvider" ><option value="chatgpt">ChatGPT</option><option value="claude">Claude</option><option value="gemini">Gemini</option><option value="kimi">Kimi</option><option value="grok">Grok</option><option value="deepseek">DeepSeek</option><option value="perplexity">Perplexity</option><option value="mistral">Mistral Vibe</option><option value="copilot">Microsoft Copilot</option><option value="custom">Autre assistant (URL HTTPS)</option></select></div>
-    <button id="runSearch" type="button" class="btn primary run-search ico-after ico-external">Rechercher</button>
+    <div class="tool-field" id="enginePicker"><label id="engineLabel" for="engineSelect">Moteur</label><select id="engineSelect" disabled><option>Chargement…</option></select></div>
+    <div class="tool-field" id="assistantPicker"><label id="assistantLabel" for="aiProvider">Assistant</label><select id="aiProvider" disabled ><option value="chatgpt">ChatGPT</option><option value="claude">Claude</option><option value="gemini">Gemini</option><option value="kimi">Kimi</option><option value="grok">Grok</option><option value="deepseek">DeepSeek</option><option value="perplexity">Perplexity</option><option value="mistral">Mistral Vibe</option><option value="copilot">Microsoft Copilot</option><option value="custom">Autre assistant (URL HTTPS)</option></select></div>
+    <button id="runSearch" type="button" class="btn primary run-search ico-after ico-external" disabled>Chargement…</button>
   </div>
   <div class="ai-custom" id="customAIWrap" hidden><label for="customAIUrl">Adresse HTTPS de l’assistant</label><input id="customAIUrl" class="field" inputmode="url" autocomplete="url" maxlength="300" placeholder="https://exemple.com/"></div>
 </section>
 
 <div class="context-row">
   <div id="activeSummary" class="active-summary" role="group" aria-label="Vos critères"></div>
-  <button type="button" id="refineToggle" class="btn refine-toggle ico-after ico-sliders" aria-haspopup="dialog">Personnaliser ma recherche</button>
+  <button type="button" id="refineToggle" class="btn refine-toggle ico-after ico-sliders" aria-haspopup="dialog" disabled>Personnaliser ma recherche</button>
 </div>
 
 <section class="panel prepared is-empty" id="resultPreview" aria-label="Votre recherche préparée">
@@ -146,13 +150,14 @@
 
 <footer class="footer"><p>Les filtres ne garantissent pas la qualité des résultats.</p><p><a href="https://support.google.com/websearch/answer/2466433?hl=fr" target="_blank" rel="noopener noreferrer">Aide Google Search</a> · <a href="https://search.brave.com/help/operators" target="_blank" rel="noopener noreferrer">Opérateurs Brave</a></p></footer>
 </div>
+<div id="updateBanner" class="update-banner" role="status" hidden><span id="updateText"></span><button type="button" id="updateNow" class="btn">Mettre à jour</button></div>
 <div id="tipBubble" class="tip-bubble" role="tooltip" hidden></div>
 <div id="status" class="status" role="status" aria-live="polite" aria-atomic="true"></div>
-<script src="./assets/js/core/search-query-core.js"></script>
-<script src="./assets/js/core/privacy-core.js"></script>
-<script src="./assets/js/core/prompt-core.js"></script>
-<script src="./assets/js/core/catalog-core.js"></script>
-<script src="./assets/js/app.js"></script>
-<script src="./assets/js/register-sw.js"></script>
+<script src="./assets/js/core/search-query-core.js?v=21"></script>
+<script src="./assets/js/core/privacy-core.js?v=21"></script>
+<script src="./assets/js/core/prompt-core.js?v=21"></script>
+<script src="./assets/js/core/catalog-core.js?v=21"></script>
+<script src="./assets/js/app.js?v=21"></script>
+<script src="./assets/js/register-sw.js?v=21"></script>
 </body>
 </html>

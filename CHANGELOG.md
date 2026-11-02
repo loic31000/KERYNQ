@@ -2,6 +2,12 @@
 
 Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent le développement et ne signifient pas une publication publique.
 
+## Non publié : thème au rechargement
+
+- Le thème enregistré s'applique avant le premier rendu : plus de thème clair visible au rechargement. Cache PWA `kerynq-static-v21`.
+- Mises à jour maîtrisées : chaque version est un instantané complet, la nouvelle version attend le clic sur « Mettre à jour ». Voir [docs/MISES_A_JOUR.md](docs/MISES_A_JOUR.md).
+- Chargement lent : mode correct dès le premier rendu, commandes inactives et message clair si un fichier échoue.
+
 ## Non publié : refonte UX
 
 - Nouvel espace de recherche : la question d'abord, Web ou IA, sujet, moteur ou assistant et action dans un même bloc.

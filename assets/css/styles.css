@@ -345,3 +345,20 @@ body[data-destination="web"] .only-ai{display:none}
   .prompt-preview{height:320px}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+/* Chargement : même structure que la page prête, commandes visiblement inactives. */
+.is-booting[data-boot-destination="web"] #assistantPicker,.is-booting[data-boot-destination="prompt"] #enginePicker{display:none}
+.is-booting[data-boot-destination="web"] #tabWeb{background:var(--tab-active);color:var(--tab-active-text);box-shadow:inset 0 -2px 0 var(--accent)}
+.is-booting[data-boot-destination="web"] #tabPrompt{background:none;color:var(--muted);box-shadow:none}
+.is-booting .tool-field>label{margin-right:30px}
+.is-booting .domain-icon{width:18px;height:18px}
+.is-booting .run-search{min-width:230px}
+.is-booting .run-search::after{display:none}
+.is-booting .result-empty{visibility:hidden;min-height:44px}
+.is-booting button:disabled,.is-booting select:disabled{cursor:progress}
+.is-booting .header-actions button:disabled{opacity:.7}
+.boot-failed button:disabled,.boot-failed select:disabled{cursor:not-allowed}
+.boot-error{display:none;margin:0 0 var(--s3);padding:var(--s2) var(--s3);border-left:3px solid var(--danger);background:var(--surface);font-size:var(--t-sm)}
+.boot-failed .boot-error,.boot-error.no-script{display:block}
+.update-banner{position:fixed;right:var(--s4);bottom:var(--s4);z-index:28;display:flex;align-items:center;gap:var(--s3);flex-wrap:wrap;max-width:calc(100vw - 2*var(--s4));padding:var(--s2) var(--s3);background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius-sm);box-shadow:var(--shadow);font-size:var(--t-sm)}
+@media(max-width:640px){.is-booting .run-search{min-width:0}}
