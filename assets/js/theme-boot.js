@@ -31,10 +31,37 @@
     return DEFAULT_THEME;
   }
 
+  function savedDestination() {
+    try {
+      if (localStorage.getItem('kerynq-premium-v5')) {
+        var stored = JSON.parse(localStorage.getItem('kerynq-premium-v5'));
+        return isRecord(stored) && stored.previewTab === 'prompt' ? 'prompt' : 'web';
+      }
+    } catch (error) { /* Même repli que le thème. */ }
+    return 'web';
+  }
+
   var theme = savedTheme();
-  document.documentElement.setAttribute('data-theme', theme);
+  var root = document.documentElement;
+  root.setAttribute('data-theme', theme);
+  root.setAttribute('data-boot-destination', savedDestination());
   var color = document.querySelector('meta[name="theme-color"]');
   if (color) color.setAttribute('content', THEMES[theme][0]);
   var scheme = document.querySelector('meta[name="color-scheme"]');
   if (scheme) scheme.setAttribute('content', THEMES[theme][1]);
+
+  // Tant que app.js n'a pas terminé, un fichier manquant ou une erreur ne doit pas laisser croire que tout fonctionne.
+  function showFailure() {
+    var select = document.getElementById('engineSelect'), run = document.getElementById('runSearch');
+    if (select && select.options[0]) select.options[0].textContent = 'Indisponible';
+    if (run) run.textContent = 'Indisponible';
+  }
+  window.addEventListener('error', function (event) {
+    if (!root.classList.contains('is-booting')) return;
+    var target = event.target;
+    if (target && target !== window && target.tagName !== 'SCRIPT' && target.tagName !== 'LINK') return;
+    root.classList.add('boot-failed');
+    showFailure();
+    document.addEventListener('DOMContentLoaded', showFailure);
+  }, true);
 })();

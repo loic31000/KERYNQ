@@ -87,7 +87,7 @@ def run(browser, name, expected, storage=None, init=None, hard=False, reuse=None
     for _ in range(200):
         pg.wait_for_timeout(50)
         try:
-            if pg.evaluate("document.readyState==='complete'&&!!document.querySelector('#engineSelect option')"): break
+            if pg.evaluate("document.readyState==='complete'&&!document.documentElement.classList.contains('is-booting')"): break
         except Exception: pass
     pg.wait_for_timeout(400)
     if cdp: cdp.send('Page.stopScreencast')
@@ -129,9 +129,9 @@ def held_frame(browser, theme):
     for _ in range(100):
         pg.wait_for_timeout(30)
         try:
-            if pg.evaluate("!!document.getElementById('topic')&&!document.querySelector('#engineSelect option')"): break
+            if pg.evaluate("!!document.getElementById('topic')&&document.documentElement.classList.contains('is-booting')"): break
         except Exception: pass
-    state = pg.evaluate("({t:document.documentElement.dataset.theme,bg:getComputedStyle(document.documentElement).getPropertyValue('--bg').trim(),meta:document.querySelector('meta[name=theme-color]').content,app:!!document.querySelector('#engineSelect option')})")
+    state = pg.evaluate("({t:document.documentElement.dataset.theme,bg:getComputedStyle(document.documentElement).getPropertyValue('--bg').trim(),meta:document.querySelector('meta[name=theme-color]').content,app:!document.documentElement.classList.contains('is-booting')})")
     shot = OUT / f'retenu-{theme}.png'; pg.screenshot(path=str(shot))
     r_ = subprocess.run(['ffmpeg', '-v', 'error', '-i', str(shot), '-vf', 'crop=4:4:iw-10:ih/2,scale=1:1', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-'], capture_output=True); px = list(r_.stdout[:3])
     bad = []

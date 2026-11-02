@@ -12,9 +12,10 @@ const css = readFileSync(join(root, 'assets/css/styles.css'), 'utf8');
 function boot(store, broken) {
   const metas = { 'meta[name="theme-color"]': { setAttribute(k, v) { this.v = v; } }, 'meta[name="color-scheme"]': { setAttribute(k, v) { this.v = v; } } };
   const attrs = {};
+  const classList = { contains: () => true, add() {} };
   const localStorage = { getItem(k) { if (broken) throw new Error('denied'); return k in store ? store[k] : null; }, setItem() { throw new Error('must not write'); } };
-  vm.runInNewContext(code, { localStorage, document: { documentElement: { setAttribute(k, v) { attrs[k] = v; } }, querySelector: q => metas[q] } });
-  return { theme: attrs['data-theme'], color: metas['meta[name="theme-color"]'].v, scheme: metas['meta[name="color-scheme"]'].v };
+  vm.runInNewContext(code, { localStorage, document: { documentElement: { classList, setAttribute(k, v) { attrs[k] = v; } }, querySelector: q => metas[q] }, window: { addEventListener() {} } });
+  return { destination: attrs['data-boot-destination'], theme: attrs['data-theme'], color: metas['meta[name="theme-color"]'].v, scheme: metas['meta[name="color-scheme"]'].v };
 }
 // Règle de référence : celle de load() dans app.js.
 function appTheme(store) {
@@ -48,4 +49,9 @@ test('boot gives the same theme as the application in every stored state', () =>
 });
 test('unavailable storage gives the default theme and writes nothing', () => {
   assert.equal(boot({}, true).theme, DEFAULT.theme);
+});
+test('the first rendered mode matches what the application will show', () => {
+  for (const [raw, want] of [['{"previewTab":"prompt"}', 'prompt'], ['{"previewTab":"web"}', 'web'], ['{"previewTab":"x"}', 'web'], ['{}', 'web'], ['[]', 'web'], ['{bad', 'web']]) assert.equal(boot({ 'kerynq-premium-v5': raw }).destination, want, raw);
+  assert.equal(boot({}).destination, 'web');
+  assert.equal(boot({}, true).destination, 'web');
 });
