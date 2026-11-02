@@ -65,3 +65,7 @@ Les scripts restent classiques, sans module ni compilation, pour conserver l'ouv
 **Lot 2 :** le service worker inclut `assets/js/core/privacy-core.js` dans son cache, aujourd'hui `kerynq-static-v5`. À tester sous HTTPS avant publication.
 
 **Détail du moteur choisi :** `capabilities()` interroge `compile()`. Il décrit ce que KERYNQ transmet ; le respect réel par chaque moteur n'est pas vérifié et peut changer.
+
+## Thème au démarrage
+
+`assets/js/theme-boot.js` est chargé dans le `head`, avant la feuille de style. Il lit le thème enregistré, sans écrire, et règle `data-theme`, `theme-color` et `color-scheme` avant le premier rendu. Il reprend les règles de `load()` et `normalize()`. Pour ajouter un thème, mettez aussi à jour sa table : `tests/unit/theme-boot.test.cjs` vérifie la correspondance avec le catalogue et le CSS, et `tests/browser/theme-flash-smoke.py` vérifie le rendu.

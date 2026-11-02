@@ -2,6 +2,10 @@
 
 Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent le développement et ne signifient pas une publication publique.
 
+## Non publié : thème au rechargement
+
+- Le thème enregistré s'applique avant le premier rendu : plus de thème clair visible au rechargement. Cache PWA `kerynq-static-v21`.
+
 ## Non publié : refonte UX
 
 - Nouvel espace de recherche : la question d'abord, Web ou IA, sujet, moteur ou assistant et action dans un même bloc.
