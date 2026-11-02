@@ -15,7 +15,7 @@ KERYNQ vise les **WCAG 2.2 AA**. Le projet ne revendique pas encore une conformi
 
 `node tests/check-static.mjs`, `python tests/browser/a11y-browser-smoke.py` et `python tests/browser/cross-browser-smoke.py` (Python Playwright requis). Résultats et limites : `AUDIT_PREPUBLICATION.md`.
 
-## Restant à valider avant publication
+## Restant à valider sur le projet désormais public
 
 - Tests manuels NVDA avec Firefox/Windows, VoiceOver avec Safari/iOS et TalkBack/Android.
 - Audit complet WCAG 2.2 AA : calcul de contrastes, reflow, zoom 200 % et 400 %, focus masqué.

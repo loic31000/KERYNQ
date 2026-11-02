@@ -8,7 +8,7 @@
 - [x] Sélecteur de neuf IA + URL HTTPS personnalisée, sans transfert automatique.
 - [x] Documentation sécurité, contribution, licence MIT, accessibilité.
 
-## Avant ouverture du dépôt
+## Vérifications encore nécessaires après ouverture publique
 
 - [x] Choisir la licence MIT pour le code et la documentation ; voir `LICENSE` et `BRANDING.md`.
 - [ ] Vérifier la provenance et les droits des ressources graphiques actuelles **et historiques** avant publication (notamment l'ancien globe et les logos).
@@ -18,9 +18,9 @@
 - [ ] Revue de sécurité indépendante avant publication : CSP et premier audit livrés, voir `AUDIT_PREPUBLICATION.md`.
 - [ ] Tester l'installation PWA sous HTTPS et cache hors ligne ; vérifier icônes requises.
 - [ ] Analyser la compatibilité réelle des opérateurs par moteur : ce que KERYNQ transmet est documenté (`MOTEURS.md`), le respect par chaque moteur reste à contrôler.
-- [ ] Choisir la politique de suivi d'incidents et activer les rapports de vulnérabilités privés **après publication**, si souhaité.
+- [ ] Vérifier l'activation du signalement privé de vulnérabilités et formaliser le suivi des incidents.
 - [ ] Définir nom de domaine, mentions légales et politique de confidentialité publique.
-- [ ] Ne changer la visibilité et ne mettre GitHub Pages en ligne qu'avec accord explicite.
+- [x] Dépôt public et GitHub Pages configuré au 2 novembre 2026. Ne pas changer ces paramètres sans accord du propriétaire.
 
 ## Améliorations proposées après revue
 
@@ -72,7 +72,7 @@ Les 39 univers sont maintenant intégrés. Les packs de sources officiels ont é
 - [x] Contrôles navigateur automatisés (Chromium, petits écrans).
 - [ ] Test NVDA/VoiceOver/TalkBack et audit WCAG complet avant publication.
 
-Les univers supplémentaires et les moteurs de recherche restent planifiés pour les phases ultérieures.
+Les univers supplémentaires ont depuis été livrés (39 au total) ; les moteurs additionnels restent à étudier.
 
 ## Phase 2 · Généralisation par petits lots
 
@@ -89,15 +89,15 @@ Les univers supplémentaires et les moteurs de recherche restent planifiés pour
 - [x] Tests 39 univers, navigation 8 familles et régression des requêtes Web.
 - Packs de sources officielles : retirés à la demande du propriétaire.
 
-## Dernière passe avant publication
+## Dernière passe avant diffusion plus large
 
 - [x] Consignes adaptées au domaine et à l'assistant, format court ou détaillé.
 - [x] Exemple au premier lancement et section d'aide.
 - [x] Détail des filtres limité au moteur choisi.
 - Écartés par le propriétaire : variantes de requêtes. Reporté pour éviter de complexifier : lien de partage.
-- [ ] Audit de sécurité, puis publication : décision du propriétaire.
+- [ ] Revue de sécurité indépendante, y compris les fichiers et métadonnées historiques désormais publics.
 
 ## Refonte de l'ergonomie
 
-- [x] Domaines en pastilles filtrables, texte pour l'IA agrandi, moteurs d'images, onze thèmes.
+- [x] Domaines en pastilles filtrables, texte pour l'IA agrandi, moteurs d'images, douze thèmes.
 - Retiré à la demande du propriétaire : section des modèles (les modèles enregistrés restent dans les sauvegardes). Recherche par fichier abandonnée.

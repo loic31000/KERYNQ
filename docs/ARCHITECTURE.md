@@ -62,7 +62,7 @@ Les scripts restent classiques, sans module ni compilation, pour conserver l'ouv
 
 `node --test tests/unit/search-query.test.mjs` lance les tests unitaires sans dépendances. Le service worker met en cache le compilateur en même temps que l’interface pour conserver la préparation hors ligne. La présence d’un opérateur dans la requête ne garantit pas que le moteur externe le respecte.
 
-**Lot 2 :** le service worker inclut `assets/js/core/privacy-core.js` dans son cache, aujourd'hui `kerynq-static-v5`. À tester sous HTTPS avant publication.
+**État du 2 novembre 2026 :** le service worker inclut `assets/js/core/privacy-core.js` dans `kerynq-static-v21`. La version fait foi dans `service-worker.js`. Voir [MISES_A_JOUR.md](MISES_A_JOUR.md) pour les règles de cohérence et les limites des mises à jour.
 
 **Détail du moteur choisi :** `capabilities()` interroge `compile()`. Il décrit ce que KERYNQ transmet ; le respect réel par chaque moteur n'est pas vérifié et peut changer.
 

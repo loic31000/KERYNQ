@@ -1,6 +1,6 @@
 # Assistance et questions fréquentes
 
-KERYNQ est en **prépublication privée**. Aucun support commercial ou délai de réponse garanti.
+Le dépôt KERYNQ est **public**, mais le logiciel évolue. Aucun support commercial ni délai de réponse garanti.
 
 ## Questions fréquentes
 
@@ -13,4 +13,4 @@ KERYNQ est en **prépublication privée**. Aucun support commercial ou délai de
 
 ## Demandes
 
-Lorsque le dépôt sera ouvert, utilisez les modèles d'issue **Bug** ou **Amélioration**. Pour les vulnérabilités, lisez impérativement [SECURITY.md](SECURITY.md), ne créez pas d'issue publique détaillée.
+Le dépôt étant ouvert, utilisez les modèles d'issue **Bug** ou **Amélioration**. Pour les vulnérabilités, lisez impérativement [SECURITY.md](SECURITY.md), ne créez pas d'issue publique détaillée.

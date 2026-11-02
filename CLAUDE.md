@@ -10,7 +10,7 @@ Conserver le coût d'hébergement à 0 euro et le fonctionnement sans serveur, A
 
 ## Règles à respecter
 
-1. Le dépôt doit rester **privé**. Ne pas activer GitHub Pages, ne pas publier de release et ne pas modifier sa visibilité sans instruction explicite du propriétaire.
+1. Le dépôt est **public** et GitHub Pages est configuré. Ne pas changer sa visibilité, les paramètres de déploiement, les releases ou les coûts sans instruction explicite du propriétaire.
 2. La licence du **code et de la documentation** est **MIT** (`LICENSE`). Le nom et les logos sont exclus de cette licence (`BRANDING.md`). Ne pas modifier le choix juridique ni redistribuer des ressources graphiques historiques sans accord.
 3. Travailler sur des branches `feat/...` ou `fix/...`, tester, commiter et ouvrir une PR pour validation ; ne pas fusionner une future PR sans demande explicite.
 4. Éviter GitHub Actions. Les contrôles sont utilisables localement et doivent être documentés honnêtement.
@@ -32,7 +32,7 @@ python tests/browser/theme-flash-smoke.py
 python tests/browser/update-smoke.py
 ```
 
-Les scripts Python requièrent Playwright et Chromium, de préférence dans un environnement virtuel hors du dépôt. `KERYNQ_CHROMIUM` permet d'indiquer un autre exécutable Chromium. Tester aussi manuellement les navigateurs concernés avant publication. Pour servir le site en local : `python -m http.server 8000`.
+Les scripts Python requièrent Playwright et Chromium, de préférence dans un environnement virtuel hors du dépôt. `KERYNQ_CHROMIUM` permet d'indiquer un autre exécutable Chromium. Tester aussi manuellement les navigateurs concernés et le site public avant d'affirmer sa compatibilité. Pour servir le site en local : `python -m http.server 8000`.
 
 ## Suite
 

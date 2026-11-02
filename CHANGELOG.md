@@ -1,8 +1,16 @@
 # Historique des changements
 
-Ce journal suit les changements vérifiables de KERYNQ. Les versions décrivent le développement et ne signifient pas une publication publique.
+## 2026-11-02 : présentation et cohérence documentaire
 
-## Non publié : thème au rechargement
+- README modernisé avec badges de stack et liens vers les guides existants.
+- Documentation alignée sur le dépôt public, le service worker v21 et la configuration GitHub Pages.
+- Les anciens audits demeurent datés ; aucun test applicatif n'a été relancé pour cette correction documentaire.
+- Les champs About et topics GitHub nécessitent une mise à jour distincte dans les paramètres du dépôt.
+
+
+Ce journal suit les changements vérifiables de KERYNQ. Les versions techniques et numéros de cache ne sont pas des releases GitHub ; le dépôt est public au 2 novembre 2026.
+
+## Intégré à `main` : thème au rechargement (v21)
 
 - Le thème enregistré s'applique avant le premier rendu : plus de thème clair visible au rechargement. Cache PWA `kerynq-static-v21`.
 - Mises à jour maîtrisées : chaque version est un instantané complet, la nouvelle version attend le clic sur « Mettre à jour ». Voir [docs/MISES_A_JOUR.md](docs/MISES_A_JOUR.md).

@@ -8,4 +8,4 @@ La licence MIT permet l'utilisation, la modification, la redistribution et l'uti
 
 **Le nom et les éléments d'identité visuelle KERYNQ** sont traités séparément. Voir [BRANDING.md](BRANDING.md).
 
-Le dépôt reste privé jusqu'à décision de son propriétaire. La licence du code ne constitue pas une décision de publication du site ou du dépôt.
+Le dépôt est désormais public. La licence du code ne couvre pas automatiquement l'identité visuelle ou les ressources de tiers.
