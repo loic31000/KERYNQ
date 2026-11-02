@@ -186,6 +186,9 @@ with sync_playwright() as p:
         # Mode privé : la mise à jour prévient avant d'effacer une recherche non enregistrée.
         c = mk(); pg = controlled(c); pg.locator('#privateSearchToggle').click(); pg.locator('#topic').fill('Secret'); Site.root = V2
         visible_soon(pg, '#updateBanner'); check(f'{e} Mode privé : avertissement avant mise à jour', 'mode privé sera effacée' in pg.locator('#updateText').text_content(), pg.locator('#updateText').text_content()); c.close()
+        # Service worker indisponible : aucune erreur, page complète.
+        reset(); c = mk(service_workers='block'); pg = c.new_page(); errs = []; pg.on('pageerror', lambda x: errs.append(str(x))); pg.goto(URL); wait_ready(pg); pg.wait_for_timeout(300)
+        check(f'{e} Sans service worker : aucune erreur', not errs and pg.locator('#engineSelect option').count() == 28, errs); c.close()
         # G : ressources qui échouent.
         for missing, label in (('app.js', 'app'), ('catalog-core.js', 'catalogue'), ('styles.css', 'css')):
             reset(); Site.missing = {missing}; c = mk(service_workers='block'); pg = c.new_page(); pg.goto(URL); pg.wait_for_timeout(800)

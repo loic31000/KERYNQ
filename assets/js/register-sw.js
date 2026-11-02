@@ -36,6 +36,7 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
     } catch {
       return;
     }
+    if (!registration) return;
     offerWaiting();
     registration.addEventListener('updatefound', () => {
       const worker = registration.installing;

@@ -129,7 +129,7 @@ def held_frame(browser, theme):
     for _ in range(100):
         pg.wait_for_timeout(30)
         try:
-            if pg.evaluate("!!document.getElementById('topic')&&document.documentElement.classList.contains('is-booting')"): break
+            if pg.evaluate("!!document.getElementById('topic')&&document.documentElement.classList.contains('is-booting')&&!!getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()"): break
         except Exception: pass
     state = pg.evaluate("({t:document.documentElement.dataset.theme,bg:getComputedStyle(document.documentElement).getPropertyValue('--bg').trim(),meta:document.querySelector('meta[name=theme-color]').content,app:!document.documentElement.classList.contains('is-booting')})")
     shot = OUT / f'retenu-{theme}.png'; pg.screenshot(path=str(shot))
